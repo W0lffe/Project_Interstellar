@@ -10,11 +10,14 @@
 * [ ] Final Act - The Reckoning
 
 ### Game World
-* [ ] Characters - player, friendlies, hostiles
-* [ ] Items
-    * [ ] Weapons - few different types, mostly ranged
-    * [ ] Armor - few different types, perks?
-    * [ ] Consumables - medicine, food
+* [ ] Characters
+    * [X] Player
+    * [ ] NPC
+* [X] Items
+    * [X] Weapons - few different types, mostly ranged
+    * [X] Armor - few different types, perks?
+    * [X] Consumables - medicine, food
+    * [ ](Optional) More all above
 * [ ] Locations
     * [ ] Planet 
         * [ ] Sub-locations - like outposts
@@ -35,7 +38,7 @@
     * [ ] Stealth
 * [ ] Experience and Level System
 * [ ] Character/Player health
-* [ ] Player Inventory
+* [X] Player Inventory
 * [ ] Combat
 * [ ] Players Choice System
  * [ ] Endings Based On Players Choices
