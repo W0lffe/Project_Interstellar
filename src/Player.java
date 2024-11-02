@@ -1,14 +1,16 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Player {
     
     private String name;
+    private int maxHealth;
     private int health;
     private ArrayList<Items> Inventory;
     private ArrayList<Skills> PlayerSkills;
     private int skillpoint;
     private Items equipped;
-    private int Level;
+    private int level;
     private int experience;
     private int expNeeded;
     
@@ -26,6 +28,14 @@ public class Player {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     public ArrayList<Items> getInventory() {
@@ -61,11 +71,11 @@ public class Player {
     }
 
     public int getLevel() {
-        return Level;
+        return level;
     }
 
     public void setLevel(int level) {
-        Level = level;
+        this.level = level;
     }
 
     public int getExperience() {
@@ -84,25 +94,28 @@ public class Player {
         this.expNeeded = expNeeded;
     }
 
-    public Player(String name, int health, ArrayList<Items> inventory, ArrayList<Skills> playerSkills, int skillpoint,
+    public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills, int skillpoint,
                 Items equipped, int level, int experience, int expNeeded) {
         
         this.name = name;
         this.health = health;
+        this.maxHealth = maxHealth;
         Inventory = inventory;
         PlayerSkills = playerSkills;
         this.skillpoint = skillpoint;
         this.equipped = equipped;
-        Level = level;
+        this.level = level;
         this.experience = experience;
         this.expNeeded = expNeeded;
     }
 
+   
+
     @Override
     public String toString() {
-        return "Player [name=" + name + ", health=" + health + ", Inventory=" + Inventory + ", PlayerSkills="
-                + PlayerSkills + ", skillpoint=" + skillpoint + ", equipped=" + equipped + ", Level=" + Level
-                + ", experience=" + experience + ", expNeeded=" + expNeeded + "]";
+        return "Player [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", Inventory=" + Inventory
+                + ", PlayerSkills=" + PlayerSkills + ", skillpoint=" + skillpoint + ", equipped=" + equipped
+                + ", level=" + level + ", experience=" + experience + ", expNeeded=" + expNeeded + "]";
     }
 
     public void addItem(Items itemToAdd){
@@ -113,6 +126,39 @@ public class Player {
             }
         }
        Inventory.add(itemToAdd);
+    }
+
+    public void ShowInventory(){
+        for(Items items : Inventory){
+            System.out.println(items);
+        }
+    }
+
+    public void ShowSkills(){
+        for(Skills skill : PlayerSkills){
+            System.out.println(skill);
+        }
+    }
+
+    public void Character(Scanner action){
+        System.out.println("A) Show Skills\nB) Level Up\nC) Show Inventory\nD) Back");
+        String userAction;
+        do {
+            userAction = Validation.UserInput(action);
+            switch (userAction) {
+                case "A":
+                    ShowSkills();
+                    break;
+                case "B":
+                    break;
+                case "C":
+                    ShowInventory();
+                    break;
+                default:
+                    break;
+            }
+        } while (!userAction.equals("D"));
+
     }
 }
 

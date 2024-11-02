@@ -1,25 +1,36 @@
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
+
+import java.util.Scanner;
 public class Main{
 
     public static void main(String[] args) {
 
-            ArrayList<Items> Inventory = new ArrayList<>();
-            Inventory.add(Items.BASIC_MEDKIT);
-            
-            ArrayList<Skills> PlayerSkills = new ArrayList<>();
-            Skills.Weapons.setPlayerHas(true);
-            PlayerSkills.add(Skills.Weapons);
+        System.out.println("Project: Interstellar");
 
-            Player player = new Player("Jaxon", 150, Inventory, PlayerSkills, 0, Items.LASER_PISTOL, 1, 0, 500);
-            
-            player.addItem(Items.BASIC_MEDKIT);
+        Scanner inputScanner = new Scanner(System.in);
+        String userInput; //initialize variable for user input
+        
+        System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
+        do {
+            userInput = Validation.UserInput(inputScanner); //use validation for user input
 
-            System.out.println(player.toString());
+            switch (userInput) {
+                case "A":
+                    Game.newGame(inputScanner); //char A to start a new game
+                    break;
+                case "B":
+                    Game.loadGame(inputScanner); //char B to load existing game
+                    break;
+                case "C":
+                    System.out.println("Exiting game"); //char C to exit game
+                    break;
+                default:
+                    System.out.println("Unknown action.");
+            }
+        } while (!userInput.equals("C"));
 
-
-
+        inputScanner.close();
     }
-
 }
+
+    
