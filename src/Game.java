@@ -27,7 +27,7 @@ public class Game{
         boolean gameRunning = true;
 
         while (gameRunning) {
-            Levels.Prologue(player, action);
+            Prologue.Start(player, action);
             
         }
 

@@ -126,6 +126,8 @@ public class Player {
             }
         }
        Inventory.add(itemToAdd);
+       System.out.println(itemToAdd.getItem()+ " Added to your inventory");
+
     }
 
     public void ShowInventory(){
