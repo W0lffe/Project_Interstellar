@@ -13,7 +13,16 @@ public class Player {
     private int level;
     private int experience;
     private int expNeeded;
+    private boolean alive;
     
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void setAlive(boolean status) {
+        this.alive = status;
+    }
+
     public String getName() {
         return name;
     }
@@ -95,7 +104,7 @@ public class Player {
     }
 
     public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills, int skillpoint,
-                Items equipped, int level, int experience, int expNeeded) {
+                Items equipped, int level, int experience, int expNeeded, boolean alive) {
         
         this.name = name;
         this.health = health;
@@ -107,15 +116,15 @@ public class Player {
         this.level = level;
         this.experience = experience;
         this.expNeeded = expNeeded;
+        this.alive = alive;
     }
-
-   
 
     @Override
     public String toString() {
         return "Player [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", Inventory=" + Inventory
                 + ", PlayerSkills=" + PlayerSkills + ", skillpoint=" + skillpoint + ", equipped=" + equipped
-                + ", level=" + level + ", experience=" + experience + ", expNeeded=" + expNeeded + "]";
+                + ", level=" + level + ", experience=" + experience + ", expNeeded=" + expNeeded + ", status=" + alive
+                + "]";
     }
 
     public void addItem(Items itemToAdd){
@@ -130,13 +139,15 @@ public class Player {
 
     }
 
-    public void ShowInventory(){
+    private void ShowInventory(){
+        int i = 1;
         for(Items items : Inventory){
-            System.out.println(items);
+            System.out.println(i + ". " + items);
+            i++;
         }
     }
 
-    public void ShowSkills(){
+    private void ShowSkills(){
         for(Skills skill : PlayerSkills){
             System.out.println(skill);
         }
@@ -161,6 +172,10 @@ public class Player {
             }
         } while (!userAction.equals("D"));
 
+    }
+
+    public void takeDamage(int damage){
+        health -= damage;
     }
 }
 

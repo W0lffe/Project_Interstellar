@@ -1,3 +1,5 @@
+PROLOGUE
+
 In the vast emptiness of space, where silence reigns supreme, the remnants of humanity cling to survival amidst the ruins of a once-great civilization. 
 After decades of relentless interplanetary wars, the echoes of conflict still resonate across the stars, leaving behind only the battered husks of ships and the debris of shattered alliances. 
 Resources, once abundant, have dwindled to near extinction, fueling desperation and despair.
@@ -15,3 +17,68 @@ His mission is clear: to navigate the treacherous waters of a fractured universe
 With every flicker of the ship's engines, Jaxon feels the weight of his quest pressing upon him—a quest not just for survival, but for the love he refuses to abandon.
 
 His journey has just begun, and with every star that shines above, he vows to find her, to bring her home, and to restore what was once whole.
+
+SCENE1
+
+You wake with a start, the dim light filtering through the vents barely illuminating your cramped quarters. 
+The remnants of the same haunting nightmare still cling to your mind, visions of darkness and loss that you can't shake.
+
+Jaxon (muttering): "I have to find her... I have to find my wife..."
+
+With a sigh, you push yourself up from the thin, worn mattress, feeling the weight of the mission pressing down on you. 
+As your eyes adjust, you take in the familiar yet unwelcoming room around you. 
+
+To your left stands a small, dented cabinet—a place where you keep the few essentials you've managed to scavenge or save. 
+Nearby, a datapad rests on the makeshift nightstand, its screen faintly glowing as it awaits commands.
+Through the thin walls, you can hear the muted sounds of life in the station—a few people talking in hushed voices just outside your dorm.
+
+SCENE2
+
+You come out of the dorm room and look through the big windows. It's a sunny day out here at Veskar Station. 
+You notice fleet ships leaving the dock, their engines humming as they ascend into the endless void. 
+Next to the windows, you spot your wingmen, Jaxer and Teth, deep in conversation.
+
+Jaxer: "I swear, Teth, the Ra'kra have been getting bolder every day. I heard they almost breached sector nine defenses last night."
+
+Teth nods grimly, his arms crossed. "Yeah, and command's been keeping it quiet. They don’t want the station to panic."
+
+Jaxer turns to you and grins. "Ryker! You're up early for once." Teth raises an eyebrow. "Bad dreams again?"
+
+You nod, trying to shake off the remnants of the nightmare.
+
+Jaxer: "Well, at least you're awake now. We could use the extra pair of eyes out there. Rumor has it the Ra'kra scouts have been seen closer to Veskar than ever before."
+
+Teth: "I don't trust those scouts. They're always the start of something bigger."
+
+You glance at the fleet ships preparing to jump into hyperspace. The sight is all too familiar. 
+The Ra'kra took everything from you, including the one person you’d give anything to find.
+
+The mission to find your wife is never far from your mind, but for now, duty calls.
+Jaxer claps a hand on your shoulder, a grin spreading across his face. "Come on, Ryker, let's hit the firing range. 
+I want to see if you've still got that deadly aim."
+You feel a surge of determination. The search isn't over, and as long as you’re breathing, there’s still hope.
+
+OPTION1
+
+You give a quick nod to Teth and Jaxer, feeling the weight of camaraderie. 
+Jaxon: "Alright, let’s see what the range has in store."
+
+The three of you make your way down the narrow corridors of the station, passing other crew members busy with their own routines. 
+The hum of machinery fills the hall as you step into the firing range—a place of preparation, focus, and relentless practice. 
+As you each take position, the air shifts to a determined silence, broken only by the sound of weapons charging up.
+
+Jaxer grins as he loads his rifle. "Time to show you two who’s still the best shot here."
+
+Jaxon: "Haha, we will see about that."
+
+OPTION2
+
+You take a moment for yourself, letting Teth and Jaxer head to the firing range without you. 
+The sounds of the bustling station fade as you lean against the wall, closing your eyes. 
+The memories come back—the last time you saw her, the look in her eyes before she was taken. 
+You feel the familiar ache, the relentless pull to keep searching, to not give up.
+
+After a deep breath, you steady yourself, grounding your focus. There will be time to join the others. 
+But for now, you just need this brief silence to remember what you're really fighting for.
+
+SCENE3

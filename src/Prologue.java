@@ -1,18 +1,16 @@
 import java.util.Scanner;
 
 public class Prologue {
-   
+    
+    private static String userAction;
+    private static final String file = "Prologue.txt";
+
     public static void Start(Player player, Scanner action){
-        String userAction;
         boolean SCENE1 = true;
-       /*  String intro = Files.ReadFile("Prologue.txt", action);
-        Print(intro, 50);
- */
+        String scene1 = Files.ReadFile(file, "PROLOGUE", "SCENE2");
+        Utility.Print(scene1, 1);
+ 
         //Enter to first scene
-        
-        String scene1 = "You wake up early morning after seeing those same nightmares again.\nJaxon(mumbles): I have to find my wife...\nYou get up from the bed." + 
-        "You look around. You see your cabinet and a datapad. You can hear other people talking outside your dorm.";
-        Print(scene1, 10);
 
         do {
             System.out.println("A) Character\nB) Take a look in the cabinet\nC) Inspect datapad\nD) Go outside");
@@ -31,64 +29,56 @@ public class Prologue {
                     break;
                 case "C":
                     System.out.println("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...");
-                    String datapad = Files.ReadFile("Datapad1.txt", action);
-                    Print(datapad, 20);
+                    String datapad = Files.ReadFile("Datapad1.txt",null,null);
+                    Utility.Print(datapad, 20);
                     break;
                 case "D":
                     System.out.println("You decide to head outside, ready to face whatever the day brings.");
                     SCENE1 = false;
                     break;
                 default:
+                    System.out.println("Jaxon: I cant do that right now");
             }
         } while (SCENE1);
 
+        //Enter to second scene
+        Scene2(player, action);
+    }
+
+    public static void Scene2(Player player, Scanner action){
+        
         boolean SCENE2 = true;
+        String scene2 = Files.ReadFile(file, "SCENE2", "OPTION1");
+        Utility.Print(scene2, 1);    
 
-        System.out.println("You come out of the dorm room and look through the big windows. Its a sunny day out here at Veskar Station."+
-        "\nYou notice fleet ships leaving the dock. Next to the windows you spot your wingmen, Jaxer and Teth." +
-        "\nJaxer and Teth are having a conversation about spotted Ra'kra activity near sector nine." + 
-        "");
+        do {
+            System.out.println("A) Go with Teth and Jaxer \nB) Not now");
+            userAction = Validation.UserInput(action);
 
-        System.out.println("You come out of the dorm room and look through the big windows. It's a sunny day out here at Veskar Station." +
-    "\nYou notice fleet ships leaving the dock, their engines humming as they ascend into the endless void." +
-    "\nNext to the windows, you spot your wingmen, Jaxer and Teth, deep in conversation." +
-    "\nJaxer: \"I swear, Teth, the Ra'kra have been getting bolder every day. I heard they almost breached sector nine defenses last night.\"" +
-    "\nTeth nods grimly, his arms crossed. \"Yeah, and command's been keeping it quiet. They don’t want the station to panic.\"");
-
-System.out.println("\nJaxer turns to you and grins. \"Ryker! You're up early for once.\" Teth raises an eyebrow. \"Bad dreams again?\"" +
-    "\nYou nod, trying to shake off the remnants of the nightmare." +
-    "\nJaxer: \"Well, at least you're awake now. We could use the extra pair of eyes out there. Rumor has it the Ra'kra scouts have been seen closer to Veskar than ever before.\"" +
-    "\nTeth: \"I don't trust those scouts. They're always the start of something bigger.\"");
-
-System.out.println("\nYou glance at the fleet ships preparing to jump into hyperspace. The sight is all too familiar." +
-    "\nThe Ra'kra took everything from you, including the one person you’d give anything to find." +
-    "\nThe mission to find your wife is never far from your mind, but for now, duty calls." +
-    "\nJaxer claps a hand on your shoulder. \"Come on, Ryker, let's grab some fuel. We’ve got a briefing in twenty.\"" +
-    "\nYou feel a surge of determination. The search isn't over, and as long as you’re breathing, there’s still hope.");
-
-
-        
-
-
-
-
-
-
-        
-    }
-
-    public static void Print(String toPrint, int speed){
-
-        char[] toPrintArray = toPrint.toCharArray();
-        for (int i = 0; i < toPrint.length(); i++) {
-            System.out.print(toPrintArray[i]);
-
-            try {
-                Thread.sleep(speed);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            switch (userAction) {
+                case "A":
+                    NPC target = new NPC(5, 5, "Target", 20, true, null);
+                    String option1 = Files.ReadFile(file, "OPTION1", "OPTION2");
+                    Utility.Print(option1, 1);  
+                    Combat.FightMenu(player, target, action);  
+                    SCENE2 = false;
+                    break;
+                case "B":
+                    String option2 = Files.ReadFile(file, "OPTION2", "SCENE3");
+                    Utility.Print(option2, 1);    
+                    SCENE2 = false;
+                    break;
+                default:
+                    System.out.println("Jaxon: I cant do that right now");
             }
-        }
-
+        } while (SCENE2);
+        
+        //Enter to third scene
+        //Scene3(player, action);
     }
+
+
+
+
+
 }
