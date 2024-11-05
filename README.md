@@ -3,7 +3,7 @@
 # Roadmap
 
 ### Story
-* [ ] Prologue
+* [X] Prologue
 * [ ] Act I - Journey Begins
 * [ ] Act II - Encounter
 * [ ] Act III - Lost Colony
@@ -12,7 +12,7 @@
 ### Game World
 * [ ] Characters
     * [X] Player
-    * [ ] NPC
+    * [X] NPC
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
     * [X] Consumables - medicine, food
@@ -35,11 +35,11 @@
     * [ ] Speech
     * [ ] Engineering
     * [ ] Stealth
-* [ ] Experience and Level System
-* [ ] Character/Player health
+* [X] Experience and Level System
+* [X] Character/Player health
 * [X] Player Inventory
 * [X] Combat
-* [ ] Players Choice System
+* [X] Players Choice System (kind of)
  * [ ](Optional) Endings Based On Players Choices
 * [ ] Journal
 
