@@ -18,7 +18,7 @@ With every flicker of the ship's engines, Jaxon feels the weight of his quest pr
 
 His journey has just begun, and with every star that shines above, he vows to find her, to bring her home, and to restore what was once whole.
 
-SCENE1
+S1
 
 You wake with a start, the dim light filtering through the vents barely illuminating your cramped quarters. 
 The remnants of the same haunting nightmare still cling to your mind, visions of darkness and loss that you can't shake.
@@ -32,7 +32,7 @@ To your left stands a small, dented cabinet—a place where you keep the few ess
 Nearby, a datapad rests on the makeshift nightstand, its screen faintly glowing as it awaits commands.
 Through the thin walls, you can hear the muted sounds of life in the station—a few people talking in hushed voices just outside your dorm.
 
-SCENE2
+S2
 
 You come out of the dorm room and look through the big windows. It's a sunny day out here at Veskar Station. 
 You notice fleet ships leaving the dock, their engines humming as they ascend into the endless void. 
@@ -40,9 +40,11 @@ Next to the windows, you spot your wingmen, Jaxer and Teth, deep in conversation
 
 Jaxer: "I swear, Teth, the Ra'kra have been getting bolder every day. I heard they almost breached sector nine defenses last night."
 
-Teth nods grimly, his arms crossed. "Yeah, and command's been keeping it quiet. They don’t want the station to panic."
+Teth nods grimly, his arms crossed. 
+Teth: "Yeah, and command's been keeping it quiet. They don’t want the station to panic."
 
-Jaxer turns to you and grins. "Ryker! You're up early for once." Teth raises an eyebrow. "Bad dreams again?"
+Jaxer turns to you and grins. 
+Jaxer: "Ryker! You're up early for once." Teth raises an eyebrow. "Bad dreams again?"
 
 You nod, trying to shake off the remnants of the nightmare.
 
@@ -54,11 +56,12 @@ You glance at the fleet ships preparing to jump into hyperspace. The sight is al
 The Ra'kra took everything from you, including the one person you’d give anything to find.
 
 The mission to find your wife is never far from your mind, but for now, duty calls.
-Jaxer claps a hand on your shoulder, a grin spreading across his face. "Come on, Ryker, let's hit the firing range. 
-I want to see if you've still got that deadly aim."
+Jaxer claps a hand on your shoulder, a grin spreading across his face.
+Jaxer:  "Come on, Ryker, let's hit the firing range. I want to see if you've still got that deadly aim."
+
 You feel a surge of determination. The search isn't over, and as long as you’re breathing, there’s still hope.
 
-OPTION1
+S2O1
 
 You give a quick nod to Teth and Jaxer, feeling the weight of camaraderie. 
 Jaxon: "Alright, let’s see what the range has in store."
@@ -67,11 +70,50 @@ The three of you make your way down the narrow corridors of the station, passing
 The hum of machinery fills the hall as you step into the firing range—a place of preparation, focus, and relentless practice. 
 As you each take position, the air shifts to a determined silence, broken only by the sound of weapons charging up.
 
-Jaxer grins as he loads his rifle. "Time to show you two who’s still the best shot here."
+Jaxer grins as he loads his rifle. 
+Jaxer: "Time to show you two who is the best shot here."
 
 Jaxon: "Haha, we will see about that."
 
-OPTION2
+S201,1
+
+Each target lights up in rapid succession, dead-center marks stacking up. 
+You and Teth exchange an amused glance, both shaking their heads as you calmly set down your weapon.
+
+Jaxer laughs, clapping you on the back. 
+Jaxer: "Show-off! You know, if you were any more of a sharpshooter, we’d have to start calling you ‘Laser Eyes’."
+
+Teth smirks, crossing his arms. 
+Teth: "Face it, Jaxer, we could practice all day and we’d still be one step behind the legend here."
+
+You chuckle, giving them a modest shrug. 
+Jaxon: "Just instinct, fellas. But hey, someone’s gotta keep you two on your toes."
+
+Jaxer grins. 
+Jaxer: "Lucky for us, we’ve got the best shot on Veskar by our side."
+
+As you walk back through the corridor, the lighthearted banter fades. Around them, the atmosphere has shifted. 
+Crew members are exchanging anxious whispers, some casting uneasy glances toward the station’s outer decks.
+
+Teth frowns, noticing the tension. 
+Teth: "You guys feel that? It’s like everyone’s holding their breath."
+
+You nod, your senses sharpen. 
+Jaxon: "Yeah, something’s up."
+
+A sudden, thunderous explosion rocks the station. The walls tremble, the lights flicker, and an alarm blares through the corridors. 
+The overhead speaker crackles with a warning: “All hands, battle stations! The Ra'kra have breached the perimeter!”
+
+The blast sends you sprawling onto the cold metal floor, your ears ringing as alarms blare in the distance. 
+Through your blurred vision, you see hulking figures in dark, battle-scarred suits entering the room—the Ra'kra soldiers, moving with ruthless precision. 
+Their eyes glow red beneath their helmets as they open fire, striking down crew members who barely have time to react.
+
+You spots Teth on the other side of the room, just as a Ra'kra soldier slams him into the wall, leaving him stunned. 
+Your heart races as you see Jaxer draw his sidearm, but a shot hits him before he can fire, and he falls.
+You grab your weapon and take cover behind a fallen console.
+
+
+S2O2
 
 You take a moment for yourself, letting Teth and Jaxer head to the firing range without you. 
 The sounds of the bustling station fade as you lean against the wall, closing your eyes. 
@@ -81,4 +123,13 @@ You feel the familiar ache, the relentless pull to keep searching, to not give u
 After a deep breath, you steady yourself, grounding your focus. There will be time to join the others. 
 But for now, you just need this brief silence to remember what you're really fighting for.
 
-SCENE3
+A sudden, thunderous explosion rocks the station. The walls tremble, the lights flicker, and an alarm blares through the corridors. 
+The overhead speaker crackles with a warning: “All hands, battle stations! The Ra'kra have breached the perimeter!”
+
+The blast sends you sprawling onto the cold metal floor, your ears ringing as alarms blare in the distance. 
+Through your blurred vision, you see hulking figures in dark, battle-scarred suits entering the room—the Ra'kra soldiers, moving with ruthless precision. 
+Their eyes glow red beneath their helmets as they open fire, striking down crew members who barely have time to react.
+
+
+S3
+

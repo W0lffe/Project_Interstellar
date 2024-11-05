@@ -1,5 +1,7 @@
 public class Utility {
     
+    public static String cantDoThat = "Jaxon: I cant do that right now";
+
     public static void Print(String toPrint, int speed){
 
         char[] toPrintArray = toPrint.toCharArray();

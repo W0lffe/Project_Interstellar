@@ -11,7 +11,7 @@ public class Game{
         //ArrayList<Player> GameState = new ArrayList<>(); //initialize emtpy list to track state of game for this player
 
         //create a new player
-        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, 0, Items.QUANTUM_REPEATER, 1, 0, 500, true);
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, 0, null , 1, 0, 250, true);
      
         //start a new game with created player
         startGame(player, inputScanner);

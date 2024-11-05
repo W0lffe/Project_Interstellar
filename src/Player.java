@@ -139,15 +139,54 @@ public class Player {
 
     }
 
-    private void ShowInventory(){
+    private void ShowInventory(Scanner action){
         int i = 1;
         for(Items items : Inventory){
             System.out.println(i + ". " + items);
             i++;
         }
+
+        String userAction;
+
+        do{
+            System.out.println("A) Use or Equip item\nB)Go back");
+            userAction = Validation.UserInput(action);
+            if (userAction.equals("A")) {
+                EquipItem(action);
+            }
+        } while (userAction != "B");
     }
 
-    private void ShowSkills(){
+    private void EquipItem(Scanner action){
+        int choice;
+
+        while (true) {
+            System.out.println("Wich item?");
+            choice = Validation.UserINput(action);
+            if(choice >= 0 && choice < Inventory.size()){
+
+                Items selectedItem = Inventory.get(choice);
+                
+                if(selectedItem.getType().equals("Consumable")){
+                    System.out.println("Used: " + selectedItem.getItem());
+                    RestoreHealth(selectedItem);
+
+                    selectedItem.setQuantity(selectedItem.getQuantity()-1);
+                    if(selectedItem.getQuantity() <= 0){
+                        Inventory.remove(choice);
+                    }
+                    break;
+                }
+                else if(selectedItem.getType().contains("Weapon")){
+                    setEquipped(selectedItem);
+                    System.out.println("Equipped: " + selectedItem.getItem());
+                    break;
+                }
+            }
+        }
+    }
+
+    private void ShowSkills(Scanner action){
         for(Skills skill : PlayerSkills){
             System.out.println(skill);
         }
@@ -160,12 +199,12 @@ public class Player {
             userAction = Validation.UserInput(action);
             switch (userAction) {
                 case "A":
-                    ShowSkills();
+                    ShowSkills(action);
                     break;
                 case "B":
                     break;
                 case "C":
-                    ShowInventory();
+                    ShowInventory(action);
                     break;
                 default:
                     break;
@@ -176,7 +215,22 @@ public class Player {
 
     public void takeDamage(int damage){
         health -= damage;
+
+        if(health <= 0) {
+            setAlive(false);
+        }
     }
+
+    private void RestoreHealth(Items item){
+        health += item.getHeals();
+        System.out.println(item.getItem() + " healed you " + item.getHeals() + " hitpoints!");
+        
+        if(health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+
+
 }
 
 

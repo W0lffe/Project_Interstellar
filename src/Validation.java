@@ -30,22 +30,18 @@ class Validation{
 
 
 
-    public static int Time(Scanner myScanner, String period){
+    public static int UserINput(Scanner myScanner){
         int userInput;
     
         while (true) {
             try {
-                System.out.printf("Enter time (in %s): ", period);
+                System.out.print("\nChoice: ");
                 userInput = Integer.parseInt(myScanner.nextLine());
-                if (userInput > 0) {
-                    break;
-                }
+                break;
             } catch (Exception e) {
                 System.out.println("\nUnknown input format! Enter time again!");
             }
         }
-
         return userInput;
-
     }
 }

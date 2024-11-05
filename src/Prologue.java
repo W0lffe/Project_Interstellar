@@ -7,7 +7,7 @@ public class Prologue {
 
     public static void Start(Player player, Scanner action){
         boolean SCENE1 = true;
-        String scene1 = Files.ReadFile(file, "PROLOGUE", "SCENE2");
+        String scene1 = Files.ReadFile(file, "PROLOGUE", "S2");
         Utility.Print(scene1, 1);
  
         //Enter to first scene
@@ -37,7 +37,7 @@ public class Prologue {
                     SCENE1 = false;
                     break;
                 default:
-                    System.out.println("Jaxon: I cant do that right now");
+                    System.out.println(Utility.cantDoThat);
             }
         } while (SCENE1);
 
@@ -45,10 +45,10 @@ public class Prologue {
         Scene2(player, action);
     }
 
-    public static void Scene2(Player player, Scanner action){
+    private static void Scene2(Player player, Scanner action){
         
         boolean SCENE2 = true;
-        String scene2 = Files.ReadFile(file, "SCENE2", "OPTION1");
+        String scene2 = Files.ReadFile(file, "S2", "S2O1");
         Utility.Print(scene2, 1);    
 
         do {
@@ -58,23 +58,29 @@ public class Prologue {
             switch (userAction) {
                 case "A":
                     NPC target = new NPC(5, 5, "Target", 20, true, null);
-                    String option1 = Files.ReadFile(file, "OPTION1", "OPTION2");
+                    String option1 = Files.ReadFile(file, "S2O1", "S2O1,1");
                     Utility.Print(option1, 1);  
                     Combat.FightMenu(player, target, action);  
+                    String s2o1 = Files.ReadFile(file, "S2O1,1", "S2O2");
+                    Utility.Print(s2o1, 1);
                     SCENE2 = false;
                     break;
                 case "B":
-                    String option2 = Files.ReadFile(file, "OPTION2", "SCENE3");
+                    String option2 = Files.ReadFile(file, "S2O2", "S3");
                     Utility.Print(option2, 1);    
                     SCENE2 = false;
                     break;
                 default:
-                    System.out.println("Jaxon: I cant do that right now");
+                    System.out.println(Utility.cantDoThat);
             }
         } while (SCENE2);
         
         //Enter to third scene
-        //Scene3(player, action);
+        Scene3(player, action);
+    }
+
+    private static void Scene3(Player player, Scanner action){
+
     }
 
 

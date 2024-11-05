@@ -15,7 +15,6 @@
     * [ ] NPC
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
-    * [X] Armor - few different types, perks?
     * [X] Consumables - medicine, food
     * [ ](Optional) More all above
 * [ ] Locations
@@ -39,9 +38,9 @@
 * [ ] Experience and Level System
 * [ ] Character/Player health
 * [X] Player Inventory
-* [ ] Combat
+* [X] Combat
 * [ ] Players Choice System
- * [ ] Endings Based On Players Choices
+ * [ ](Optional) Endings Based On Players Choices
 * [ ] Journal
 
 * [ ] Save Game
