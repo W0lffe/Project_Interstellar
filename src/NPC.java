@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class NPC {
     
     private int maxHealth;
@@ -6,14 +8,16 @@ public class NPC {
     private int experience;
     private boolean alive;
     private Items equipped;
-    
-    public NPC(int maxHealth, int health, String name, int experience, boolean alive, Items equipped) {
+    private ArrayList<Items> inventory;
+
+    public NPC(int maxHealth, int health, String name, int experience, boolean alive, Items equipped, ArrayList<Items> inventory) {
         this.maxHealth = maxHealth;
         this.health = health;
         this.name = name;
         this.experience = experience;
         this.alive = alive;
         this.equipped = equipped;
+        this.inventory = inventory;
     }
     public int getMaxHealth() {
         return maxHealth;
@@ -51,11 +55,22 @@ public class NPC {
     public void setEquipped(Items equipped) {
         this.equipped = equipped;
     }
-
+    public ArrayList<Items> getInventory() {
+        return inventory;
+    }
+    public void setInventory(ArrayList<Items> inventory) {
+        this.inventory = inventory;
+    }
+    
     public void takeDamage(int damage){
         health -= damage;
     }
+    /* private Items randomInventory(){
+        ArrayList<Items> itemsPossible = new ArrayList<>();
 
+
+    }
+ */
 
 
 }

@@ -23,7 +23,7 @@ public class Combat {
                     Attack(player, enemy);
                     break;
                 default:
-                    System.out.println("Jaxon: I cant do that right now");
+                    System.out.println(Utility.cantDoThat);
             }
         } while (fight);
     }
@@ -40,6 +40,7 @@ public class Combat {
         if(enemy.getHealth() <= 0){
             enemy.setAlive(false);
             fight = false;
+            System.out.printf("You eliminated %s, gaining %d experience!\n", enemy.getName(), enemy.getExperience());
             player.setExperience(player.getExperience() + enemy.getExperience());
             return;
         }

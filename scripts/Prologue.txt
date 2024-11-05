@@ -9,7 +9,7 @@ These small enclaves of humanity, isolated from one another, fight to survive ag
 Ruthless and cunning, the Ra'kra have decimated entire fleets, their insatiable hunger for conquest driven by an unyielding thirst for power.
 
 Amidst this chaos, one man stands determined to defy the odds: Captain Jaxon Ryker. 
-An experienced pilot and a former officer of the once-mighty Terran Space Fleet, Jaxon is haunted not only by memories of glory long past but by the torment of loss. 
+An experienced pilot and a former officer of the once-mighty Galactic Vanguard, Jaxon is haunted not only by memories of glory long past but by the torment of loss. 
 His beloved wife, taken captive by the Ra'kra during a brutal raid, has become a phantom of hope that drives him forward. 
 Each day that passes without her only deepens his resolve to rescue her from the clutches of their cruel captors.
 
@@ -18,7 +18,7 @@ With every flicker of the ship's engines, Jaxon feels the weight of his quest pr
 
 His journey has just begun, and with every star that shines above, he vows to find her, to bring her home, and to restore what was once whole.
 
-S1
+SCENE1
 
 You wake with a start, the dim light filtering through the vents barely illuminating your cramped quarters. 
 The remnants of the same haunting nightmare still cling to your mind, visions of darkness and loss that you can't shake.
@@ -28,11 +28,11 @@ Jaxon (muttering): "I have to find her... I have to find my wife..."
 With a sigh, you push yourself up from the thin, worn mattress, feeling the weight of the mission pressing down on you. 
 As your eyes adjust, you take in the familiar yet unwelcoming room around you. 
 
-To your left stands a small, dented cabinet—a place where you keep the few essentials you've managed to scavenge or save. 
+To your left stands a small, dented locker - a place where you keep the few essentials you've managed to scavenge or save. 
 Nearby, a datapad rests on the makeshift nightstand, its screen faintly glowing as it awaits commands.
 Through the thin walls, you can hear the muted sounds of life in the station—a few people talking in hushed voices just outside your dorm.
 
-S2
+SCENE2
 
 You come out of the dorm room and look through the big windows. It's a sunny day out here at Veskar Station. 
 You notice fleet ships leaving the dock, their engines humming as they ascend into the endless void. 
@@ -61,7 +61,7 @@ Jaxer:  "Come on, Ryker, let's hit the firing range. I want to see if you've sti
 
 You feel a surge of determination. The search isn't over, and as long as you’re breathing, there’s still hope.
 
-S2O1
+S2-OPTION1
 
 You give a quick nod to Teth and Jaxer, feeling the weight of camaraderie. 
 Jaxon: "Alright, let’s see what the range has in store."
@@ -75,7 +75,7 @@ Jaxer: "Time to show you two who is the best shot here."
 
 Jaxon: "Haha, we will see about that."
 
-S201,1
+S2-OPTION1,2
 
 Each target lights up in rapid succession, dead-center marks stacking up. 
 You and Teth exchange an amused glance, both shaking their heads as you calmly set down your weapon.
@@ -113,7 +113,7 @@ Your heart races as you see Jaxer draw his sidearm, but a shot hits him before h
 You grab your weapon and take cover behind a fallen console.
 
 
-S2O2
+S2-OPTION2
 
 You take a moment for yourself, letting Teth and Jaxer head to the firing range without you. 
 The sounds of the bustling station fade as you lean against the wall, closing your eyes. 
@@ -130,6 +130,229 @@ The blast sends you sprawling onto the cold metal floor, your ears ringing as al
 Through your blurred vision, you see hulking figures in dark, battle-scarred suits entering the room—the Ra'kra soldiers, moving with ruthless precision. 
 Their eyes glow red beneath their helmets as they open fire, striking down crew members who barely have time to react.
 
+You spots Teth on the other side of the room, just as a Ra'kra soldier slams him into the wall, leaving him stunned. 
+Your heart races as you see Jaxer draw his sidearm, but a shot hits him before he can fire, and he falls.
+You grab your weapon and take cover behind a fallen console.
 
-S3
 
+SCENE3
+
+With the last Ra'kra soldier collapsing to the ground, you take a moment to catch your breath, your heart is still racing from the fight. 
+The room is filled with smoke and the smell of burnt metal, remnants of the battle hanging heavy in the air. 
+
+As you survey the chaotic scene, your gaze falls upon Jaxer, who lies unconscious on the floor, his hand pressed against a wound. 
+He urgently needs a medkit to stabilize his condition.
+In the opposite direction, you catch a sight of Teth, struggling to fend off a group of injured crew members. 
+He seems to be doing his best to keep them calm, but it’s clear they need assistance.
+
+S3-OPTION1
+
+You press the stabilizing syringe against Jaxer’s arm, injecting the vital serum. 
+He gasps silently, a sharp intake of breath that echoes the pain etched across his face. 
+You watch, while thinking, maybe he will survive this, but he’s in critical shape.
+
+Teth rushes over, urgency in his voice.
+Teth: "Is he going to make it? We need to get out of here while we still can."
+
+You nod, a mix of hope and determination in your reply. 
+Jaxon: "He’ll survive. We need to leave now."
+
+Turning to Teth, you question. 
+Jaxon: "Do you have any ideas on how to get out?"
+
+Teth thinks quickly, responding. 
+Teth: "We can access the engineering deck to reach the docks, but we need a keycard. Otherwise, we’ll have to take a longer route."
+
+You furrows your brow, asking. 
+Jaxon: "Where can we find a keycard?"
+
+Teth replies with a sense of urgency.
+Teth: "The engineers have them."
+
+S3-OPTION2
+
+You rush over to Teth, concern etched on your face.
+Jaxon: "Teth, are you okay?"
+
+Teth nods quickly, but the worry in his eyes betrays him.
+Teth: "I’m fine, but Jaxer… I’m worried about him."
+
+You shake your head, knowing the truth.
+Jaxon: "There’s nothing we can do about him right now."
+
+Teth glances back toward Jaxer, then turns to you with urgency.
+Teth: "We have to go. It’s not safe here."
+
+Turning to Teth, you question. 
+Jaxon: "Do you have any ideas on how to get out?"
+
+Teth thinks quickly, responding. 
+Teth: "We can access the engineering bay to reach the docks, but we need a keycard. Otherwise, we’ll have to take a longer route."
+
+You furrows your brow, asking. 
+Jaxon: "Where can we find a keycard?"
+
+Teth replies with a sense of urgency.
+Teth: "The engineers have them."
+
+S3-PART2
+
+You and Teth navigate through the dimly lit corridors of Veskar Station, finally reaching the blast door leading to the engineering bay.
+
+Jaxon: "Here’s the door, but we don’t have the card…"
+
+Teth: "We should keep going!"
+
+As you take a glance behind you, a crew member barrels down the corridor, panic etched across his face.
+
+Crew Member: "Run! They’re coming!"
+Your mind races as you realize: this guy must have a keycard.
+
+S3P2-OPTION1
+
+You take the keycard from the engineer's lifeless corpse, feeling a chill run down your spine.
+
+Teth looks at you, worry etched on his face.
+Teth: "Jaxon, you didn’t have to do that!"
+
+You meet his gaze, determination hardening your resolve.
+Jaxon: "Look, Teth! This place is coming apart; it’s us or them!"
+
+Teth nods, a mix of understanding and reluctance in his expression.
+
+With the looted keycard in hand, you approach the blast doors. 
+The mechanism beeps as you swipe the card, and the heavy doors slide open with a hiss.
+
+You and Teth move cautiously through the engineering bay. 
+Suddenly, Teth spots a supply crate tucked away against the wall. He rushes over, prying it open to reveal a stash of medical supplies.
+He quickly grabs a medkit, then turns to you,
+Teth: "Took this from that supply crate, you will need it", and shoves the medkit into your hands.
+
+The sounds of chaos echoing in the distance, until you reach the corridor that leads to your starship, the Orion.
+
+S3P2-OPTION2
+
+You let the engineer run ahead, the sound of Ra'kra soldiers closing in sending adrenaline coursing through your veins. 
+You duck and weave, narrowly avoiding laser fire as it sears through the air.
+
+A massive explosion shakes the station, the blaring alarm warning of "imminent destruction" amplifying the urgency of your escape.
+
+You and Teth finally reach a wide corridor, hope swelling in your chest as you realize you’re almost at the ship! 
+But just as relief washes over you, you hear the unmistakable sound of Ra'kra soldiers lurking around the corner. 
+You both stop in your tracks, watching in horror as the engineer races forward, oblivious to the danger, sprinting directly toward his death.
+
+Regret floods your mind. I should have taken the keycard from him earlier…
+
+Suddenly, Teth spots a supply crate tucked away against the wall. He rushes over, prying it open to reveal a stash of medical supplies.
+He quickly grabs a medkit, then turns to you, urgency etched on his face.
+
+Teth: "Took this from that supply crate, you will need it", and shoves the medkit into your hands.
+
+With a shared glance, you and Teth quickly take cover, bracing yourselves for the battle that lies ahead.
+
+S3P2-OPTION2,2
+
+After you dispatch the last of the Ra'kra soldiers, 
+you push forward through the smoke-filled corridor, your heart pounding as you finally reach the door that leads to your starship, the Orion. 
+The sounds of chaos reverberate around you—alarms blare, and the distant echoes of explosions send vibrations through the metal walls.
+
+You and Teth share a brief moment, locking eyes amid the turmoil. 
+The flicker of hope in your gaze cuts through the fear, a silent acknowledgment of the danger that still surrounds you.
+
+Jaxon: "Let’s get out of here!"
+
+Teth: "Roger, I’ll go disable the ship's maglocks."
+
+Jaxon: "I’ll open the hangar bay and fire up the ship!"
+
+
+FINAL
+
+After you manage to open the hangar bay doors, you sprint toward the Orion, your heart racing with urgency. 
+The familiar hum of the ship’s systems greets you as you leap into the cockpit, fingers flying over the controls to fire up the engines. 
+The roar of power fills the cabin, drowning out the chaos behind you, but you know you can't leave without Teth. 
+
+Rushing back down the ramp, you scan the area, and your heart sinks at the sight before you. 
+Ra'kra soldiers surround Teth, their weapons raised, forcing him to his knees. 
+The menacing figure of Ka'tar steps forward, a cruel smile spreading across his face as he addresses you.
+
+Ka'tar: "Look at that, trying to abandon your kind and save yourself."
+
+Jaxon: "Let him go, or else!", You step forward, fists clenched, adrenaline pumping through your veins.
+
+Ka'tar's laughter is cold and mocking. "Now now, maybe I should just drop your friend and let you watch while this station burns." 
+He tightens his grip on Teth's shoulder, the gleam of his weapon reflecting the flickering lights of the hangar.
+
+Rage surges within you, and you can’t stand by any longer.
+
+Jaxon: "You think you can intimidate us? You’ll pay for this, Ka'tar!"
+
+Ka'tar smirks, tauntingly. "Such bravado for a man about to witness his friend’s demise. You should consider—"
+
+Before he can finish, the sound of an explosion rips through the air, and a fuel cylinder crashes down from the ceiling, slamming onto one of the Ra'kra soldiers. 
+The impact sends the soldier sprawling, and the explosion of fuel ignites, sending flames licking toward the ceiling. 
+The sudden chaos confuses Ka'tar, his eyes darting around as he shouts orders.
+
+Ka'tar: "Seize him!"
+
+You dive for cover behind a nearby console, your pulse racing as you prepare for a fight.
+
+FINAL-PART2
+
+A deafening explosion erupts nearby, sending a shockwave through the hangar. 
+The blast hurls Teth off his feet, slamming him hard onto the ground as he struggles to regain his bearings. 
+The Ra'kra soldiers are thrown back by the force, some colliding with walls and crates, their weapons clattering from their grasp.
+
+Through the smoke and chaos, you spot Ka'tar sprawled on the floor, his once-mighty composure shattered. 
+His armor is scorched, and his face twists with desperation. His voice, usually so cold and commanding, now trembles with fear as he raises a hand, pleading.
+
+Ka'tar: "Mercy… please… don't…"
+
+Teth pulls himself up, shaking off the impact and makes his way to the ship, while you seize the moment, stepping forward with your weapon at the ready. 
+
+END
+
+As you break free from Veskar Station, a final blast rips through the structure behind you, shattering compartments and sending debris spiraling into space. 
+The shockwave catches your ship, giving it a rough but welcome boost forward. 
+In the cockpit, you and Teth share a look—part relief, part disbelief. 
+You made it out, against all odds.
+
+Jaxon: "I can’t believe we actually made it."
+
+Teth, grinning despite himself, shakes his head.
+Teth: "Luck or something else. Either way, I’ll take it."
+
+Silence fills the cockpit as the two of you settle in, catching your breath. 
+The hum of the ship’s engines fills the space, a steady reminder that, at least for now, you’re safe. 
+Your gaze turns distant, his thoughts circling back to one thing.
+
+Jaxon: "I need to find her. I have to find my wife, Teth." 
+He glances at his friend. 
+Jaxon: "I’ll drop you at another station if you want."
+
+Teth doesn’t hesitate, his expression firm.
+Teth: "I’m with you, Jaxon. We’ll find her together."
+
+You nod, a flicker of hope lighting in your eyes, though you admit,
+Jaxon: "I have no idea where to start."
+
+Teth leans back, giving him a confident smile.
+Teth: "We’ll find her. One way or another."
+
+You sit back in your seat, letting the familiar creaks and hums of the old ship fill the silence. You chuckle softly, patting the console.
+Jaxon: "This old beast is still holding together."
+
+Teth laughs, casting a fond look around.
+Teth: "She’s tougher than she looks."
+
+Turning to the navicomputer, Teth begins scanning for any nearby sectors with minimal Ra'kra activity. His finger taps on one spot on the map.
+Teth: "Hey, look at this - Calyra Drift. Barely any reported Ra'kra presence."
+
+You study the display, determination settling in.
+Jaxon: "It's a start" 
+You initiate the jump sequence, your hand steady on the controls. 
+Jaxon: "Let’s go."
+
+With a flick of switches and a pull of the lever, the stars stretch into lines, and the ship lurches into lightspeed, leaving Veskar Station—and everything that just happened—far behind.
+
+PROLOGUE-END

@@ -109,8 +109,8 @@ public class Player {
         this.name = name;
         this.health = health;
         this.maxHealth = maxHealth;
-        Inventory = inventory;
-        PlayerSkills = playerSkills;
+        this.Inventory = inventory;
+        this.PlayerSkills = playerSkills;
         this.skillpoint = skillpoint;
         this.equipped = equipped;
         this.level = level;
@@ -135,26 +135,34 @@ public class Player {
             }
         }
        Inventory.add(itemToAdd);
-       System.out.println(itemToAdd.getItem()+ " Added to your inventory");
+       System.out.println(itemToAdd.getItem()+ " added to your inventory");
 
     }
 
     private void ShowInventory(Scanner action){
-        int i = 1;
-        for(Items items : Inventory){
-            System.out.println(i + ". " + items);
-            i++;
+        if (Inventory.isEmpty()){
+            System.out.println("Inventory is empty");
+            return;  
         }
+        else{
 
         String userAction;
-
         do{
-            System.out.println("A) Use or Equip item\nB)Go back");
+            int i = 1;
+            System.out.println("Inventory: ");
+            for(Items items : Inventory){
+                System.out.println(i + ". " + items);
+                i++;
+            }
+
+            System.out.println("\nA) Use or Equip item\nB) Go back");
             userAction = Validation.UserInput(action);
             if (userAction.equals("A")) {
                 EquipItem(action);
             }
-        } while (userAction != "B");
+        } while (!userAction.equals("B"));
+
+    }
     }
 
     private void EquipItem(Scanner action){
@@ -163,9 +171,9 @@ public class Player {
         while (true) {
             System.out.println("Wich item?");
             choice = Validation.UserINput(action);
-            if(choice >= 0 && choice < Inventory.size()){
+            if(choice >= 0 && choice <= Inventory.size()){
 
-                Items selectedItem = Inventory.get(choice);
+                Items selectedItem = Inventory.get(choice-1);
                 
                 if(selectedItem.getType().equals("Consumable")){
                     System.out.println("Used: " + selectedItem.getItem());
@@ -173,7 +181,7 @@ public class Player {
 
                     selectedItem.setQuantity(selectedItem.getQuantity()-1);
                     if(selectedItem.getQuantity() <= 0){
-                        Inventory.remove(choice);
+                        Inventory.remove(choice-1);
                     }
                     break;
                 }
@@ -182,6 +190,9 @@ public class Player {
                     System.out.println("Equipped: " + selectedItem.getItem());
                     break;
                 }
+            }
+            else{
+                System.out.println("Item not found!");
             }
         }
     }
@@ -193,9 +204,10 @@ public class Player {
     }
 
     public void Character(Scanner action){
-        System.out.println("A) Show Skills\nB) Level Up\nC) Show Inventory\nD) Back");
         String userAction;
         do {
+            CharacterInfo();
+            System.out.println("A) Show Skills\nB) Level Up\nC) Show Inventory\nD) Back");
             userAction = Validation.UserInput(action);
             switch (userAction) {
                 case "A":
@@ -230,7 +242,18 @@ public class Player {
         }
     }
 
+    private void CharacterInfo(){
+        String isEquipped = "";
+        if (equipped == null) {
+            isEquipped = "None";
+        }
+        else{
+            isEquipped = equipped.getItem();
+        }
+        System.out.printf("[%s  | Level: %d | XP: %d/%d]\n[Health: %d/%d | Equipped: %s]\n", 
+                             name, level, experience, expNeeded, health, maxHealth, isEquipped);
 
+    }
 }
 
 

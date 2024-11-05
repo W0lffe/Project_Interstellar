@@ -5,7 +5,7 @@ Humanity’s collapse after decades of interplanetary wars, dwindling resources,
 Jaxon’s last message from his wife, Lina, came months ago from a distant outpost on the fringes of the known universe, a place called Veskar Station. Now, with no recent word and rising tension, Jaxon is desperate to locate her.
 
 #  Act 1: The Journey Begins
-Jaxon begins his journey in an aging, barely-functioning spaceship called The Starhound. He starts by visiting deserted colonies and stations, piecing together clues about Lina’s last known location. Along the way, Jaxon encounters both allies and enemies, each encounter shedding more light on the galaxy’s hostile landscape. You could include:
+Jaxon begins his journey in an aging, barely-functioning spaceship called The Orion. He starts by visiting deserted colonies and stations, piecing together clues about Lina’s last known location. Along the way, Jaxon encounters both allies and enemies, each encounter shedding more light on the galaxy’s hostile landscape. You could include:
 
 Other refugees who may trade information for supplies or help repair his ship.
 Encrypted messages left by Lina, hinting at her journey or offering hope she is alive.
