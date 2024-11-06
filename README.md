@@ -23,7 +23,7 @@ The project will be iteratively refined as new skills are developed, with the po
 ### Game World
 * [ ] Characters
     * [X] Player
-    * [] NPC
+    * [ ] NPC
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
     * [X] Consumables - medicine, food
@@ -33,7 +33,7 @@ The project will be iteratively refined as new skills are developed, with the po
         * [ ] Sub-locations - like outposts
     * [ ] Ships
         * [ ] Sub-locations - like bridge, mess hall etc..
-* [ ](optional) Lore
+* [ ] (optional) Lore
 * [ ] Interactable Objects - hackable computers, readable datapads etc..
  
 
@@ -51,7 +51,7 @@ The project will be iteratively refined as new skills are developed, with the po
 * [X] Player Inventory
 * [X] Combat
 * [X] Players Choice System (kind of)
- * [ ](Optional) Endings Based On Players Choices
+ * [ ]  (Optional) Endings Based On Players Choices
 * [ ] Journal
 
 * [ ] Save Game
