@@ -27,7 +27,7 @@ The project will be iteratively refined as new skills are developed, with the po
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
     * [X] Consumables - medicine, food
-    * [ ](Optional) More all above
+    * [ ] (Optional) More all above
 * [ ] Locations
     * [ ] Planet 
         * [ ] Sub-locations - like outposts
