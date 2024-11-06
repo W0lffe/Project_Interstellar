@@ -1,4 +1,15 @@
-# Project_Interstellar
+# Codename: Project_Interstellar
+
+## Brief:
+#### Objective:
+Develop a text-based adventure game to explore and practice programming techniques, with an emphasis on object-oriented principles and object manipulation. 
+The game's story, crafted in collaboration with AI, unfolds in a sci-fi setting, allowing the player to make choices, interact with characters, and explore different environments.
+
+#### Scope and Functionality:
+This project will involve creating and manipulating various game objects, such as characters, items, and locations, to simulate a dynamic and immersive experience. 
+Game functionality is intentionally flexible to accommodate ongoing learning and new programming concepts. 
+The project will be iteratively refined as new skills are developed, with the potential to add or adjust features based on learning needs.
+
 
 # Roadmap
 
@@ -12,7 +23,7 @@
 ### Game World
 * [ ] Characters
     * [X] Player
-    * [X] NPC
+    * [] NPC
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
     * [X] Consumables - medicine, food
