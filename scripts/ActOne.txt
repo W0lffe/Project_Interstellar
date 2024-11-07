@@ -60,3 +60,62 @@ Ramp’s mechanism is twisted, jammed from the impact, leaving it unusable.
 Your eyes fall on the emergency hatch. It’s a bit scuffed but still functional.
 
 ACT1-SCENE2
+
+Jaxon and Teth scramble out of the wreckage, their boots hitting the soft, moss-covered ground of Calyra I. 
+The lush, vibrant landscape stretches out before them, but their peace is short-lived.
+
+Suddenly, the sound of rustling in the dense underbrush echoes through the air. 
+Before they can react, a small detachment of Ra'kra soldiers emerges from the foliage, weapons raised. 
+The harsh crackle of gunfire fills the air as they open fire.
+
+Teth ducks behind a large rock, pulling his sidearm out from his holster. He looks at Jaxon, frustration in his eyes.
+
+Teth: "Can’t we just get a moment of peace?"
+
+Jaxon: "Not while they're breathing down our necks. Stay sharp!"
+
+ACT1-SCENE3
+
+After the last Ra'kra soldier falls to the ground, you and Teth exchange a brief nod before you both make a run for it, heading towards the cover of the dense forest. 
+The thick trees and foliage offer some semblance of safety as you push forward, hearts racing.
+
+When you finally reach the forest’s edge, you slow your pace, taking a moment to catch your breath. 
+The heavy sounds of your footsteps fade into the gentle rustling of the wind through the trees, the serenity of the forest contrasting sharply with the chaos you just left behind.
+
+Teth wipes his brow, his voice strained but trying to mask his fatigue.
+Teth: "I swear, I thought we might get a break today. Calyra I looks peaceful enough, but I should’ve known better."
+
+You nod, glancing around at the vibrant yet eerie surroundings. 
+Calyra I’s beauty is almost unsettling, like a picture-perfect world hiding something darker beneath its surface.
+Jaxon: "It's a strange feeling. The place feels alive... but not in a welcoming way. Almost like it’s waiting for something."
+
+Teth sighs, looking back toward the wreckage of your ship. 
+Teth: "Veskar Station was a hell of a ride too. We barely made it out of there. But this... this feels different. The Ra'kra being here—it can’t be a coincidence."
+
+You both walk in silence for a while, the weight of your conversation hanging between you. 
+Then, out of the corner of your eye, you spot something ahead—something unnatural.
+
+Through the thick trees, an old, weathered structure appears, half-hidden by the overgrown forest. 
+It's clearly been abandoned for years, but the remnants of a bunker-like building stand strong, like a silent sentinel in the woods.
+
+Jaxon: "What the hell is that?"
+
+Teth squints, a mix of curiosity and caution in his gaze.
+Teth: "Looks like a bunker. We should check it out. Maybe it’ll have answers... or at least some shelter."
+
+You both move toward the structure, cautiously. The dense foliage shifts as you approach, hiding the mysteries the bunker may hold.
+
+As Jaxon and Teth approach the abandoned bunker, the air grows heavy with tension. The structure stands weathered, vines creeping over its walls. Something feels off about the place.
+
+Teth: "I don’t like this."
+
+Jaxon: "Stay alert."
+
+Just as you near the entrance, a faint rustling breaks the eerie silence. 
+Then, sharp clicking sounds echo from the darkness. 
+You exchange a wary glance, and before you can react, a pack of grotesque, bug-like creatures skitters out from the shadows. 
+Their black bodies glisten, mandibles clicking as they move toward you, their glowing red eyes fixed on the prey in front of them.
+
+Teth: "What the hell are those?"
+
+ACT1-SCENE4

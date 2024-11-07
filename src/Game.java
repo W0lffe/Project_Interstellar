@@ -14,7 +14,7 @@ public class Game {
 
         // create a new player
         // Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, 0, null , 1, 250, true); 
-        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, null, 1, 1000, 250, true);
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true);
 
         // start a new game with created player
         startGame(player, inputScanner);

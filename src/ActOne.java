@@ -56,6 +56,31 @@ public class ActOne {
             
         } while (!userAction.equals("D"));
 
+        String ActOneScene2 = Files.ReadFile(file,"ACT1-SCENE2", "ACT1-SCENE3");
+        Utility.Print(ActOneScene2, Utility.StoryPrintSpeed);
+
+        NPC scout = new NPC(50, 50, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null);
+        NPC rookie = new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_RIFLE, null);
+
+        Combat.FightMenu(player, scout, action);
+        if(!player.isAlive()){
+            //Get player Alive status after Combat
+            Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
+            return;
+        }
+        Combat.FightMenu(player, rookie, action);
+        if(!player.isAlive()){
+            //Get player Alive status after Combat
+            Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
+            return;
+        }
+
+        String ActOneScene3 = Files.ReadFile(file,"ACT1-SCENE3", "ACT1-SCENE4");
+        Utility.Print(ActOneScene3, Utility.StoryPrintSpeed);
+
+
+
+
 
 
     }
