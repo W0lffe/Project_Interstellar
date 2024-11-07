@@ -30,8 +30,8 @@ public class Combat {
 
     private static void Attack(Player player, NPC enemy){
 
-        Items playerEquipped = player.getEquipped();
-        Items enemyEquipped = enemy.getEquipped();
+        Weapon playerEquipped = player.getEquipped();
+        Weapon enemyEquipped = enemy.getEquipped();
 
         int damage = (int)(Math.random()*(playerEquipped.getMaxDamage() - playerEquipped.getMinDamage() + 1) + playerEquipped.getMinDamage());
         System.out.println("You strike with " + playerEquipped.getItem() + ", dealing " + damage + " damage!");

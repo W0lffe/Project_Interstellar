@@ -22,12 +22,12 @@ public class Prologue {
                     break;
                 case "B":
                     System.out.println("You look in the locker and find: \n" + 
-                    "[" + Items.LASER_PISTOL.getItem() + " - " + Items.LASER_PISTOL.getDescription() + "]\n" +
-                    "[" + Items.SPACE_SODA.getItem() + " - " + Items.SPACE_SODA.getDescription()+ "]" +
-                    "[" + Items.BASIC_MEDKIT.getItem() + " - " + Items.BASIC_MEDKIT.getDescription() + "]");
-                    player.addItem(Items.LASER_PISTOL);
-                    player.addItem(Items.SPACE_SODA);
-                    player.addItem(Items.BASIC_MEDKIT);
+                    "[" + Weapon.LASER_PISTOL.getItem() + " - " + Weapon.LASER_PISTOL.getDescription() + "]\n" +
+                    "[" + Consumables.SPACE_SODA.getItem() + " - " + Consumables.SPACE_SODA.getDescription()+ "]\n" +
+                    "[" + Consumables.BASIC_MEDKIT.getItem() + " - " + Consumables.BASIC_MEDKIT.getDescription() + "]\n");
+                    player.addItem(Weapon.LASER_PISTOL);
+                    player.addItem(Consumables.SPACE_SODA);
+                    player.addItem(Consumables.BASIC_MEDKIT);
                     break;
                 case "C":
                     System.out.println("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...");
@@ -35,7 +35,7 @@ public class Prologue {
                     Utility.Print(datapad, 20);
                     break;
                 case "D":
-                    if(player.getInventory().contains(Items.LASER_PISTOL)) {
+                    if(player.getInventory().contains(Weapon.LASER_PISTOL)) {
                         System.out.println("You decide to head outside, ready to face whatever the day brings.");
                         SCENE1 = false;
                         break;
@@ -90,8 +90,8 @@ public class Prologue {
 
     private static void Scene3(Player player, Scanner action){
 
-        NPC rookie = new NPC(50, 50, "Rak'ra Rookie", 50, true, Items.PULSE_PISTOL, null);
-        NPC brute = new NPC(60, 60, "Rak'ra Brute", 75, true, Items.PULSE_RIFLE, null);
+        NPC rookie = new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_PISTOL, null);
+        NPC brute = new NPC(60, 60, "Rak'ra Brute", 75, true, Weapon.PULSE_RIFLE, null);
         boolean SCENE3 = true;
       
         do {
@@ -128,7 +128,7 @@ public class Prologue {
 
             switch (userAction) {
                 case "A":
-                    if(player.getInventory().contains(Items.BASIC_MEDKIT)){
+                    if(player.getInventory().contains(Consumables.BASIC_MEDKIT)){
                         System.out.println("You go to Jaxer");
                         String s3o1 = Files.ReadFile(file, "S3-OPTION1", "S3-OPTION2");
                         Utility.Print(s3o1, 2);
@@ -154,8 +154,8 @@ public class Prologue {
         Utility.Print(s3part2, 0);
 
         NPC engineer = new NPC(5, 5, "Crew Member", 20, true, null, null);
-        NPC scout = new NPC(25, 25, "Ra'kra Scout", 35, true, Items.PULSE_PISTOL, null);
-        NPC officer = new NPC(100, 100, "Rak'ra Officer", 75, true, Items.PULSE_RIFLE, null);
+        NPC scout = new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null);
+        NPC officer = new NPC(100, 100, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, null);
     
         do {
             System.out.println("A) Kill the engineer \nB) Keep going");
@@ -166,15 +166,15 @@ public class Prologue {
                     Combat.FightMenu(player, engineer, action);
                     String p2o1 = Files.ReadFile(file, "S3P2-OPTION1", "S3P2-OPTION2,2");
                     Utility.Print(p2o1, 2);
-                    player.addItem(Items.BASIC_MEDKIT);
-                    player.addItem(Items.BASIC_MEDKIT);
+                    player.addItem(Consumables.BASIC_MEDKIT);
+                    player.addItem(Consumables.BASIC_MEDKIT);
                     SCENE3 = false;
                     break;
                 case "B":
                     String p2o2 = Files.ReadFile(file, "S3P2-OPTION2,2", "FINAL");
                     Utility.Print(p2o2, 2);
-                    player.addItem(Items.BASIC_MEDKIT);
-                    player.addItem(Items.BASIC_MEDKIT);
+                    player.addItem(Consumables.BASIC_MEDKIT);
+                    player.addItem(Consumables.BASIC_MEDKIT);
                     Combat.FightMenu(player, scout, action);
                     Combat.FightMenu(player, officer, action);
                     SCENE3 = false;
@@ -195,7 +195,7 @@ public class Prologue {
         String finalScene = Files.ReadFile(file, "FINAL", "FINAL-PART2");
         Utility.Print(finalScene, 2);
 
-        NPC Boss = new NPC(200, 200, "Ka'tar", 200, true, Items.PULSE_PISTOL, null);
+        NPC Boss = new NPC(200, 200, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, null);
 
         Combat.FightMenu(player, Boss, action);
 

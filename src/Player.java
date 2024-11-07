@@ -9,7 +9,7 @@ public class Player {
     private ArrayList<Items> Inventory;
     private ArrayList<Skills> PlayerSkills;
     private int skillpoint;
-    private Items equipped;
+    private Weapon equipped;
     private int level;
     private int experience;
     private int expNeeded;
@@ -71,11 +71,11 @@ public class Player {
         this.skillpoint = skillpoint;
     }
 
-    public Items getEquipped() {
+    public Weapon getEquipped() {
         return equipped;
     }
 
-    public void setEquipped(Items equipped) {
+    public void setEquipped(Weapon equipped) {
         this.equipped = equipped;
     }
 
@@ -104,7 +104,7 @@ public class Player {
     }
 
     public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills, int skillpoint,
-                Items equipped, int level, int experience, int expNeeded, boolean alive) {
+                Weapon equipped, int level, int experience, int expNeeded, boolean alive) {
         
         this.name = name;
         this.health = health;
@@ -175,19 +175,20 @@ public class Player {
 
                 Items selectedItem = Inventory.get(choice-1);
                 
-                if(selectedItem.getType().equals("Consumable")){
-                    System.out.println("Used: " + selectedItem.getItem());
-                    RestoreHealth(selectedItem);
-
-                    selectedItem.setQuantity(selectedItem.getQuantity()-1);
-                    if(selectedItem.getQuantity() <= 0){
+                if(selectedItem instanceof Consumables){
+                    Consumables useItem = (Consumables)selectedItem;
+                    System.out.println("Used: " + useItem.getItem());
+                    RestoreHealth(useItem);
+                    useItem.setQuantity(selectedItem.getQuantity()-1);
+                    if(useItem.getQuantity() <= 0){
                         Inventory.remove(choice-1);
                     }
                     break;
                 }
-                else if(selectedItem.getType().contains("Weapon")){
-                    setEquipped(selectedItem);
-                    System.out.println("Equipped: " + selectedItem.getItem());
+                else if(selectedItem instanceof Weapon){
+                    Weapon equipWeapon = (Weapon)selectedItem;
+                    setEquipped(equipWeapon);
+                    System.out.println("Equipped: " + equipWeapon.getItem());
                     break;
                 }
             }
@@ -233,9 +234,9 @@ public class Player {
         }
     }
 
-    private void RestoreHealth(Items item){
-        health += item.getHeals();
-        System.out.println(item.getItem() + " healed you " + item.getHeals() + " hitpoints!");
+    private void RestoreHealth(Consumables item){
+        health += item.getHealPoints();
+        System.out.println(item.getItem() + " healed you " + item.getHealPoints() + " hitpoints!");
         
         if(health > maxHealth) {
             health = maxHealth;
