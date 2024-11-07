@@ -33,8 +33,10 @@ public class Skills {
         this.description = description;
     }
 
+    //Arraylist for Skills
     public static ArrayList<Skills> SkillList = new ArrayList<>();
 
+    //Add predefined skills to arraylist, function called from Game.newGame
     public static void initializeSkillArray(){
         SkillList.add(Weapons);
         SkillList.add(Lockpicking);
@@ -46,6 +48,8 @@ public class Skills {
         
         
     }
+
+    //Predefined Skills
     public static Skills Weapons = new Skills("Weapons", false, "Every weapon now deals 5 extra damage!");
     public static Skills Lockpicking = new Skills("Lockpicking", false, "Enables lockpicking");
     public static Skills Computers = new Skills("Computers", false, "Learn hacking/programming");

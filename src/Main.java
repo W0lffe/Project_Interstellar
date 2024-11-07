@@ -1,12 +1,14 @@
-
-
 import java.util.Scanner;
+
+//Main Class
 public class Main{
+
+    //Main
 
     public static void main(String[] args) {
 
 
-        Scanner inputScanner = new Scanner(System.in);
+        Scanner inputScanner = new Scanner(System.in); //Create object Scanner
         String userInput; //initialize variable for user input
         
         do {
@@ -28,7 +30,7 @@ public class Main{
                 default:
                     System.out.println("Unknown action.");
             }
-        } while (!userInput.equals("C"));
+        } while (!userInput.equals("C")); //If userInput is C, program closes
 
         inputScanner.close();
     }

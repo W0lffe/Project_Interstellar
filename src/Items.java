@@ -81,7 +81,7 @@ class Weapon extends Items {
     }
 
 
-
+    //predefined weapons
     public static Weapon PULSE_PISTOL = new Weapon("Pulse Pistol", "Energy Weapon", 8, 12, "A compact energy-based sidearm", 1);
     public static Weapon PULSE_RIFLE = new Weapon("Pulse Rifle", "Energy Weapon" ,18, 22, "Firepower with versatility", 1);
     public static Weapon LASER_RIFLE  = new Weapon("Laser Rifle", "Energy Weapon" ,15, 20, "Lightweight rifle with precision", 1);
@@ -111,7 +111,7 @@ class Consumables extends Items {
         return "[" + getItem() + ", " + getType() + "| Heals: " + healPoints + " | " + getDescription() + " | " + "Qty: " + getQuantity() + "]";
     }
 
-
+    //predefined consumables
     public static Consumables SPACE_STEAK = new Consumables("Space Steak", "Food", 15, "All nutrients preserved!", 1);
     public static Consumables ENERGY_DRINK = new Consumables("Energy Drink", "Drink", 8,  "Lovely refreshing drink", 1);
     public static Consumables SPACE_SANDWICH = new Consumables("Sandwich", "Food", 12, "Vacuum sealed sandwich", 1);

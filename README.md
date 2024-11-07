@@ -42,7 +42,7 @@ The project will be iteratively refined as new skills are developed, with the po
     * [X] Weapons
     * [ ] Lockpicking?
     * [ ] Computers
-    * [ ] Medicine
+    * [X] Medicine
     * [ ] Speech
     * [ ] Engineering
     * [ ] Stealth

@@ -1,11 +1,16 @@
 public class Utility {
     
-    public static String cantDoThat = "Jaxon: I cant do that right now";
+    public static String cantDoThat = "Jaxon: I cant do that right now"; //For Switch case defaults
 
-    public static int StoryPrintSpeed = 0;
-    public static int DatapadPrintSpeed = 20;
-    public static int LoreItemEXP = 25;
+    //Speed parameters for Utility.Print function, sets speed how fast to "type" text
+    public static int StoryPrintSpeed = 0; 
+    public static int DatapadPrintSpeed = 20; 
 
+    //Experience points got from "LoreItems"
+    public static final int LoreItemEXP = 25;
+
+
+    //Function that sets parameter String to character array, prints characters with delay, parameter speed
     public static void Print(String toPrint, int speed){
 
         char[] toPrintArray = toPrint.toCharArray();

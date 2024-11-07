@@ -1,10 +1,8 @@
 import java.util.Scanner;
 
-/******Class contains error handling functions******/
 class Validation{
 
-    /*Function is called from different part of code, this makes sure that value returned is INT*/
-
+    //Check user inputs, this function is run from game menus
     public static String UserInput(Scanner inputScanner){
         
         String userInput;
@@ -13,7 +11,7 @@ class Validation{
             try {
                 System.out.print("\nAction: ");
                 userInput = inputScanner.nextLine();
-                
+                //userInput Has to match set characters
                 if (userInput.matches("A|B|C|D|a|b|c|d")) {
                     break;
                 }
@@ -25,11 +23,11 @@ class Validation{
                 System.out.println("\nUnknown action.");
             }
         }
-        return userInput.toUpperCase();
+        return userInput.toUpperCase(); //return userInput as uppercase
     }
 
 
-
+    //Check user inputs, this function is run from game menus
     public static int UserINput(Scanner myScanner){
         int userInput;
     

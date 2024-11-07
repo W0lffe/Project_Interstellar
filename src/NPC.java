@@ -62,15 +62,9 @@ public class NPC {
         this.inventory = inventory;
     }
     
+    //reduce health
     public void takeDamage(int damage){
         health -= damage;
     }
-    /* private Items randomInventory(){
-        ArrayList<Items> itemsPossible = new ArrayList<>();
-
-
-    }
- */
-
-
+ 
 }
