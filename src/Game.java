@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Game{
     
+    public static boolean gameRunning = true;
     public static void newGame(Scanner inputScanner){
 
         ArrayList<Skills> playerSkills = new ArrayList<>(); //initialize empty list for player skills
@@ -24,11 +25,10 @@ public class Game{
 
     private static void startGame(Player player, Scanner action){
         System.out.println("Starting Game");
-        boolean gameRunning = true;
+        gameRunning = true;
 
         while (gameRunning) {
             Prologue.Start(player, action);
-            
         }
 
     }

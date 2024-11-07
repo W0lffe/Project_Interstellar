@@ -5,13 +5,14 @@ public class Main{
 
     public static void main(String[] args) {
 
-        System.out.println("Project: Interstellar");
 
         Scanner inputScanner = new Scanner(System.in);
         String userInput; //initialize variable for user input
         
-        System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
         do {
+            System.out.println("Project: Interstellar");
+
+            System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
             userInput = Validation.UserInput(inputScanner); //use validation for user input
 
             switch (userInput) {

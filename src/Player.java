@@ -255,6 +255,7 @@ public class Player {
                              name, level, experience, expNeeded, health, maxHealth, isEquipped);
 
     }
+
 }
 
 

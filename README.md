@@ -48,6 +48,7 @@ The project will be iteratively refined as new skills are developed, with the po
     * [ ] Stealth
 * [X] Experience and Level System
 * [X] Character/Player health
+* [ ] Character Death
 * [X] Player Inventory
 * [X] Combat
 * [X] Players Choice System (kind of)

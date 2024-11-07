@@ -2,6 +2,9 @@ public class Utility {
     
     public static String cantDoThat = "Jaxon: I cant do that right now";
 
+    public static int StoryPrintSpeed = 15;
+    public static int DatapadPrintSpeed = 20;
+
     public static void Print(String toPrint, int speed){
 
         char[] toPrintArray = toPrint.toCharArray();

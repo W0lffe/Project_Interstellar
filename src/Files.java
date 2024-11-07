@@ -17,13 +17,19 @@ public class Files {
             }
             else{
                 while((line = reader.readLine()) != null){
-                    if(!Reading && line.contains(start)){
+                    if(!Reading && line.equals(start)){
                         Reading = true;
                     }
-                    if(Reading && line.contains(end)){
+                    if(Reading && line.equals(end)){
                         Reading = false;
                     }
                     if (Reading) {
+                        if(line.equals(start)){
+                            line = line.replace(start, " ");
+                        }
+                        else if(line.equals(end)){
+                            line = line.replace(start, " ");
+                        }
                         dataToReturn.append(line).append("\n");
                     }
                 }  

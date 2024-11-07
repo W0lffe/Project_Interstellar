@@ -50,6 +50,7 @@ public class Combat {
         player.takeDamage(damage);
 
         if(player.getHealth() <= 0){
+            System.out.println("You have been eliminated... Returning to Main Menu.");
             player.setAlive(false);
             fight = false;
             return;
