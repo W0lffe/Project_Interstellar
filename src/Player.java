@@ -2,19 +2,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-    
+
     private String name;
     private int maxHealth;
     private int health;
     private ArrayList<Items> Inventory;
     private ArrayList<Skills> PlayerSkills;
-    private int skillpoint;
     private Weapon equipped;
     private int level;
     private int experience;
     private int expNeeded;
     private boolean alive;
-    
+
     public boolean isAlive() {
         return alive;
     }
@@ -63,14 +62,6 @@ public class Player {
         PlayerSkills = playerSkills;
     }
 
-    public int getSkillpoint() {
-        return skillpoint;
-    }
-
-    public void setSkillpoint(int skillpoint) {
-        this.skillpoint = skillpoint;
-    }
-
     public Weapon getEquipped() {
         return equipped;
     }
@@ -103,15 +94,14 @@ public class Player {
         this.expNeeded = expNeeded;
     }
 
-    public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills, int skillpoint,
-                Weapon equipped, int level, int experience, int expNeeded, boolean alive) {
-        
+    public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills,
+            Weapon equipped, int level, int experience, int expNeeded, boolean alive) {
+
         this.name = name;
         this.health = health;
         this.maxHealth = maxHealth;
         this.Inventory = inventory;
         this.PlayerSkills = playerSkills;
-        this.skillpoint = skillpoint;
         this.equipped = equipped;
         this.level = level;
         this.experience = experience;
@@ -119,103 +109,102 @@ public class Player {
         this.alive = alive;
     }
 
-    @Override
-    public String toString() {
-        return "Player [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", Inventory=" + Inventory
-                + ", PlayerSkills=" + PlayerSkills + ", skillpoint=" + skillpoint + ", equipped=" + equipped
-                + ", level=" + level + ", experience=" + experience + ", expNeeded=" + expNeeded + ", status=" + alive
-                + "]";
-    }
-
-    public void addItem(Items itemToAdd){
+    public void addItem(Items itemToAdd) {
         for (Items items : Inventory) {
             if (items.getItem().equals(itemToAdd.getItem())) {
                 items.setQuantity(itemToAdd.getQuantity() + items.getQuantity());
                 return;
             }
         }
-       Inventory.add(itemToAdd);
-       System.out.println(itemToAdd.getItem()+ " added to your inventory");
+        Inventory.add(itemToAdd);
+        System.out.println(itemToAdd.getItem() + " added to your inventory");
 
     }
 
-    private void ShowInventory(Scanner action){
-        if (Inventory.isEmpty()){
+    private void ShowInventory(Scanner action) {
+        if (Inventory.isEmpty()) {
             System.out.println("Inventory is empty");
-            return;  
+            return;
+        } else {
+
+            String userAction;
+            do {
+                int i = 1;
+                System.out.println("Inventory: ");
+                for (Items items : Inventory) {
+                    System.out.println(i + ". " + items);
+                    i++;
+                }
+
+                System.out.println("\nA) Use or Equip item\nB) Go back");
+                userAction = Validation.UserInput(action);
+                if (userAction.equals("A")) {
+                    EquipItem(action);
+                }
+            } while (!userAction.equals("B"));
+
         }
-        else{
-
-        String userAction;
-        do{
-            int i = 1;
-            System.out.println("Inventory: ");
-            for(Items items : Inventory){
-                System.out.println(i + ". " + items);
-                i++;
-            }
-
-            System.out.println("\nA) Use or Equip item\nB) Go back");
-            userAction = Validation.UserInput(action);
-            if (userAction.equals("A")) {
-                EquipItem(action);
-            }
-        } while (!userAction.equals("B"));
-
-    }
     }
 
-    private void EquipItem(Scanner action){
+    private void EquipItem(Scanner action) {
         int choice;
 
         while (true) {
             System.out.println("Wich item?");
             choice = Validation.UserINput(action);
-            if(choice >= 0 && choice <= Inventory.size()){
+            if (choice >= 0 && choice <= Inventory.size()) {
 
-                Items selectedItem = Inventory.get(choice-1);
-                
-                if(selectedItem instanceof Consumables){
-                    Consumables useItem = (Consumables)selectedItem;
+                Items selectedItem = Inventory.get(choice - 1);
+
+                if (selectedItem instanceof Consumables) {
+                    Consumables useItem = (Consumables) selectedItem;
                     System.out.println("Used: " + useItem.getItem());
                     RestoreHealth(useItem);
-                    useItem.setQuantity(selectedItem.getQuantity()-1);
-                    if(useItem.getQuantity() <= 0){
-                        Inventory.remove(choice-1);
+                    useItem.setQuantity(selectedItem.getQuantity() - 1);
+                    if (useItem.getQuantity() <= 0) {
+                        Inventory.remove(choice - 1);
                     }
                     break;
-                }
-                else if(selectedItem instanceof Weapon){
-                    Weapon equipWeapon = (Weapon)selectedItem;
+                } else if (selectedItem instanceof Weapon) {
+                    Weapon equipWeapon = (Weapon) selectedItem;
                     setEquipped(equipWeapon);
                     System.out.println("Equipped: " + equipWeapon.getItem());
                     break;
                 }
-            }
-            else{
-                System.out.println("Item not found!");
+            } else {
+                System.out.println("I dont have that item.");
             }
         }
     }
 
-    private void ShowSkills(Scanner action){
-        for(Skills skill : PlayerSkills){
+    private void ShowSkills(Scanner action) {
+        System.out.println("You have: ");
+        for (Skills skill : PlayerSkills) {
             System.out.println(skill);
         }
+        System.out.println();
     }
 
-    public void Character(Scanner action){
+    public void Character(Scanner action) {
         String userAction;
         do {
+
             CharacterInfo();
             System.out.println("A) Show Skills\nB) Level Up\nC) Show Inventory\nD) Back");
+
             userAction = Validation.UserInput(action);
             switch (userAction) {
                 case "A":
                     ShowSkills(action);
                     break;
                 case "B":
-                    break;
+                    if (experience >= expNeeded) {
+                        LevelUp(action);
+                        break;
+                    } else {
+                        System.out.println("Not enough of experience!");
+                        break;
+                    }
                 case "C":
                     ShowInventory(action);
                     break;
@@ -226,36 +215,80 @@ public class Player {
 
     }
 
-    public void takeDamage(int damage){
+    public void takeDamage(int damage) {
         health -= damage;
 
-        if(health <= 0) {
+        if (health <= 0) {
             setAlive(false);
         }
     }
 
-    private void RestoreHealth(Consumables item){
-        health += item.getHealPoints();
-        System.out.println(item.getItem() + " healed you " + item.getHealPoints() + " hitpoints!");
-        
-        if(health > maxHealth) {
+    private void RestoreHealth(Consumables item) {
+        int itemHeal = item.getHealPoints();
+
+        if (PlayerSkills.contains(Skills.Medicine)) {
+            itemHeal += 5;
+        }
+
+        health += itemHeal;
+        System.out.println(item.getItem() + " healed you " + itemHeal + " hitpoints!");
+
+        if (health > maxHealth) {
             health = maxHealth;
         }
     }
 
-    private void CharacterInfo(){
+    private void CharacterInfo() {
         String isEquipped = "";
+        String levelUp = "";
+
+        if (experience >= expNeeded) {
+            levelUp = "- Level Up Available";
+        }
+
         if (equipped == null) {
             isEquipped = "None";
-        }
-        else{
+        } else {
             isEquipped = equipped.getItem();
         }
-        System.out.printf("[%s  | Level: %d | XP: %d/%d]\n[Health: %d/%d | Equipped: %s]\n", 
-                             name, level, experience, expNeeded, health, maxHealth, isEquipped);
+        System.out.printf("[%s  | Level: %d | XP: %d/%d %s]\n[Health: %d/%d | Equipped: %s]\n",
+                name, level, experience, expNeeded, levelUp, health, maxHealth, isEquipped);
+
+    }
+
+    private void LevelUp(Scanner action) {
+        setLevel(getLevel() + 1);
+        int remainingExp = experience - expNeeded;
+        setExperience(remainingExp);
+        setMaxHealth(getMaxHealth() + 10);
+        setHealth(getMaxHealth());
+        setExpNeeded(getExpNeeded() + 250);
+
+        int userInput;
+        boolean skillChosen = false;
+        do {
+            int i = 1;
+            System.out.println("Choose a skill: ");
+            for (Skills skill : Skills.SkillList) {
+                if (!PlayerSkills.contains(skill)) {
+                    System.out.printf("%d) %s \n", i, skill);
+                    i++;
+                }
+            }
+            userInput = Validation.UserINput(action);
+
+            if (userInput > 0 && userInput <= Skills.SkillList.size()) {
+                Skills chosenSkill = Skills.SkillList.get(userInput - 1);
+                PlayerSkills.add(chosenSkill);
+                chosenSkill.setPlayerHas(true);
+                Skills.SkillList.remove(userInput - 1);
+                skillChosen = true;
+            } else {
+                System.out.println("No way I can learn that!");
+            }
+
+        } while (!skillChosen);
 
     }
 
 }
-
-

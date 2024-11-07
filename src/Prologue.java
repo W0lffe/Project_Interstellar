@@ -13,7 +13,7 @@ public class Prologue {
         //Enter to first scene
 
         do {
-            System.out.println("A) Character\nB) Take a look in the locker\nC) Inspect datapad\nD) Go outside\n");
+            System.out.println("A) Character\nB) Take a look in the locker\nC) Inspect datapad\nD) Go outside");
             userAction = Validation.UserInput(action);
 
             switch (userAction) {
@@ -32,6 +32,7 @@ public class Prologue {
                 case "C":
                     System.out.println("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...");
                     String datapad = Files.ReadFile("Datapad1.txt",null,null);
+                    player.setExperience(player.getExperience() + Utility.LoreItemEXP);
                     Utility.Print(datapad, Utility.DatapadPrintSpeed);
                     break;
                 case "D":

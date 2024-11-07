@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Skills {
     
     private String skill;
@@ -31,17 +33,30 @@ public class Skills {
         this.description = description;
     }
 
-    public static Skills Weapons = new Skills("Weapons", false, "10% More damage");
+    public static ArrayList<Skills> SkillList = new ArrayList<>();
+
+    public static void initializeSkillArray(){
+        SkillList.add(Weapons);
+        SkillList.add(Lockpicking);
+        SkillList.add(Computers);
+        SkillList.add(Medicine);
+        SkillList.add(Speech);
+        SkillList.add(Engineering);
+        SkillList.add(Stealth);
+        
+        
+    }
+    public static Skills Weapons = new Skills("Weapons", false, "Every weapon now deals 5 extra damage!");
     public static Skills Lockpicking = new Skills("Lockpicking", false, "Enables lockpicking");
     public static Skills Computers = new Skills("Computers", false, "Learn hacking/programming");
-    public static Skills Medicine = new Skills("Medicine", false, "5% More from healing items");
+    public static Skills Medicine = new Skills("Medicine", false, "Healing items now heals 5 extra points!");
     public static Skills Speech = new Skills("Speech", false, "Chance to speak your way out");
     public static Skills Engineering = new Skills("Engineering", false, "Allow repair and enhancements");
     public static Skills Stealth = new Skills("Stealth", false, "You become a silhouette in the dark");
 
     @Override
     public String toString() {
-        return "Skills [skill=" + skill + ", playerHas=" + playerHas + ", description=" + description + "]";
+        return "[Skill: " + skill + " | " + description + "]";
     }
     
 
