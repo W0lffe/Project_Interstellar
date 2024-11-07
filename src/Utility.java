@@ -8,6 +8,7 @@ public class Utility {
 
     //Experience points got from "LoreItems"
     public static final int LoreItemEXP = 25;
+    public static final int LootItemEXP = 5;
 
 
     //Function that sets parameter String to character array, prints characters with delay, parameter speed

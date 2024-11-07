@@ -310,7 +310,14 @@ public class Player {
             }
 
         } while (!skillChosen);
+    }
 
+    public void LoreExperience(){
+        setExperience(experience + Utility.LoreItemEXP);
+    }
+
+    public void LootExperience(){
+        setExperience(experience + Utility.LootItemEXP);
     }
 
 }

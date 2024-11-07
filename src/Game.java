@@ -33,9 +33,11 @@ public class Game {
         gameRunning = true; //sets gameRunning true again, incase for example player dies and starts again
 
         while (gameRunning) {
-            Prologue.Start(player, action); //take player to Prologue
+            //Prologue.Start(player, action); //take player to Prologue
 
             Continue(action);
+
+            ActOne.InstanceOne(player, action);
         }
 
     }

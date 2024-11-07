@@ -1,0 +1,5 @@
+Hull Integrity: 35% 
+Engines: Offline 
+Life Support: Functional 
+Damage: Critical
+

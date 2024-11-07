@@ -15,7 +15,7 @@ public class Files {
             boolean Reading = false; //not writing to dataToReturn
 
             //If file contains "Datapad", it will be read instantly
-            if(file.contains("Datapad")) {
+            if(file.contains("Datapad") || file.contains("Console")) {
                 while((line = reader.readLine()) != null){
                     dataToReturn.append(line).append("\n");
                 }

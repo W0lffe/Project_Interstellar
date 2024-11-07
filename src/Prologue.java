@@ -7,6 +7,8 @@ public class Prologue {
 
     public static void Start(Player player, Scanner action){
         boolean SCENE1 = true;
+        boolean checkedLocker = false;
+        boolean readDatapad = false;
         String scene1 = Files.ReadFile(file, "PROLOGUE", "SCENE2"); //Read file to string, starts from word PROLOGUE, ends to word SCENE2
         Utility.Print(scene1, Utility.StoryPrintSpeed); //Print story
  
@@ -22,24 +24,37 @@ public class Prologue {
                     break;
                 case "B":
                     //Add items to inventory
-                    System.out.println("You look in the locker and find: \n" + 
-                    "[" + Weapon.LASER_PISTOL.getItem() + " - " + Weapon.LASER_PISTOL.getDescription() + "]\n" +
-                    "[" + Consumables.SPACE_SODA.getItem() + " - " + Consumables.SPACE_SODA.getDescription()+ "]\n" +
-                    "[" + Consumables.BASIC_MEDKIT.getItem() + " - " + Consumables.BASIC_MEDKIT.getDescription() + "]\n");
-                    player.addItem(Weapon.LASER_PISTOL);
-                    player.addItem(Consumables.SPACE_SODA);
-                    player.addItem(Consumables.BASIC_MEDKIT);
-                    break;
+                    if (!checkedLocker) {
+                        System.out.println("You look in the locker and find: \n" + Weapon.LASER_PISTOL + "\n" + 
+                                        Consumables.SPACE_SODA + "\n" + Consumables.BASIC_MEDKIT);
+                        player.addItem(Weapon.LASER_PISTOL);
+                        player.addItem(Consumables.SPACE_SODA);
+                        player.addItem(Consumables.BASIC_MEDKIT);
+                        player.LootExperience();
+                        checkedLocker = true;
+                        break;
+                    }
+                    else{
+                        System.out.println("Locker is empty.");
+                        break;
+                    }
                 case "C":
                     //Read datapad and get experience
-                    System.out.println("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...");
-                    String datapad = Files.ReadFile("Datapad1.txt",null,null);
-                    player.setExperience(player.getExperience() + Utility.LoreItemEXP);
-                    Utility.Print(datapad, Utility.DatapadPrintSpeed);
-                    break;
+                    if(!readDatapad){
+                        System.out.println("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...");
+                        String datapad = Files.ReadFile("Datapad1.txt",null,null);
+                        player.LoreExperience();
+                        Utility.Print(datapad, Utility.DatapadPrintSpeed);
+                        readDatapad = true;
+                        break;
+                    }
+                    else{
+                        System.out.println("Jaxon: I already read that.");
+                        break;
+                    }
                 case "D":
-                    //Cant proceed before player has acquired Weapon object, CASE B
-                    if(player.getInventory().contains(Weapon.LASER_PISTOL)) {
+                    //Cant proceed before player has looked int he locker
+                    if(!checkedLocker) {
                         System.out.println("You decide to head outside, ready to face whatever the day brings.");
                         SCENE1 = false;
                         break;
@@ -240,6 +255,7 @@ public class Prologue {
                 case "A":
                     System.out.println("You eliminate Ka'tar. You grab his weapon.");
                     player.addItem(Boss.getEquipped()); //Add item that NPC Boss has equipped
+                    player.LootExperience();
                     FinalScene = false;
                     System.out.println("You make your way to the ship and leave the station.");
                     break;
