@@ -120,8 +120,9 @@ public class Player {
         }
         //Add item to invetory
         Inventory.add(itemToAdd);
-        System.out.println(itemToAdd.getItem() + " added to your inventory");
-
+        String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
+        Utility.Print(itemAdded, Utility.ActionSpeed);
+        LootExperience();
     }
 
     //Function shows invetory
@@ -138,7 +139,12 @@ public class Player {
                 System.out.println("Inventory: ");
                 //Loop through inventory item objects
                 for (Items items : Inventory) {
-                    System.out.println(i + ". " + items);
+                    if (equipped.equals(items)) {
+                        System.out.println(i + ". " + items + " Equipped");
+                    }
+                    else{
+                        System.out.println(i + ". " + items);
+                    }
                     i++;
                 }
 
@@ -169,7 +175,7 @@ public class Player {
                 //If item is object class Consumables
                 if (selectedItem instanceof Consumables) {
                     Consumables useItem = (Consumables) selectedItem; //Convert to Items to Consumables
-                    System.out.println("Used: " + useItem.getItem());
+                    Utility.Print("Used: " + useItem.getItem() + "\n", Utility.ActionSpeed);
                     RestoreHealth(useItem); //Send consumable to RestoreHealth function
                     useItem.setQuantity(selectedItem.getQuantity() - 1); //Reduce quantity
                     if (useItem.getQuantity() <= 0) {
@@ -179,22 +185,27 @@ public class Player {
                 } else if (selectedItem instanceof Weapon) {
                     Weapon equipWeapon = (Weapon) selectedItem; //Convert Items to Weapon
                     setEquipped(equipWeapon); //set Weapon object equipped for player
-                    System.out.println("Equipped: " + equipWeapon.getItem()); 
+                    Utility.Print("Equipped: " + equipWeapon.getItem() + "\n", Utility.ActionSpeed);
                     break;
                 }
             } else {
-                System.out.println("I dont have that item.");
+                Utility.Print("Jaxon: I dont have that item.\n", Utility.ActionSpeed);
+                return;
             }
         }
     }
 
     //Print skills in playerSkills array
     private void ShowSkills(Scanner action) {
-        System.out.println("You have: ");
-        for (Skills skill : PlayerSkills) {
-            System.out.println(skill);
+        if (!PlayerSkills.isEmpty()) {
+            System.out.println("You have: ");
+            for (Skills skill : PlayerSkills) {
+                System.out.println(skill);
+            }
         }
-        System.out.println();
+        else{
+            System.out.println("You have not acquired any skills yet!");
+        }
     }
 
     //Show character details 
@@ -215,7 +226,7 @@ public class Player {
                         LevelUp(action); //Level up character if experience requirements is met
                         break;
                     } else {
-                        System.out.println("Not enough of experience!");
+                        Utility.Print("Not enough of experience!\n", Utility.ActionSpeed);
                         break;
                     }
                 case "C":
@@ -248,7 +259,8 @@ public class Player {
         }
 
         health += itemHeal;
-        System.out.println(item.getItem() + " healed you " + itemHeal + " hitpoints!");
+        String healed = item.getItem() + " healed you " + itemHeal + " hitpoints!";
+        Utility.Print(healed, Utility.ActionSpeed);
 
         //if health goes over maxhealth, health is set to max
         if (health > maxHealth) {
@@ -288,7 +300,8 @@ public class Player {
         boolean skillChosen = false;
         do {
             int i = 1;
-            System.out.println("Choose a skill: ");
+            String levelUp = "You have leveled up! \nChoose a skill: \n";
+            Utility.Print(levelUp, Utility.ActionSpeed);
             //Loop through SkillList (initialized in Game.newGame)
             for (Skills skill : Skills.SkillList) {
                 if (!PlayerSkills.contains(skill)) {
@@ -302,21 +315,25 @@ public class Player {
             if (userInput > 0 && userInput <= Skills.SkillList.size()) {
                 Skills chosenSkill = Skills.SkillList.get(userInput - 1); //get skill from list
                 PlayerSkills.add(chosenSkill); //add to player acquired skills
+                String acquiredSkill = "You have acquired skill: " + chosenSkill.getSkill() + "\n";
+                Utility.Print(acquiredSkill, Utility.ActionSpeed);
                 //chosenSkill.setPlayerHas(true); no use for this yet
                 Skills.SkillList.remove(userInput - 1); //removes from SkillList so it wont show again when selecting skills
                 skillChosen = true; //break loop
             } else {
-                System.out.println("No way I can learn that!");
+                Utility.Print("No way I can learn that!\n", Utility.ActionSpeed);
             }
 
         } while (!skillChosen);
     }
 
     public void LoreExperience(){
+        Utility.Print("You gained " + Utility.LoreItemEXP + " experience.\n", Utility.ActionSpeed);
         setExperience(experience + Utility.LoreItemEXP);
     }
 
     public void LootExperience(){
+        Utility.Print("You gained " + Utility.LootItemEXP + " experience.\n", Utility.ActionSpeed);
         setExperience(experience + Utility.LootItemEXP);
     }
 

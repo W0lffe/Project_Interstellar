@@ -12,7 +12,7 @@ public class Main{
         String userInput; //initialize variable for user input
         
         do {
-            System.out.println("Project: Interstellar");
+            Utility.Print("Project: Interstellar\n", 20);
 
             System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
             userInput = Validation.UserInput(inputScanner); //use validation for user input
@@ -29,6 +29,7 @@ public class Main{
                     break;
                 default:
                     System.out.println("Unknown action.");
+                    break;
             }
         } while (!userInput.equals("C")); //If userInput is C, program closes
 

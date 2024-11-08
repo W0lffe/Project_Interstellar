@@ -29,7 +29,7 @@ public class Game {
 
     //Start Game with earlier created player
     private static void startGame(Player player, Scanner action) {
-        System.out.println("Starting Game");
+        Utility.Print("Game is starting\n", Utility.ActionSpeed);
         gameRunning = true; //sets gameRunning true again, incase for example player dies and starts again
 
         while (gameRunning) {
@@ -47,7 +47,8 @@ public class Game {
         String userInput;
 
         while (true) {
-            System.out.println("Do you want to continue your journey?\nA) Yes \nB) No");
+            Utility.Print("Do you want to continue your journey?\n", Utility.ActionSpeed);
+            System.out.println("A) Yes \nB) No");
             userInput = Validation.UserInput(action);
 
             if (userInput.equals("B")) {

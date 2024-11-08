@@ -32,6 +32,7 @@ Nearby, a datapad rests on the makeshift nightstand, its screen faintly glowing 
 Through the thin walls, you can hear the muted sounds of life in the station—a few people talking in hushed voices just outside your dorm.
 
 SCENE2
+"You decide to head outside, ready to face whatever the day brings."
 
 You come out of the dorm room and look through the big windows. It's a sunny day out here at Veskar Station. 
 You notice fleet ships leaving the dock, their engines humming as they ascend into the endless void. 

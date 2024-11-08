@@ -16,11 +16,11 @@ class Validation{
                     break;
                 }
                 else{
-                    System.out.println("Unknown action.");
+                    break;
                 }
 
             } catch (Exception e) {
-                System.out.println("\nUnknown action.");
+                System.out.println("\nError has occured!" + e);
             }
         }
         return userInput.toUpperCase(); //return userInput as uppercase
@@ -29,7 +29,7 @@ class Validation{
 
     //Check user inputs, this function is run from game menus
     public static int UserINput(Scanner myScanner){
-        int userInput;
+        int userInput = -1;
     
         while (true) {
             try {
@@ -37,7 +37,8 @@ class Validation{
                 userInput = Integer.parseInt(myScanner.nextLine());
                 break;
             } catch (Exception e) {
-                System.out.println("\nUnknown input format! Enter time again!");
+                System.out.println("I dont have that item.");
+                break;
             }
         }
         return userInput;

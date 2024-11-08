@@ -3,8 +3,10 @@ public class Utility {
     public static String cantDoThat = "Jaxon: I cant do that right now"; //For Switch case defaults
 
     //Speed parameters for Utility.Print function, sets speed how fast to "type" text
-    public static int StoryPrintSpeed = 0; 
+    public static int StoryPrintSpeed = 1; 
     public static int DatapadPrintSpeed = 20; 
+    public static int ActionSpeed = 15;
+
 
     //Experience points got from "LoreItems"
     public static final int LoreItemEXP = 25;
@@ -24,6 +26,14 @@ public class Utility {
                 e.printStackTrace();
             }
         }
+
+        //Delays program after printing text 500ms
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

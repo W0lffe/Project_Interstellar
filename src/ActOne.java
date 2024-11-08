@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class ActOne {
     
-    private static final String file = "ActOne.txt";
+    private static final String file = "ActOne/ActOne.txt";
     private static String userAction;
 
     public static void InstanceOne(Player player, Scanner action){
@@ -26,31 +26,32 @@ public class ActOne {
                         System.out.println("You open the medical locker and find: ");
                         System.out.println(Consumables.BASIC_MEDKIT);
                         player.addItem(Consumables.BASIC_MEDKIT);
-                        player.LootExperience();
                         checkedLocker = true;
                         break;
                     }
                     else{
-                        System.out.println("Locker is empty");
+                        Utility.Print("Locker is empty\n", Utility.ActionSpeed);
                         break;
                     }
                 case "C":
                     if (!readDatapad) {
-                        System.out.println("You press the button on the console. The screen flickers to life, displaying a series of data: ");
-                        String console = Files.ReadFile("Console1.txt", "" , "" );
+                        Utility.Print("You press the button on the console. The screen flickers to life, displaying a series of data: \n", Utility.ActionSpeed);
+                        String console = Files.ReadFile("ActOne/Console1.txt", "" , "" );
                         Utility.Print(console, Utility.DatapadPrintSpeed);
                         player.LoreExperience();
-                        System.out.println("Jaxon: The ship is in bad shape, but at least the life support is still operational.");
+                        Utility.Print("Jaxon: The ship is in bad shape, but at least the life support is still operational.\n", Utility.ActionSpeed);
                         readDatapad = true;
                         break;
                     }
                     else{
-                        System.out.println("Jaxon: I already read that.");
+                        Utility.Print("Jaxon: I already read that.\n", Utility.ActionSpeed);
                         break;
                     }
-                  
+                case "D":
+                    Utility.Print("You exit the ship through emergency hatch.\n", Utility.ActionSpeed);
+                    break;
                 default:
-                    System.out.println("You exit the ship through emergency hatch.");
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
             }
             
@@ -75,8 +76,9 @@ public class ActOne {
             return;
         }
 
-        String ActOneScene3 = Files.ReadFile(file,"ACT1-SCENE3", "ACT1-SCENE4");
-        Utility.Print(ActOneScene3, Utility.StoryPrintSpeed);
+        return;
+        //String ActOneScene3 = Files.ReadFile(file,"ACT1-SCENE3", "ACT1-SCENE4");
+        //Utility.Print(ActOneScene3, Utility.StoryPrintSpeed);
 
 
 

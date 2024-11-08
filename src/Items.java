@@ -77,17 +77,22 @@ class Weapon extends Items {
 
     @Override
     public String toString() {
-        return "[" + getItem() + ", " + getType() + "| Damage: " + minDamage + "-" + maxDamage + " | " + getDescription() + "]";
+        return "[" + getItem() + " | " + getType() + " | Damage: " + minDamage + "-" + maxDamage + " | " + getDescription() + "]";
     }
 
 
     //predefined weapons
+    public static Weapon STINGER_PISTOL = new Weapon("Stinger Pistol", "Projectile Sidearm", 12, 16, "Fires compact, armor-piercing rounds with pinpoint accuracy, perfect for critical shots", 1);
+    public static Weapon PHASE_REVOLVER = new Weapon("Phase Revolver", "Energy Sidearm", 14, 18, "Emits short-range energy blasts that can phase through armor with minimal delay", 1);
     public static Weapon PULSE_PISTOL = new Weapon("Pulse Pistol", "Energy Weapon", 8, 12, "A compact energy-based sidearm", 1);
     public static Weapon PULSE_RIFLE = new Weapon("Pulse Rifle", "Energy Weapon" ,18, 22, "Firepower with versatility", 1);
     public static Weapon LASER_RIFLE  = new Weapon("Laser Rifle", "Energy Weapon" ,15, 20, "Lightweight rifle with precision", 1);
     public static Weapon LASER_PISTOL  = new Weapon("Laser Pistol", "Energy Weapon" , 9, 13, "Lightweight pistol for sharpshooters", 1);
     public static Weapon QUANTUM_REPEATER  = new Weapon("Quantum Repeater", "Energy Weapon" , 27, 35, "Unleash a hail of destabilized energy", 1);
-}
+    public static Weapon GRAVITY_CANNON = new Weapon("Gravity Cannon", "Heavy Weapon", 40, 50, "Uses gravity pulses to crush and destabilize enemies", 1);
+    public static Weapon PARTICLE_BEAMER = new Weapon("Particle Beamer", "Energy Weapon", 20, 28, "Fires a continuous, precise particle beam", 1);
+    public static Weapon HYPERSONIC_REPEATER = new Weapon("Hypersonic Repeater", "Projectile Weapon", 18, 24, "Rapid-firing weapon that launches high-speed projectiles with piercing power", 1);
+}   
 
 class Consumables extends Items {
 
@@ -108,7 +113,7 @@ class Consumables extends Items {
 
     @Override
     public String toString() {
-        return "[" + getItem() + ", " + getType() + "| Heals: " + healPoints + " | " + getDescription() + " | " + "Qty: " + getQuantity() + "]";
+        return "[" + getItem() + " | " + getType() + " | Heals: " + healPoints + " | " + getDescription() + " | " + "Qty: " + getQuantity() + "]";
     }
 
     //predefined consumables
@@ -116,7 +121,11 @@ class Consumables extends Items {
     public static Consumables ENERGY_DRINK = new Consumables("Energy Drink", "Drink", 8,  "Lovely refreshing drink", 1);
     public static Consumables SPACE_SANDWICH = new Consumables("Sandwich", "Food", 12, "Vacuum sealed sandwich", 1);
     public static Consumables SPACE_SODA = new Consumables("Soda", "Drink", 7,"Diet soda", 1);
-
+    public static Consumables NUTRI_PASTE = new Consumables("Nutri-Paste", "Food", 10, "Concentrated paste full of essential vitamins and proteins", 1);
+    public static Consumables ADRENAL_SHOT = new Consumables("Adrenal Shot", "Injection", 20, "Instant energy boost, enhances alertness temporarily", 1);
+    public static Consumables HYDRATION_PACK = new Consumables("Hydration Pack", "Drink", 5, "Replenishes hydration, great for long treks", 1);
+    public static Consumables RATIONS_BAR = new Consumables("Rations Bar", "Food", 12, "Compact bar with all essential nutrients for survival", 1);
+    public static Consumables ADVANCED_MEDKIT = new Consumables("Advanced Medkit", "Medkit", 100, "Comprehensive medkit for more serious injuries", 1);
     public static Consumables BASIC_MEDKIT = new Consumables("Basic Medkit", "Medkit", 50, "Medkit for minor injuries", 1);
 
 }

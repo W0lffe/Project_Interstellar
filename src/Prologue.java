@@ -3,13 +3,13 @@ import java.util.Scanner;
 public class Prologue {
     
     private static String userAction;
-    private static final String file = "Prologue.txt"; //File wich from program reads story
+    private static final String storyFile = "Prologue/Prologue.txt"; //File wich from program reads story
 
     public static void Start(Player player, Scanner action){
         boolean SCENE1 = true;
         boolean checkedLocker = false;
         boolean readDatapad = false;
-        String scene1 = Files.ReadFile(file, "PROLOGUE", "SCENE2"); //Read file to string, starts from word PROLOGUE, ends to word SCENE2
+        String scene1 = Files.ReadFile(storyFile, "PROLOGUE", "SCENE2"); //Read file to string, starts from word PROLOGUE, ends to word SCENE2
         Utility.Print(scene1, Utility.StoryPrintSpeed); //Print story
  
         //Enter to first scene
@@ -30,41 +30,40 @@ public class Prologue {
                         player.addItem(Weapon.LASER_PISTOL);
                         player.addItem(Consumables.SPACE_SODA);
                         player.addItem(Consumables.BASIC_MEDKIT);
-                        player.LootExperience();
                         checkedLocker = true;
                         break;
                     }
                     else{
-                        System.out.println("Locker is empty.");
+                        Utility.Print("Locker is empty.\n", Utility.ActionSpeed);
                         break;
                     }
                 case "C":
                     //Read datapad and get experience
                     if(!readDatapad){
-                        System.out.println("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...");
-                        String datapad = Files.ReadFile("Datapad1.txt",null,null);
-                        player.LoreExperience();
+                        Utility.Print("You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...\n", Utility.ActionSpeed);
+                        String datapad = Files.ReadFile("Prologue/Datapad1.txt",null,null);
                         Utility.Print(datapad, Utility.DatapadPrintSpeed);
+                        player.LoreExperience();
                         readDatapad = true;
                         break;
                     }
                     else{
-                        System.out.println("Jaxon: I already read that.");
+                        Utility.Print("Jaxon: I already read that.\n", Utility.ActionSpeed);
                         break;
                     }
                 case "D":
                     //Cant proceed before player has looked int he locker
                     if(!checkedLocker) {
-                        System.out.println("You decide to head outside, ready to face whatever the day brings.");
                         SCENE1 = false;
                         break;
                     }
                     else{
-                        System.out.println("Jaxon: Maybe I should take a look in my locker first.");
+                        Utility.Print("Jaxon: Maybe I should take a look in my locker first.\n", Utility.ActionSpeed);
                         break;
                     }
                 default:
-                    System.out.println(Utility.cantDoThat);
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
+                    break;
             }
         } while (SCENE1);
 
@@ -78,7 +77,7 @@ public class Prologue {
         NPC target = new NPC(5, 5, "Target", 20, true, null, null);
 
         boolean SCENE2 = true;
-        String scene2 = Files.ReadFile(file, "SCENE2", "S2-OPTION1"); //Read story to string
+        String scene2 = Files.ReadFile(storyFile, "SCENE2", "S2-OPTION1"); //Read story to string
         Utility.Print(scene2, Utility.StoryPrintSpeed);  //print story
 
         do {
@@ -87,20 +86,20 @@ public class Prologue {
 
             switch (userAction) {
                 case "A":
-                    String option1 = Files.ReadFile(file, "S2-OPTION1", "S2-OPTION1,2");
+                    String option1 = Files.ReadFile(storyFile, "S2-OPTION1", "S2-OPTION1,2");
                     Utility.Print(option1, Utility.StoryPrintSpeed);  
                     Combat.FightMenu(player, target, action);  //Fight with NPC
-                    String s2o1 = Files.ReadFile(file, "S2-OPTION1,2", "S2-OPTION2");
+                    String s2o1 = Files.ReadFile(storyFile, "S2-OPTION1,2", "S2-OPTION2");
                     Utility.Print(s2o1, Utility.StoryPrintSpeed);
                     SCENE2 = false;
                     break;
                 case "B":
-                    String option2 = Files.ReadFile(file, "S2-OPTION2", "SCENE3");
+                    String option2 = Files.ReadFile(storyFile, "S2-OPTION2", "SCENE3");
                     Utility.Print(option2, Utility.StoryPrintSpeed);    
                     SCENE2 = false;
                     break;
                 default:
-                    System.out.println(Utility.cantDoThat);
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
             }
         } while (SCENE2);
         
@@ -124,7 +123,7 @@ public class Prologue {
                     player.Character(action); //Show Character info
                     break;
                 case "B":
-                    System.out.println("You will fight the Rak'ra");
+                    Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
                     Combat.FightMenu(player, rookie, action); //Fight with NPC
                     if(!player.isAlive()){
                         //Get player Alive status after Combat
@@ -138,18 +137,19 @@ public class Prologue {
                     }
                     break;
                 case "C":
-                    System.out.println("You try to get over to Teth. But");
-                    System.out.println(brute.getName() + " spots you and shoots at you, dealing " + brute.getEquipped().getMinDamage() + " damage!");
+                    String caseC = "You try to get over to Teth. But " + brute.getName() + " spots you and shoots at you, dealing " + 
+                                        brute.getEquipped().getMinDamage() + " damage!\n";
+                    Utility.Print(caseC, Utility.ActionSpeed);
                     player.takeDamage(brute.getEquipped().getMinDamage());
-                    System.out.println("Forcing you back to cover\n");
+                    Utility.Print("Forcing you back to cover\n", Utility.ActionSpeed);
                     break;
                 default:
-                    System.out.println("Jaxon: I need to help Teth and Jaxer!");
+                    Utility.Print("Jaxon: I need to help Teth and Jaxer!\n", Utility.ActionSpeed);
                     break;
             }
         } while (!userAction.equals("B"));
 
-        String scene3 = Files.ReadFile(file, "SCENE3", "S3-OPTION1");
+        String scene3 = Files.ReadFile(storyFile, "SCENE3", "S3-OPTION1");
         Utility.Print(scene3, Utility.StoryPrintSpeed);
 
         do {
@@ -160,28 +160,28 @@ public class Prologue {
                 case "A":
                     //This CASE is not available if player inventory doesnt contain Consumable medkit
                     if(player.getInventory().contains(Consumables.BASIC_MEDKIT)){
-                        System.out.println("You go to Jaxer");
-                        String s3o1 = Files.ReadFile(file, "S3-OPTION1", "S3-OPTION2");
+                        Utility.Print("You go to Jaxer\"\n", Utility.ActionSpeed);
+                        String s3o1 = Files.ReadFile(storyFile, "S3-OPTION1", "S3-OPTION2");
                         Utility.Print(s3o1, Utility.StoryPrintSpeed);
                         userAction = "B";
                         break;
                     }
                     else{
-                        System.out.println("Jaxon: I need a medkit to help Jaxer...");
+                        Utility.Print("Jaxon: I need a medkit to help Jaxer...\n", Utility.ActionSpeed);
                         break;
                     }
                 case "B":
-                    String s3o2 = Files.ReadFile(file, "S3-OPTION2", "S3-PART2");
+                    String s3o2 = Files.ReadFile(storyFile, "S3-OPTION2", "S3-PART2");
                     Utility.Print(s3o2, Utility.StoryPrintSpeed);
                     break;
                 default:
-                    System.out.println(Utility.cantDoThat);
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
             }
         } while (!userAction.equals("B"));
 
 
-        String s3part2 = Files.ReadFile(file, "S3-PART2", "S3P2-OPTION1");
+        String s3part2 = Files.ReadFile(storyFile, "S3-PART2", "S3P2-OPTION1");
         Utility.Print(s3part2, Utility.StoryPrintSpeed);
 
         //Create 3 NPC
@@ -196,14 +196,14 @@ public class Prologue {
             switch (userAction) {
                 case "A":
                     Combat.FightMenu(player, engineer, action); //Fight with NPC
-                    String p2o1 = Files.ReadFile(file, "S3P2-OPTION1", "S3P2-OPTION2,2");
+                    String p2o1 = Files.ReadFile(storyFile, "S3P2-OPTION1", "S3P2-OPTION2,2");
                     Utility.Print(p2o1, Utility.StoryPrintSpeed);
                     player.addItem(Consumables.BASIC_MEDKIT); //Add medkits to inventory
                     player.addItem(Consumables.BASIC_MEDKIT);
                     SCENE3 = false;
                     break;
                 case "B":
-                    String p2o2 = Files.ReadFile(file, "S3P2-OPTION2,2", "FINAL");
+                    String p2o2 = Files.ReadFile(storyFile, "S3P2-OPTION2,2", "FINAL");
                     Utility.Print(p2o2, Utility.StoryPrintSpeed);
                     player.addItem(Consumables.BASIC_MEDKIT); //Add medkits to inventory
                     player.addItem(Consumables.BASIC_MEDKIT);
@@ -220,7 +220,7 @@ public class Prologue {
                     SCENE3 = false;
                     break;
                 default:
-                    System.out.println(Utility.cantDoThat);
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
             }
         } while (SCENE3);
@@ -233,7 +233,7 @@ public class Prologue {
 
         //Set player health to max
         player.setHealth(player.getMaxHealth());
-        String finalScene = Files.ReadFile(file, "FINAL", "FINAL-PART2");
+        String finalScene = Files.ReadFile(storyFile, "FINAL", "FINAL-PART2");
         Utility.Print(finalScene, Utility.StoryPrintSpeed);
 
         //Create NPC
@@ -245,7 +245,7 @@ public class Prologue {
             return;
         }
 
-        String finalPart2 = Files.ReadFile(file, "FINAL-PART2", "END");
+        String finalPart2 = Files.ReadFile(storyFile, "FINAL-PART2", "END");
         Utility.Print(finalPart2, Utility.StoryPrintSpeed);
 
         do {
@@ -253,23 +253,22 @@ public class Prologue {
             userAction = Validation.UserInput(action);
             switch (userAction) {
                 case "A":
-                    System.out.println("You eliminate Ka'tar. You grab his weapon.");
+                    Utility.Print("You eliminate Ka'tar and grab his weapon.\n", Utility.ActionSpeed);
                     player.addItem(Boss.getEquipped()); //Add item that NPC Boss has equipped
-                    player.LootExperience();
+                    Utility.Print("You make your way to the ship and leave the station.\n", Utility.ActionSpeed);
                     FinalScene = false;
-                    System.out.println("You make your way to the ship and leave the station.");
                     break;
                 case "B":
-                    System.out.println("You make your way to the ship and leave the station.");
+                    Utility.Print("You make your way to the ship and leave the station.\n", Utility.ActionSpeed);
                     FinalScene = false;
                     break;
                 default:
-                    System.out.println(Utility.cantDoThat);
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
             }
         } while (FinalScene);
 
-        String finalEnd = Files.ReadFile(file, "END", "PROLOGUE-END");
+        String finalEnd = Files.ReadFile(storyFile, "END", "PROLOGUE-END");
         Utility.Print(finalEnd, Utility.StoryPrintSpeed);
 
     }

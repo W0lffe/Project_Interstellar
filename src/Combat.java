@@ -47,27 +47,31 @@ public class Combat {
             playerMinDmg += 5;
         }
 
-        //Get random damage from range
+        //Get random damage from equipped item range
         int damage = (int) (Math.random() * ((playerMaxDmg - playerMinDmg) + 1) + playerMinDmg);
-        System.out.println("You strike with " + playerEquipped.getItem() + ", dealing " + damage + " damage!");
+        String damageDealt = "You strike with " + playerEquipped.getItem() + ", dealing " + damage + " damage!\n";
+        Utility.Print(damageDealt, Utility.ActionSpeed);
         enemy.takeDamage(damage); //reduce enemy health
 
         //if enemy health is 0 or less
         if (enemy.getHealth() <= 0) {
             enemy.setAlive(false); //enemy is not alive
-            fight = false; //fight is over
-            System.out.printf("You eliminated %s, gaining %d experience!\n", enemy.getName(), enemy.getExperience());
+            String eliminated = "You eliminated " + enemy.getName() + ", gaining " + enemy.getExperience() + " experience!\n";
+            Utility.Print(eliminated, Utility.ActionSpeed);
             player.setExperience(player.getExperience() + enemy.getExperience()); //Give player experience of enemy's experience property
+            fight = false; //fight is over
             return;
         }
 
         damage = (int) (Math.random() * ((enemyMaxDmg - enemyMinDmg) + 1) + enemyMinDmg);
-        System.out.println(enemy.getName() + " counters, dealing " + damage + " damage!");
+        damageDealt = enemy.getName() + " counters, dealing " + damage + " damage!\n";
+        Utility.Print(damageDealt, Utility.ActionSpeed);
         player.takeDamage(damage); //Reduce player health
 
         //if player health is 0 or less
         if (player.getHealth() <= 0) {
-            System.out.println("You have been eliminated... Returning to Main Menu.");
+            String eliminated = "You have been eliminated... Returning to Main Menu.\n";
+            Utility.Print(eliminated, Utility.ActionSpeed);
             player.setAlive(false); //player is not alive
             fight = false; //fight is over
             return;
