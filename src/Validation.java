@@ -12,7 +12,7 @@ class Validation{
                 System.out.print("\nAction: ");
                 userInput = inputScanner.nextLine();
                 //userInput Has to match set characters
-                if (userInput.matches("A|B|C|D|a|b|c|d")) {
+                if (userInput.matches("A|B|C|D|E|a|b|c|d|e")) {
                     break;
                 }
                 else{

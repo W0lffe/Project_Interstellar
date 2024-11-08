@@ -121,3 +121,49 @@ Teth: "What the hell are those?"
 You raise your weapon quickly.
 
 ACT1-SCENE4
+
+The thick metal door grates open as Jaxon and Teth step cautiously into the bunker. 
+Dim emergency lights flicker along the walls, casting eerie shadows over the dust-covered floor and grimy equipment scattered around. 
+The air is stale, carrying a damp, metallic scent mixed with the unmistakable tang of burnt circuits and old machinery.
+
+Jaxon is wrinkling his nose.
+Jaxon: "This place has seen better days. Smells like something's been rotting in here for a while."
+
+Teth grinning: "Could use a bit of a cleanup, yeah. But we’ve made do with worse. It’s defensible, at least. Thick walls, only one entrance… This could work as a base while we’re on Calyra."
+
+Jaxon nods thoughtfully.
+Jaxon: "Agreed. Once we clear it out, it’ll be hard to breach. We’ll need supplies to make it livable, though. Who knows what kind of critters are hiding in these corners."
+
+Teth walks over to a panel mounted on the wall, brushing away a layer of dust and grime to reveal a cracked display screen.
+Teth: "Looks like some sort of power control… The whole grid might still be operational. If we can get this running, we’d have lights and basic systems."
+
+Jaxon skeptically: "You think this relic still has power after all this time?"
+
+Teth shrugs, pressing a few buttons experimentally.
+Teth: "Only one way to find out."
+
+A low hum begins to echo through the bunker, and dim lights flicker on, illuminating the cramped, industrial space with an unsettling orange glow. 
+The lights sputter a bit but eventually hold steady.
+
+Jaxon smirking: "Well, I’ll be damned. Nice work, Teth."
+
+Teth: "Don’t thank me yet. We’ll still need to sweep for more of those Skitters. This place has been abandoned too long to be safe."
+
+After a few minutes of searching, Teth calls Jaxon over to another room—a makeshift armory.
+
+Teth is holding up an old, rusted weapon.
+Teth: "Most of this stuff is junk, but I found a couple of medkits, a case of rations, alltho they are behind locks.. 
+And a map. Looks like a map of Calyra’s surface—maybe marked with more bunkers like this one."
+
+Jaxon: "Now we’re talking. If this place becomes too hot, we can always relocate. This might be the safest bet we have on Calyra."
+
+Teth: "Let’s see if there’s any data left on the terminals, maybe something about the Ra'kra or why this bunker was abandoned."
+
+Against the wall, you spot a locked cabinet, its contents clearly visible through the cracked glass—medical supplies and food rations neatly arranged inside.
+
+Behind you, Teth has activated an old terminal, its screen flickering to life with static before displaying a series of unreadable data logs.
+
+To your right, near the doorway leading back to the main room, a weapon rack stands—its silhouette ominous in the low light. 
+You notice something glinting in the rack, just waiting to be investigated.
+
+ACT1-SCENE5

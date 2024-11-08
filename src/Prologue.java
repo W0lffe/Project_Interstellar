@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Prologue {
     
     private static String userAction;
     private static final String storyFile = "Prologue/Prologue.txt"; //File wich from program reads story
+    private static ArrayList<NPC> EnemyList = new ArrayList<>();
 
     public static void Start(Player player, Scanner action){
         boolean SCENE1 = true;
@@ -52,8 +54,8 @@ public class Prologue {
                         break;
                     }
                 case "D":
-                    //Cant proceed before player has looked int he locker
-                    if(!checkedLocker) {
+                    //Cant proceed before player has looked in the locker
+                    if(checkedLocker) {
                         SCENE1 = false;
                         break;
                     }
@@ -74,7 +76,7 @@ public class Prologue {
     private static void Scene2(Player player, Scanner action){
         
         //Create NPC target
-        NPC target = new NPC(5, 5, "Target", 20, true, null, null);
+        EnemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
 
         boolean SCENE2 = true;
         String scene2 = Files.ReadFile(storyFile, "SCENE2", "S2-OPTION1"); //Read story to string
@@ -88,7 +90,7 @@ public class Prologue {
                 case "A":
                     String option1 = Files.ReadFile(storyFile, "S2-OPTION1", "S2-OPTION1,2");
                     Utility.Print(option1, Utility.StoryPrintSpeed);  
-                    Combat.FightMenu(player, target, action);  //Fight with NPC
+                    Combat.FightMenu(player, EnemyList, action);  //Fight with NPC
                     String s2o1 = Files.ReadFile(storyFile, "S2-OPTION1,2", "S2-OPTION2");
                     Utility.Print(s2o1, Utility.StoryPrintSpeed);
                     SCENE2 = false;
@@ -110,8 +112,9 @@ public class Prologue {
     private static void Scene3(Player player, Scanner action){
 
         //Create 2 NPC
-        NPC rookie = new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_PISTOL, null);
-        NPC brute = new NPC(60, 60, "Rak'ra Brute", 75, true, Weapon.PULSE_RIFLE, null);
+        EnemyList.add(new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_PISTOL, null));
+        EnemyList.add(new NPC(60, 60, "Rak'ra Brute", 75, true, Weapon.PULSE_RIFLE, null));
+        NPC brute = EnemyList.get(1);
         boolean SCENE3 = true;
       
         do {
@@ -124,14 +127,9 @@ public class Prologue {
                     break;
                 case "B":
                     Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
-                    Combat.FightMenu(player, rookie, action); //Fight with NPC
+                    Combat.FightMenu(player, EnemyList, action); //Fight with NPC
                     if(!player.isAlive()){
                         //Get player Alive status after Combat
-                        Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
-                        return;
-                    }
-                    Combat.FightMenu(player, brute, action); //Fight with NPC
-                    if(!player.isAlive()){
                         Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
                         return;
                     }
@@ -160,7 +158,7 @@ public class Prologue {
                 case "A":
                     //This CASE is not available if player inventory doesnt contain Consumable medkit
                     if(player.getInventory().contains(Consumables.BASIC_MEDKIT)){
-                        Utility.Print("You go to Jaxer\"\n", Utility.ActionSpeed);
+                        Utility.Print("You go to Jaxer\n", Utility.ActionSpeed);
                         String s3o1 = Files.ReadFile(storyFile, "S3-OPTION1", "S3-OPTION2");
                         Utility.Print(s3o1, Utility.StoryPrintSpeed);
                         userAction = "B";
@@ -184,35 +182,28 @@ public class Prologue {
         String s3part2 = Files.ReadFile(storyFile, "S3-PART2", "S3P2-OPTION1");
         Utility.Print(s3part2, Utility.StoryPrintSpeed);
 
-        //Create 3 NPC
-        NPC engineer = new NPC(5, 5, "Crew Member", 20, true, null, null);
-        NPC scout = new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null);
-        NPC officer = new NPC(100, 100, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, null);
-    
         do {
             System.out.println("A) Kill the engineer \nB) Keep going");
             userAction = Validation.UserInput(action);
 
             switch (userAction) {
                 case "A":
-                    Combat.FightMenu(player, engineer, action); //Fight with NPC
-                    String p2o1 = Files.ReadFile(storyFile, "S3P2-OPTION1", "S3P2-OPTION2,2");
+                    NPC engineer = new NPC(5, 5, "Crew Member", 20, true, Weapon.NONE, null);
+                    Combat.Attack(player, engineer); //Fight with NPC
+                    String p2o1 = Files.ReadFile(storyFile, "S3P2-OPTION1", "S3P2-OPTION2");
                     Utility.Print(p2o1, Utility.StoryPrintSpeed);
                     player.addItem(Consumables.BASIC_MEDKIT); //Add medkits to inventory
                     player.addItem(Consumables.BASIC_MEDKIT);
                     SCENE3 = false;
                     break;
                 case "B":
-                    String p2o2 = Files.ReadFile(storyFile, "S3P2-OPTION2,2", "FINAL");
+                    EnemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null));
+                    EnemyList.add(new NPC(100, 100, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, null));
+                    String p2o2 = Files.ReadFile(storyFile, "S3P2-OPTION2", "FINAL");
                     Utility.Print(p2o2, Utility.StoryPrintSpeed);
                     player.addItem(Consumables.BASIC_MEDKIT); //Add medkits to inventory
                     player.addItem(Consumables.BASIC_MEDKIT);
-                    Combat.FightMenu(player, scout, action); //Fight with NPC
-                    if(!player.isAlive()){
-                        Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
-                        return;
-                    }
-                    Combat.FightMenu(player, officer, action); //Fight with NPC
+                    Combat.FightMenu(player, EnemyList, action); //Fight with NPC
                     if(!player.isAlive()){
                         Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
                         return;
@@ -237,9 +228,10 @@ public class Prologue {
         Utility.Print(finalScene, Utility.StoryPrintSpeed);
 
         //Create NPC
-        NPC Boss = new NPC(200, 200, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, null);
+        EnemyList.add(new NPC(200, 200, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, null));
+        NPC Boss = EnemyList.get(0);
 
-        Combat.FightMenu(player, Boss, action); //Fight the boss
+        Combat.FightMenu(player, EnemyList, action); //Fight the boss
         if(!player.isAlive()){
             Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
             return;

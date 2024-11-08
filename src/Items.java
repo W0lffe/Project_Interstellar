@@ -82,6 +82,7 @@ class Weapon extends Items {
 
 
     //predefined weapons
+    public static Weapon NONE = new Weapon("Hands", "Hands", 0, 0, "Hands", 0);
     public static Weapon STINGER_PISTOL = new Weapon("Stinger Pistol", "Projectile Sidearm", 12, 16, "Fires compact, armor-piercing rounds with pinpoint accuracy, perfect for critical shots", 1);
     public static Weapon PHASE_REVOLVER = new Weapon("Phase Revolver", "Energy Sidearm", 14, 18, "Emits short-range energy blasts that can phase through armor with minimal delay", 1);
     public static Weapon PULSE_PISTOL = new Weapon("Pulse Pistol", "Energy Weapon", 8, 12, "A compact energy-based sidearm", 1);

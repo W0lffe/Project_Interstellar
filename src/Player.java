@@ -114,7 +114,9 @@ public class Player {
         //Loop through player inventory, check if has same items to increase quantity
         for (Items items : Inventory) {
             if (items.getItem().equals(itemToAdd.getItem())) {
-                items.setQuantity(itemToAdd.getQuantity() + items.getQuantity());
+                items.setQuantity(itemToAdd.getQuantity() + 1);
+                String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
+                Utility.Print(itemAdded, Utility.ActionSpeed);
                 return;
             }
         }
@@ -129,7 +131,7 @@ public class Player {
     private void ShowInventory(Scanner action) {
         //Return if inventory is empty
         if (Inventory.isEmpty()) {
-            System.out.println("Inventory is empty");
+            Utility.Print("Inventory is empty\n", Utility.ActionSpeed);
             return;
         } else {
 
@@ -139,6 +141,7 @@ public class Player {
                 System.out.println("Inventory: ");
                 //Loop through inventory item objects
                 for (Items items : Inventory) {
+                    
                     if (equipped.equals(items)) {
                         System.out.println(i + ". " + items + " Equipped");
                     }
@@ -154,6 +157,10 @@ public class Player {
                 if (userAction.equals("A")) {
                     EquipItem(action); //Go to function where player equips/uses item
                 }
+                if (!userAction.matches("A|B")) {
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
+                }
+               
             } while (!userAction.equals("B"));
 
         }
@@ -204,7 +211,7 @@ public class Player {
             }
         }
         else{
-            System.out.println("You have not acquired any skills yet!");
+            Utility.Print("You have not acquired any skills yet!\n", Utility.ActionSpeed);
         }
     }
 
@@ -232,7 +239,10 @@ public class Player {
                 case "C":
                     ShowInventory(action); //Show player inventory
                     break;
+                case "D":
+                    return;
                 default:
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
             }
         } while (!userAction.equals("D")); //Go back 
