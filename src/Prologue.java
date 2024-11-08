@@ -75,9 +75,6 @@ public class Prologue {
 
     private static void Scene2(Player player, Scanner action){
         
-        //Create NPC target
-        EnemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
-
         boolean SCENE2 = true;
         String scene2 = Files.ReadFile(storyFile, "SCENE2", "S2-OPTION1"); //Read story to string
         Utility.Print(scene2, Utility.StoryPrintSpeed);  //print story
@@ -88,6 +85,7 @@ public class Prologue {
 
             switch (userAction) {
                 case "A":
+                    EnemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
                     String option1 = Files.ReadFile(storyFile, "S2-OPTION1", "S2-OPTION1,2");
                     Utility.Print(option1, Utility.StoryPrintSpeed);  
                     Combat.FightMenu(player, EnemyList, action);  //Fight with NPC
