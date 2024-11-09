@@ -27,13 +27,13 @@ The project will be iteratively refined as new skills are developed, with the po
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
     * [X] Consumables - medicine, food
-    * [ ](Optional) More all above
+    * [ ] (Optional) More all above
 * [ ] Locations
     * [ ] Planet 
         * [ ] Sub-locations - like outposts
     * [ ] Ships
         * [ ] Sub-locations - like bridge, mess hall etc..
-* [X](optional) Lore
+* [X] (optional) Lore
 * [X] Interactable Objects - hackable computers, readable datapads etc..
  
 
@@ -52,7 +52,7 @@ The project will be iteratively refined as new skills are developed, with the po
 * [X] Player Inventory
 * [X] Combat
 * [X] Players Choice System (kind of)
- * [ ](Optional) Endings Based On Players Choices
+ * [ ] (Optional) Endings Based On Players Choices
 * [ ] Journal
 * [X] Progress Flags
 
