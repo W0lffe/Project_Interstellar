@@ -127,11 +127,6 @@ public class Prologue {
                 case "B":
                     Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
                     Combat.FightMenu(player, EnemyList, action); //Fight with NPC
-                    if(!player.isAlive()){
-                        //Get player Alive status after Combat
-                        Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
-                        return;
-                    }
                     break;
                 case "C":
                     String caseC = "You try to get over to Teth. But " + brute.getName() + " spots you and shoots at you, dealing " + 
@@ -204,10 +199,6 @@ public class Prologue {
                     player.addItem(Consumables.BASIC_MEDKIT); //Add medkits to inventory
                     player.addItem(Consumables.BASIC_MEDKIT);
                     Combat.FightMenu(player, EnemyList, action); //Fight with NPC
-                    if(!player.isAlive()){
-                        Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
-                        return;
-                    }
                     SCENE3 = false;
                     break;
                 default:
@@ -232,10 +223,7 @@ public class Prologue {
         NPC Boss = EnemyList.get(0);
 
         Combat.FightMenu(player, EnemyList, action); //Fight the boss
-        if(!player.isAlive()){
-            Game.gameRunning=false; //If false (not alive), gameRunning is set to false, and player is taken back to main menu
-            return;
-        }
+       
 
         String finalPart2 = Files.ReadFile(storyFile, "FINAL-PART2", "END");
         Utility.Print(finalPart2, Utility.StoryPrintSpeed);

@@ -184,3 +184,99 @@ A small comfort washes over him, knowing he can return here to restore his stren
 This room could be more than just a base — it could be a lifeline.
 
 ACT1-SCENE6
+
+Jaxon stretches his arms, feeling the weight of the last few days lift off him after his rest. 
+The quiet of the bunker is replaced by the distant chirping of the planet's wildlife, and as he steps outside, the thick, humid air fills his lungs. 
+The lush greenery of Calyra I sprawls in every direction, the vibrant colors of alien plants swaying gently in the breeze. 
+He looks around, taking it all in, grateful for the rare moment of calm.
+
+As Jaxon walks along the rough trail leading away from the bunker, he can’t help but admire the beauty of the untouched landscape. 
+Towering trees with bioluminescent flowers glow faintly as the sun dips lower in the sky. 
+The terrain here feels like something out of a dream, wild and unspoiled. 
+He’s not sure what he’s looking for, but something is pulling him forward, some unknown force urging him to follow the path.
+
+Soon, the path splits into multiple trails, each heading in a different direction. 
+Jaxon stops for a moment, considering his options. The air is still, except for the occasional rustle of leaves. 
+His instincts tell him to be cautious. He steps closer to the junction, his eyes scanning for any sign of danger.
+
+Out of nowhere, a rough voice cuts through the silence:
+
+Bandit: "Well, well... what do we have here? Looks like someone wandered a little too far from home."
+
+Jaxon freezes, his hand instinctively brushing the handle of his weapon as he slowly turns to face the source of the voice.
+
+From the shadows of the surrounding trees, four bandits step into view, their worn clothes and makeshift armor giving off an unmistakable air of danger. 
+They move with a predatory grace, and it's clear they've done this before. 
+The leader steps forward, a smirk on his scarred face, while the others fan out, surrounding Jaxon.
+
+Bandit Leader: "What's a lone traveler doing out here? Not many come through these parts... and those who do usually don't leave. 
+Where are you coming from, huh? And where are you going?"
+
+Jaxon stands his ground, not revealing too much. 
+His eyes flick from bandit to bandit, gauging their positions. 
+His fingers twitch at his side, itching to draw his weapon, but he holds off for now. He knows he can’t afford to make a mistake here.
+
+Jaxon: "Just passing through. I'm not looking for trouble."
+
+Bandit : "Trouble finds you, friend. You shouldn’t have come here."
+
+The bandit leader takes a step closer, his hand resting casually on the hilt of his blade.
+
+Bandit Leader: "I think it’s time for you to hand over whatever you've got... and tell us where you're headed. We might just let you go after that."
+
+Jaxon (gritting his teeth): "I don’t think that’s going to happen."
+
+The bandits close in, weapons drawn, and Jaxon’s pulse quickens. 
+He knows the situation is about to escalate. He reaches for his weapon, the familiar weight of it offering a sense of comfort. 
+The air is thick with tension, and the moment hangs in the balance.
+
+The leader grins, his teeth yellowed from years of neglect, and the others tighten their circle, their eyes fixed on Jaxon.
+
+Bandit Leader: "Last chance, traveler."
+
+Without warning, the bandits make their move, advancing with weapons raised.
+
+ACT1-SCENE7
+
+Jaxon stands tall, breathing heavily, his weapon still smoking from the recent exchange. 
+The bandit leader falls to the ground with a heavy thud, blood staining the dirt beneath him. 
+The remaining bandits stagger back, eyes wide with fear.
+
+One of the bandits, a scruffy man with a dirty face, turns and bolts, attempting to make a break for it. Jaxon’s sharp eyes track his movements, and with a swift motion, he raises his weapon and fires. 
+A loud crack echoes through the air as the shot connects with the bandit’s leg. 
+The man screams, crumpling to the ground, his foot twitching in pain but unable to move any further.
+
+The remaining bandit bolts away evading Jaxon's shots.
+
+Jaxon stands up next to injured bandit.
+Jaxon: "Where's the closest spaceport? And where are you all coming from?"
+
+The injured bandit groans, clutching his bleeding leg as he stares up at Jaxon, torn between fear and survival. 
+He spits blood on the ground before speaking, his voice weak but clear.
+
+Bandit: "The spaceport... it's about two clicks to the west... you’ll find it in the old industrial district. As for us… we were hired by the Ra'kra... 
+to make sure no one gets to the south side of the planet. We were... just following orders."
+
+Jaxon: "What is on the south side?"
+
+Bandit: "There is.. there is..."
+
+His voice trails off as he slumps, his head drooping forward. He struggles to finish his thought, but his body can’t hold on any longer. 
+With one last shuddering breath, the bandit’s eyes go glassy, his body going limp as the life fades from him.
+
+Jaxon watches silently, waiting for more that will never come. The only sound now is the wind in the trees, and the quiet rustling of leaves. 
+He glances at the bandit's lifeless form, then looks toward the west, where the spaceport lies.
+
+Suddenly, a low rumble fills the air—a sound unlike the usual breeze or wildlife. Jaxon’s eyes narrow, his gaze shifting to the sky. 
+He hears the unmistakable roar of a starship, its engines throttling as it flies in low, heading west toward the spaceport. 
+The sound grows louder, the craft now visible above the treetops, cutting through the air with impressive speed.
+
+Jaxon takes a deep breath, his mind racing. 
+The spaceport wasn’t far, but with the Ra'kra and bandits lurking nearby, he had no idea what to expect when he arrived.
+
+Jaxon stands at the crossroads once more, the weight of the decision settling heavily on him. 
+To the west, the sound of a starship’s engines grows louder, a clear sign of movement toward the spaceport. 
+To the south lies the potential for answers, though the bandit’s unfinished words leave more questions than clarity. 
+And to the north, an air of mystery lingers, with unknown dangers waiting to be uncovered.
+
+ACT1-SCENE8
