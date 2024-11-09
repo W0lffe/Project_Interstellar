@@ -21,9 +21,9 @@ The project will be iteratively refined as new skills are developed, with the po
 * [ ] Final Act - The Reckoning
 
 ### Game World
-* [ ] Characters
+* [X] Characters
     * [X] Player
-    * [] NPC
+    * [X] NPC
 * [X] Items
     * [X] Weapons - few different types, mostly ranged
     * [X] Consumables - medicine, food
@@ -33,14 +33,14 @@ The project will be iteratively refined as new skills are developed, with the po
         * [ ] Sub-locations - like outposts
     * [ ] Ships
         * [ ] Sub-locations - like bridge, mess hall etc..
-* [ ](optional) Lore
-* [ ] Interactable Objects - hackable computers, readable datapads etc..
+* [X](optional) Lore
+* [X] Interactable Objects - hackable computers, readable datapads etc..
  
 
 ### Game Mechanics
 * [ ] Player Skills
     * [X] Weapons
-    * [ ] Lockpicking?
+    * [X] Lockpicking
     * [ ] Computers
     * [X] Medicine
     * [ ] Speech
@@ -54,6 +54,7 @@ The project will be iteratively refined as new skills are developed, with the po
 * [X] Players Choice System (kind of)
  * [ ](Optional) Endings Based On Players Choices
 * [ ] Journal
+* [X] Progress Flags
 
 * [ ] Save Game
 * [ ] Load Game
