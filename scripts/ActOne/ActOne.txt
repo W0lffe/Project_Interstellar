@@ -167,3 +167,20 @@ To your right, near the doorway leading back to the main room, a weapon rack sta
 You notice something glinting in the rack, just waiting to be investigated.
 
 ACT1-SCENE5
+
+Jaxon and Teth step back into the main room, the weight of the day’s battles clear on their faces. 
+They scan the dimly lit space, both assessing and accepting its rough potential as a temporary base.
+
+Jaxon: “First thing tomorrow, we start gathering intel. We need to know what’s out there...and, more importantly, where we might find a ship off this rock.”
+
+Teth nods, glancing at the ceiling as if envisioning the stars beyond it.
+
+Teth: “Agreed. But tonight? We rest. We’ll need every bit of energy if we’re going to get off Calyra I in one piece.”
+
+They settle in, exhaustion taking over as they prepare for whatever challenges lie ahead.
+
+Jaxon looks around the main room, noting the sturdy walls and the relative quiet. It’s not much, but it feels safe enough. He thinks to himself, "In this room, I can rest and recover." 
+A small comfort washes over him, knowing he can return here to restore his strength and plan his next moves. 
+This room could be more than just a base — it could be a lifeline.
+
+ACT1-SCENE6

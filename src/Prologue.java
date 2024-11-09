@@ -6,6 +6,7 @@ public class Prologue {
     private static String userAction;
     private static final String storyFile = "Prologue/Prologue.txt"; //File wich from program reads story
     private static ArrayList<NPC> EnemyList = new ArrayList<>();
+    private static ArrayList<ProgressFlags> prologueFlags = new ArrayList<>();
 
     public static void Start(Player player, Scanner action){
         boolean SCENE1 = true;
@@ -157,6 +158,7 @@ public class Prologue {
                     //This CASE is not available if player inventory doesnt contain Consumable medkit
                     if(player.getInventory().contains(Consumables.BASIC_MEDKIT)){
                         Utility.Print("You go to Jaxer\n", Utility.ActionSpeed);
+                        player.addProgressFlag(new ProgressFlags("Saved Jaxer", true));
                         String s3o1 = Files.ReadFile(storyFile, "S3-OPTION1", "S3-OPTION2");
                         Utility.Print(s3o1, Utility.StoryPrintSpeed);
                         userAction = "B";
@@ -246,6 +248,7 @@ public class Prologue {
                     Utility.Print("You eliminate Ka'tar and grab his weapon.\n", Utility.ActionSpeed);
                     player.addItem(Boss.getEquipped()); //Add item that NPC Boss has equipped
                     Utility.Print("You make your way to the ship and leave the station.\n", Utility.ActionSpeed);
+                    player.addProgressFlag(new ProgressFlags("Eliminated Ka'tar", true));
                     FinalScene = false;
                     break;
                 case "B":
@@ -261,7 +264,7 @@ public class Prologue {
         String finalEnd = Files.ReadFile(storyFile, "END", "PROLOGUE-END");
         Utility.Print(finalEnd, Utility.StoryPrintSpeed);
 
+        player.setProgressFlags(prologueFlags);
     }
-
     //END OF PROLOGUE
 }

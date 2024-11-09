@@ -8,6 +8,7 @@ public class Player {
     private int health;
     private ArrayList<Items> Inventory;
     private ArrayList<Skills> PlayerSkills;
+    private ArrayList<ProgressFlags> ProgressFlags;
     private Weapon equipped;
     private int level;
     private int experience;
@@ -61,7 +62,13 @@ public class Player {
     public void setPlayerSkills(ArrayList<Skills> playerSkills) {
         PlayerSkills = playerSkills;
     }
+    public ArrayList<ProgressFlags> getProgressFlags() {
+        return ProgressFlags;
+    }
 
+    public void setProgressFlags(ArrayList<ProgressFlags> progressFlags) {
+        ProgressFlags = progressFlags;
+    }
     public Weapon getEquipped() {
         return equipped;
     }
@@ -95,7 +102,7 @@ public class Player {
     }
 
     public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills,
-            Weapon equipped, int level, int experience, int expNeeded, boolean alive) {
+            Weapon equipped, int level, int experience, int expNeeded, boolean alive, ArrayList<ProgressFlags> flags) {
 
         this.name = name;
         this.health = health;
@@ -107,6 +114,7 @@ public class Player {
         this.experience = experience;
         this.expNeeded = expNeeded;
         this.alive = alive;
+        this.ProgressFlags = flags;
     }
 
     //Function adds items to player inventory with parameter object
@@ -241,6 +249,9 @@ public class Player {
                     break;
                 case "D":
                     return;
+                case "E":
+                    ShowProgressFlags();
+                    return;
                 default:
                     Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
@@ -347,4 +358,33 @@ public class Player {
         setExperience(experience + Utility.LootItemEXP);
     }
 
+    public void addProgressFlag(ProgressFlags flag){
+        ProgressFlags.add(flag);
+    }
+
+    private void ShowProgressFlags() {
+        if (!ProgressFlags.isEmpty()) {
+            System.out.println("You have: ");
+            for (ProgressFlags flag : ProgressFlags) {
+                System.out.println(flag);
+            }
+        }
+        else{
+            Utility.Print("You have not acquired any skills yet!\n", Utility.ActionSpeed);
+        }
+
+    } 
+    
+    public boolean flagExists(String actionFlag){
+        boolean flagFound = false;
+        for (ProgressFlags flag : getProgressFlags()) {
+            if (flag.getAction().equals(actionFlag)) {
+                flagFound = true;
+                //System.out.println("Flag found!");
+                break;
+            }
+        }
+        //System.out.println("Flag not found!" + flagFound);
+        return flagFound;
+    }
 }

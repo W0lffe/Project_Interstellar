@@ -102,14 +102,15 @@ public class ActOne {
     }
 
     private static void BunkerArmory(Player player,Scanner action){
-        boolean cabinetLooted = false;
-        boolean rackLooted = false;
-        boolean terminalRead = false;
+        String firstTimeFlag = "BunkerArmory";
+        boolean firstTime = !player.flagExists(firstTimeFlag);
 
-         //!!!Implement logic that this only happens first time player comes here!!!
-        String ActOneScene4 = Files.ReadFile(file,"ACT1-SCENE4", "ACT1-SCENE5");
-        Utility.Print(ActOneScene4, Utility.StoryPrintSpeed);
-
+        if (firstTime) {
+            String ActOneScene4 = Files.ReadFile(file,"ACT1-SCENE4", "ACT1-SCENE5");
+            Utility.Print(ActOneScene4, Utility.StoryPrintSpeed);
+            player.addProgressFlag(new ProgressFlags("BunkerArmory", true));
+        }
+       
         do {
             System.out.println("A) Show Character \nB) Take a look at the cabinet \nC) Inspect old terminal \nD) Inspect the weapon rack \nE) Go back to Main Room");
             userAction = Validation.UserInput(action);
@@ -119,7 +120,8 @@ public class ActOne {
                     player.Character(action);
                     break;
                 case "B":
-                    if (player.getPlayerSkills().contains(Skills.Lockpicking) && !cabinetLooted) {
+                    String cabinetUnlocked = "ArmoryCabinetUnlocked";
+                    if (player.getPlayerSkills().contains(Skills.Lockpicking) && !player.flagExists(cabinetUnlocked)) {
                         System.out.println("You unlock the cabinet and find: ");
                         System.out.println(Consumables.ADRENAL_SHOT);
                         System.out.println(Consumables.ADRENAL_SHOT);
@@ -129,7 +131,7 @@ public class ActOne {
                         player.addItem(Consumables.ADRENAL_SHOT);
                         player.addItem(Consumables.ADRENAL_SHOT);
                         player.addItem(Consumables.ADVANCED_MEDKIT);
-                        cabinetLooted=true;
+                        player.addProgressFlag(new ProgressFlags(cabinetUnlocked, true));
                         break;
                     }
                     else{
@@ -137,11 +139,13 @@ public class ActOne {
                         break;
                     }
                 case "C":
-                    if (!terminalRead) {
+                    String terminalRead = "ArmoryTerminalRead";
+                    if (!player.flagExists(terminalRead)) {
                         Utility.Print("You press the button on the console. The terminal flickers and hums to life, displaying a series of broken messages:\n", Utility.ActionSpeed);
                         String terminal = Files.ReadFile(armoryTerminal, null, null);
                         Utility.Print(terminal, Utility.DatapadPrintSpeed);
                         player.LoreExperience();
+                        player.addProgressFlag(new ProgressFlags(terminalRead, true));
                         break;
                     }
                     else{
@@ -149,11 +153,12 @@ public class ActOne {
                         break;
                     }
                 case "D":
-                    if (!rackLooted){
+                    String rackLooted = "ArmoryRackLooted";
+                    if (!player.flagExists(rackLooted)){
                         System.out.println("In the weapon rack you find: ");
                         System.out.println(Weapon.LASER_RIFLE);
                         player.addItem(Weapon.LASER_RIFLE);
-                        rackLooted=true;
+                        player.addProgressFlag(new ProgressFlags(rackLooted, true));
                         break;
                     }
                     else{
@@ -162,13 +167,53 @@ public class ActOne {
                     }
                 case "E":
                     Utility.Print("You go back to Main Room\n", Utility.ActionSpeed);
-                    //BunkerMainRoom(player, action);
+                    BunkerMainRoom(player, action);
                     break;
                 default:
                     Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                     break;
             }
         } while (!userAction.equals("E"));
-        Game.gameRunning=false;
+    }
+
+    public static void BunkerMainRoom(Player player, Scanner action){
+        String BunkerMain = "BunkerMain";
+        boolean firstTime = !player.flagExists(BunkerMain); //if player flag doesnt exist, set false, if found set true
+        String goingOut = "Jaxon: Heading out!\n";
+
+        if (firstTime) {
+            String ActOneScene5 = Files.ReadFile(file,"ACT1-SCENE5", "ACT1-SCENE6");
+            Utility.Print(ActOneScene5, Utility.StoryPrintSpeed);
+            goingOut = "Jaxon: Lets see what is out there\n";
+            player.addProgressFlag(new ProgressFlags(BunkerMain, true));
+            //RestoreHealth and Savegame logic here
+        }
+ 
+        do {
+            System.out.println("A) Show Character \nB) Rest in the cozy bunkbed \nC) Head out \nD) Go to Armory");
+            userAction = Validation.UserInput(action);
+
+            switch (userAction) {
+                case "A":
+                    player.Character(action);
+                    break;
+                case "B":
+                    Utility.Print("Jaxon: Im gonna rest a while\n", Utility.ActionSpeed);
+                    //save and health restore logic here
+                    break;
+                case "C":
+                    Utility.Print(goingOut, Utility.ActionSpeed);
+                    //Go out of bunker function here
+                    break;
+                case "D":
+                    Utility.Print("You go to Armory\n", Utility.ActionSpeed);
+                    BunkerArmory(player, action);
+                    break;
+                default:
+                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
+                    break;
+            }
+            
+        } while (!userAction.equals("C"));
     }
 }

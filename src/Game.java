@@ -9,12 +9,13 @@ public class Game {
 
         ArrayList<Skills> playerSkills = new ArrayList<>(); // initialize empty list for player skills
         ArrayList<Items> playerInventory = new ArrayList<>(); // initialize empty list for player inventory items
+        ArrayList<ProgressFlags> progressFlags = new ArrayList<>();
    
         Skills.initializeSkillArray(); //Initialize array with set Skills
 
         // create a new player
-        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true); 
-        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true);
+        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags);
 
         // start a new game with created player
         startGame(player, inputScanner);
@@ -33,11 +34,14 @@ public class Game {
         gameRunning = true; //sets gameRunning true again, incase for example player dies and starts again
 
         while (gameRunning) {
-            Prologue.Start(player, action); //take player to Prologue
+            //Prologue.Start(player, action); //take player to Prologue
 
             //Continue(action);
 
-            ActOne.InstanceOne(player, action);
+            //ActOne.InstanceOne(player, action);
+            ActOne.BunkerMainRoom(player, action);
+
+            Continue(action);
         }
 
     }
