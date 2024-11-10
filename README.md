@@ -1,5 +1,29 @@
 # Codename: Project_Interstellar
 
+## State of Project
+
+The game is currently playable up to a certain point, featuring functional core mechanics such as combat, skill checks, inventory management, and progress tracking. 
+The story is actively unfolding, and players can explore a variety of environments, interact with characters, and make choices that shape their journey.
+
+As this is a work in progress, certain features are still being developed, and the game may contain bugs or issues. 
+Updates will continue as new content and features are added, with an ongoing focus on polishing gameplay and expanding the storyline.
+
+To run the game in terminal (from project folder) :
+compile: 
+```
+javac src/*.java -d out
+```
+run:
+```
+java -cp out/ Main
+```
+
+or
+
+In Visual Studio Code:
+* Run task using tasks.json tasks, compile and run
+
+
 ## Brief:
 #### Objective:
 Develop a text-based adventure game to explore and practice programming techniques, with an emphasis on object-oriented principles and object manipulation. 
