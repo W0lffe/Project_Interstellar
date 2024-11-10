@@ -35,6 +35,7 @@ The project will be iteratively refined as new skills are developed, with the po
         * [ ] Sub-locations - like bridge, mess hall etc..
 * [X] (optional) Lore
 * [X] Interactable Objects - hackable computers, readable datapads etc..
+
  
 
 ### Game Mechanics
