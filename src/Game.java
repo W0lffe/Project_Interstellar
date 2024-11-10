@@ -1,34 +1,67 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+public class Game {
 
-public class Game{
-    
-    public static void newGame(Scanner inputScanner){
+    public static boolean gameRunning = true; // Set game running TRUE
 
-        ArrayList<Skills> playerSkills = new ArrayList<>(); //initialize empty list for player skills
-        ArrayList<Items> playerInventory = new ArrayList<>(); //initialize empty list for player inventory items
-        //ArrayList<Player> GameState = new ArrayList<>(); //initialize emtpy list to track state of game for this player
+    public static void newGame(Scanner inputScanner) {
 
-        //create a new player
-        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, 0, null , 1, 0, 250, true);
-     
-        //start a new game with created player
+        ArrayList<Skills> playerSkills = new ArrayList<>(); // initialize empty list for player skills
+        ArrayList<Items> playerInventory = new ArrayList<>(); // initialize empty list for player inventory items
+        ArrayList<ProgressFlags> progressFlags = new ArrayList<>();
+   
+        Skills.initializeSkillArray(); //Initialize array with set Skills
+
+        // create a new player
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
+        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags);
+
+        // start a new game with created player
         startGame(player, inputScanner);
-}
+    }
 
-    public static void loadGame(Scanner inputScanner){
+
+    //WIP loadGame 
+    public static void loadGame(Scanner inputScanner) {
         System.out.println("WIP");
         return;
     }
 
-    private static void startGame(Player player, Scanner action){
-        System.out.println("Starting Game");
-        boolean gameRunning = true;
+    //Start Game with earlier created player
+    private static void startGame(Player player, Scanner action) {
+        Utility.Print("Game is starting\n", Utility.ActionSpeed);
+        gameRunning = true; //sets gameRunning true again, incase for example player dies and starts again
 
         while (gameRunning) {
-            Prologue.Start(player, action);
-            
+            Prologue.Start(player, action); //take player to Prologue
+
+            Continue(action);
+
+            ActOne.InstanceOne(player, action);
+            //ActOne.BunkerMainRoom(player, action);
+            gameRunning = false;
+
+            //Continue(action);
+        }
+
+    }
+
+    //Function asks player if they still want to play, if not player will be taken back to main menu
+    private static void Continue(Scanner action) {
+        String userInput;
+
+        while (true) {
+            Utility.Print("Do you want to continue your journey?\n", Utility.ActionSpeed);
+            System.out.println("A) Yes \nB) No");
+            userInput = Validation.UserInput(action);
+
+            if (userInput.equals("B")) {
+                gameRunning = false;
+                break;
+            } else {
+                break;
+            }
         }
 
     }

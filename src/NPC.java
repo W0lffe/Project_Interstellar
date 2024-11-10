@@ -7,10 +7,10 @@ public class NPC {
     private String name;
     private int experience;
     private boolean alive;
-    private Items equipped;
+    private Weapon equipped;
     private ArrayList<Items> inventory;
 
-    public NPC(int maxHealth, int health, String name, int experience, boolean alive, Items equipped, ArrayList<Items> inventory) {
+    public NPC(int maxHealth, int health, String name, int experience, boolean alive, Weapon equipped, ArrayList<Items> inventory) {
         this.maxHealth = maxHealth;
         this.health = health;
         this.name = name;
@@ -49,10 +49,10 @@ public class NPC {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
-    public Items getEquipped() {
+    public Weapon getEquipped() {
         return equipped;
     }
-    public void setEquipped(Items equipped) {
+    public void setEquipped(Weapon equipped) {
         this.equipped = equipped;
     }
     public ArrayList<Items> getInventory() {
@@ -62,15 +62,9 @@ public class NPC {
         this.inventory = inventory;
     }
     
+    //reduce health
     public void takeDamage(int damage){
         health -= damage;
     }
-    /* private Items randomInventory(){
-        ArrayList<Items> itemsPossible = new ArrayList<>();
-
-
-    }
- */
-
-
+ 
 }

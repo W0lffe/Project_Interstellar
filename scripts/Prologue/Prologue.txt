@@ -18,7 +18,6 @@ With every flicker of the ship's engines, Jaxon feels the weight of his quest pr
 
 His journey has just begun, and with every star that shines above, he vows to find her, to bring her home, and to restore what was once whole.
 
-SCENE1
 
 You wake with a start, the dim light filtering through the vents barely illuminating your cramped quarters. 
 The remnants of the same haunting nightmare still cling to your mind, visions of darkness and loss that you can't shake.
@@ -33,6 +32,7 @@ Nearby, a datapad rests on the makeshift nightstand, its screen faintly glowing 
 Through the thin walls, you can hear the muted sounds of life in the station—a few people talking in hushed voices just outside your dorm.
 
 SCENE2
+You decide to head outside, ready to face whatever the day brings.
 
 You come out of the dorm room and look through the big windows. It's a sunny day out here at Veskar Station. 
 You notice fleet ships leaving the dock, their engines humming as they ascend into the endless void. 
@@ -230,6 +230,16 @@ Teth: "Took this from that supply crate, you will need it", and shoves the medki
 
 The sounds of chaos echoing in the distance, until you reach the corridor that leads to your starship, the Orion.
 
+You and Teth share a brief moment, locking eyes amid the turmoil. 
+The flicker of hope in your gaze cuts through the fear, a silent acknowledgment of the danger that still surrounds you.
+
+Jaxon: "Let’s get out of here!"
+
+Teth: "Roger, I’ll go disable the ship's maglocks."
+
+Jaxon: "I’ll open the hangar bay and fire up the ship!"
+
+
 S3P2-OPTION2
 
 You let the engineer run ahead, the sound of Ra'kra soldiers closing in sending adrenaline coursing through your veins. 
@@ -250,7 +260,7 @@ Teth: "Took this from that supply crate, you will need it", and shoves the medki
 
 With a shared glance, you and Teth quickly take cover, bracing yourselves for the battle that lies ahead.
 
-S3P2-OPTION2,2
+S3P2-OPTION2P1
 
 After you dispatch the last of the Ra'kra soldiers, 
 you push forward through the smoke-filled corridor, your heart pounding as you finally reach the door that leads to your starship, the Orion. 
@@ -264,7 +274,6 @@ Jaxon: "Let’s get out of here!"
 Teth: "Roger, I’ll go disable the ship's maglocks."
 
 Jaxon: "I’ll open the hangar bay and fire up the ship!"
-
 
 FINAL
 

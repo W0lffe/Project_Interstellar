@@ -1,17 +1,20 @@
-
-
 import java.util.Scanner;
+
+//Main Class
 public class Main{
+
+    //Main
 
     public static void main(String[] args) {
 
-        System.out.println("Project: Interstellar");
 
-        Scanner inputScanner = new Scanner(System.in);
+        Scanner inputScanner = new Scanner(System.in); //Create object Scanner
         String userInput; //initialize variable for user input
         
-        System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
         do {
+            Utility.Print("Project: Interstellar\n", 20);
+
+            System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
             userInput = Validation.UserInput(inputScanner); //use validation for user input
 
             switch (userInput) {
@@ -26,8 +29,9 @@ public class Main{
                     break;
                 default:
                     System.out.println("Unknown action.");
+                    break;
             }
-        } while (!userInput.equals("C"));
+        } while (!userInput.equals("C")); //If userInput is C, program closes
 
         inputScanner.close();
     }
