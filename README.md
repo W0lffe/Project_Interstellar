@@ -8,7 +8,8 @@ The story is actively unfolding, and players can explore a variety of environmen
 As this is a work in progress, certain features are still being developed, and the game may contain bugs or issues. 
 Updates will continue as new content and features are added, with an ongoing focus on polishing gameplay and expanding the storyline.
 
-To run the game in terminal (from project folder) :
+To run the game in terminal (from project folder):
+
 compile: 
 ```
 javac src/*.java -d out
