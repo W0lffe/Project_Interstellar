@@ -117,6 +117,10 @@ class Consumables extends Items {
         return "[" + getItem() + " | " + getType() + " | Heals: " + healPoints + " | " + getDescription() + " | " + "Qty: " + getQuantity() + "]";
     }
 
+    public String Found(){
+        return "[" + getItem() + " | " + getType() + " | Heals: " + healPoints + " | " + getDescription() +"]";
+    }
+
     //predefined consumables
     public static Consumables SPACE_STEAK = new Consumables("Space Steak", "Food", 15, "All nutrients preserved!", 1);
     public static Consumables ENERGY_DRINK = new Consumables("Energy Drink", "Drink", 8,  "Lovely refreshing drink", 1);

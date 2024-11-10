@@ -3,7 +3,7 @@ public class Utility {
     public static String cantDoThat = "Jaxon: I cant do that right now\n"; //For Switch case defaults
 
     //Speed parameters for Utility.Print function, sets speed how fast to "type" text
-    public static int StoryPrintSpeed = 0; 
+    public static int StoryPrintSpeed = 5; 
     public static int DatapadPrintSpeed = 20; 
     public static int ActionSpeed = 15;
 

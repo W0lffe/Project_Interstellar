@@ -6,7 +6,6 @@ public class Prologue {
     private static String userAction;
     private static final String storyFile = "Prologue/Prologue.txt"; //File wich from program reads story
     private static ArrayList<NPC> EnemyList = new ArrayList<>();
-    private static ArrayList<ProgressFlags> prologueFlags = new ArrayList<>();
 
     public static void Start(Player player, Scanner action){
         boolean SCENE1 = true;
@@ -29,7 +28,7 @@ public class Prologue {
                     //Add items to inventory
                     if (!checkedLocker) {
                         System.out.println("You look in the locker and find: \n" + Weapon.LASER_PISTOL + "\n" + 
-                                        Consumables.SPACE_SODA + "\n" + Consumables.BASIC_MEDKIT);
+                                        Consumables.SPACE_SODA.Found() + "\n" + Consumables.BASIC_MEDKIT.Found());
                         player.addItem(Weapon.LASER_PISTOL);
                         player.addItem(Consumables.SPACE_SODA);
                         player.addItem(Consumables.BASIC_MEDKIT);
@@ -127,6 +126,10 @@ public class Prologue {
                 case "B":
                     Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
                     Combat.FightMenu(player, EnemyList, action); //Fight with NPC
+                    if (!player.isAlive()) {
+                        Game.gameRunning=false; //if player is not alive, user will be sent back to main menu
+                        return;
+                    }
                     break;
                 case "C":
                     String caseC = "You try to get over to Teth. But " + brute.getName() + " spots you and shoots at you, dealing " + 
@@ -194,11 +197,17 @@ public class Prologue {
                 case "B":
                     EnemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null));
                     EnemyList.add(new NPC(100, 100, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, null));
-                    String p2o2 = Files.ReadFile(storyFile, "S3P2-OPTION2", "FINAL");
+                    String p2o2 = Files.ReadFile(storyFile, "S3P2-OPTION2", "S3P2-OPTION2P1");
                     Utility.Print(p2o2, Utility.StoryPrintSpeed);
                     player.addItem(Consumables.BASIC_MEDKIT); //Add medkits to inventory
                     player.addItem(Consumables.BASIC_MEDKIT);
                     Combat.FightMenu(player, EnemyList, action); //Fight with NPC
+                    if (!player.isAlive()) {
+                        Game.gameRunning=false; //if player is not alive, user will be sent back to main menu
+                        return;
+                    }
+                    String p2o3 = Files.ReadFile(storyFile, "S3P2-OPTION2P1", "FINAL");
+                    Utility.Print(p2o3, Utility.StoryPrintSpeed);
                     SCENE3 = false;
                     break;
                 default:
@@ -219,12 +228,15 @@ public class Prologue {
         Utility.Print(finalScene, Utility.StoryPrintSpeed);
 
         //Create NPC
-        EnemyList.add(new NPC(200, 200, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, null));
+        EnemyList.add(new NPC(150, 150, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, null));
         NPC Boss = EnemyList.get(0);
 
         Combat.FightMenu(player, EnemyList, action); //Fight the boss
+        if (!player.isAlive()) {
+            Game.gameRunning=false; //if player is not alive, user will be sent back to main menu
+            return;
+        }
        
-
         String finalPart2 = Files.ReadFile(storyFile, "FINAL-PART2", "END");
         Utility.Print(finalPart2, Utility.StoryPrintSpeed);
 
@@ -252,7 +264,6 @@ public class Prologue {
         String finalEnd = Files.ReadFile(storyFile, "END", "PROLOGUE-END");
         Utility.Print(finalEnd, Utility.StoryPrintSpeed);
 
-        player.setProgressFlags(prologueFlags);
     }
     //END OF PROLOGUE
 }

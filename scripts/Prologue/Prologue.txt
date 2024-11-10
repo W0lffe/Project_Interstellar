@@ -230,6 +230,16 @@ Teth: "Took this from that supply crate, you will need it", and shoves the medki
 
 The sounds of chaos echoing in the distance, until you reach the corridor that leads to your starship, the Orion.
 
+You and Teth share a brief moment, locking eyes amid the turmoil. 
+The flicker of hope in your gaze cuts through the fear, a silent acknowledgment of the danger that still surrounds you.
+
+Jaxon: "Let’s get out of here!"
+
+Teth: "Roger, I’ll go disable the ship's maglocks."
+
+Jaxon: "I’ll open the hangar bay and fire up the ship!"
+
+
 S3P2-OPTION2
 
 You let the engineer run ahead, the sound of Ra'kra soldiers closing in sending adrenaline coursing through your veins. 
@@ -250,7 +260,7 @@ Teth: "Took this from that supply crate, you will need it", and shoves the medki
 
 With a shared glance, you and Teth quickly take cover, bracing yourselves for the battle that lies ahead.
 
-FINAL
+S3P2-OPTION2P1
 
 After you dispatch the last of the Ra'kra soldiers, 
 you push forward through the smoke-filled corridor, your heart pounding as you finally reach the door that leads to your starship, the Orion. 
@@ -265,6 +275,7 @@ Teth: "Roger, I’ll go disable the ship's maglocks."
 
 Jaxon: "I’ll open the hangar bay and fire up the ship!"
 
+FINAL
 
 After you manage to open the hangar bay doors, you sprint toward the Orion, your heart racing with urgency. 
 The familiar hum of the ship’s systems greets you as you leap into the cockpit, fingers flying over the controls to fire up the engines. 

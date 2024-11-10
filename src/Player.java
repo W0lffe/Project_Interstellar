@@ -124,6 +124,7 @@ public class Player {
             if (items.getItem().equals(itemToAdd.getItem())) {
                 items.setQuantity(itemToAdd.getQuantity() + 1);
                 String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
+                LootExperience();
                 Utility.Print(itemAdded, Utility.ActionSpeed);
                 return;
             }
@@ -164,6 +165,7 @@ public class Player {
                 userAction = Validation.UserInput(action);
                 if (userAction.equals("A")) {
                     EquipItem(action); //Go to function where player equips/uses item
+                    return;
                 }
                 if (!userAction.matches("A|B")) {
                     Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);

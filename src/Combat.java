@@ -10,11 +10,7 @@ public class Combat {
         String userAction;
 
         do {
-            //See if player is alive or not after Attack function
-            if (!player.isAlive()) {
-                Game.gameRunning = false;
-                return;
-            }
+         
             //print player and enemy healths
             int enemies = enemy.size();
             if (enemy.isEmpty()) {
@@ -42,7 +38,7 @@ public class Combat {
                         }
                         break;
                     default:
-                        System.out.println(Utility.cantDoThat);
+                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                         break;
                 }
             }
@@ -75,7 +71,7 @@ public class Combat {
                         }
                         break;
                     default:
-                        System.out.println(Utility.cantDoThat);
+                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                         break;
                 }
             }
@@ -115,7 +111,7 @@ public class Combat {
                         }
                         break;
                     default:
-                        System.out.println(Utility.cantDoThat);
+                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                         break;
                 }
             }
@@ -162,11 +158,11 @@ public class Combat {
                         }
                         break;
                     default:
-                        System.out.println(Utility.cantDoThat);
+                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
                         break;
                 }
             }
-        } while (fight || player.isAlive()); //break when fight is set false or when player dies
+        } while (fight); //break when fight is set false or when player dies
     }
 
     public static void Attack(Player player, NPC enemy) {
