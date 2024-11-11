@@ -15,7 +15,7 @@ public class Game {
 
         // create a new player
         Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
-        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags);
+        //Player player = new Player("Jaxon Ryker", 50, 150, playerInventory, playerSkills, Weapon.GRAVITY_CANNON, 1, 1000, 250, true, progressFlags);
 
         // start a new game with created player
         startGame(player, inputScanner);
@@ -38,9 +38,9 @@ public class Game {
 
             Continue(action);
 
-            ActOne.InstanceOne(player, action);
-            //ActOne.BunkerMainRoom(player, action);
-            gameRunning = false;
+            CalyraBunker.InstanceOne(player, action);
+            //CalyraBunker.BunkerMainRoom(player, action);
+            //gameRunning = false;
 
             //Continue(action);
         }
