@@ -1,7 +1,7 @@
 # Codename: Project_Interstellar
 
 ## State of Project
-
+# NOTE: This state is only for master branch, currently taking a step back and converting to GUI(JavaFX). Will be merged when ready.
 The game is currently playable up to a certain point, featuring functional core mechanics such as combat, skill checks, inventory management, and progress tracking. 
 The story is actively unfolding, and players can explore a variety of environments, interact with characters, and make choices that shape their journey.
 
@@ -85,7 +85,8 @@ The project will be iteratively refined as new skills are developed, with the po
 * [ ] Save Game
 * [ ] Load Game
 
-
+### GUI
+* [ ] JavaFX
 
 
     
