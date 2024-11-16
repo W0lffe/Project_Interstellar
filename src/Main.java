@@ -1,39 +1,50 @@
-import java.util.Scanner;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 
 //Main Class
-public class Main{
+public class Main extends Application{
+
+    public static final int WINDOW_WIDTH = 1200;
+    public static final int WINDOW_HEIGHT = 900;
+    public static Scene mainMenuScene;
+
 
     //Main
 
-    public static void main(String[] args) {
+    public void start(Stage primaryStage){
 
+        HorizontalContainer top = new HorizontalContainer("");
+        top.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT/4);
 
-        Scanner inputScanner = new Scanner(System.in); //Create object Scanner
-        String userInput; //initialize variable for user input
+        HorizontalContainer bottom = new HorizontalContainer("");
+        bottom.setPrefSize(WINDOW_WIDTH, WINDOW_HEIGHT/4);
+
+        VerticalContainer left = new VerticalContainer("");
+        left.setPrefSize(WINDOW_WIDTH/4, WINDOW_HEIGHT);
+
+        VerticalContainer right = new VerticalContainer("");
+        right.setPrefSize(WINDOW_WIDTH/4, WINDOW_HEIGHT);
+
+        VerticalMainMenu center = new VerticalMainMenu("Project Interstellar", "New Game", "Load Game", "Exit Game");
+        center.setPrefSize(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+
+        Interface root = new Interface(top, bottom, left, right, center);
         
-        do {
-            Utility.Print("Project: Interstellar\n", 20);
 
-            System.out.println("A) New Game\nB) Load Game \nC) Exit Game");
-            userInput = Validation.UserInput(inputScanner); //use validation for user input
+        //BUTTONS HERE
 
-            switch (userInput) {
-                case "A":
-                    Game.newGame(inputScanner); //char A to start a new game
-                    break;
-                case "B":
-                    Game.loadGame(inputScanner); //char B to load existing game
-                    break;
-                case "C":
-                    System.out.println("Exiting game"); //char C to exit game
-                    break;
-                default:
-                    System.out.println("Unknown action.");
-                    break;
-            }
-        } while (!userInput.equals("C")); //If userInput is C, program closes
+        Scene mainMenu = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+        mainMenuScene = mainMenu;
+        primaryStage.setTitle("Project Interstellar");
+        primaryStage.setScene(mainMenu);
+        primaryStage.show();
 
-        inputScanner.close();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
 
