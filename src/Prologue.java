@@ -24,7 +24,7 @@ public class Prologue {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action); //Show character info
+                    //player.Character(action); //Show character info
                     break;
                 case "B":
                     //Add items to inventory
@@ -35,6 +35,7 @@ public class Prologue {
                         player.addItem(Weapon.LASER_PISTOL);
                         player.addItem(Consumables.SPACE_SODA);
                         player.addItem(Consumables.BASIC_MEDKIT);
+
 
                         checkedLocker = true;
                         break;
@@ -129,14 +130,13 @@ public class Prologue {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action); //Show Character info
+                    //player.Character(action); //Show Character info
                     break;
                 case "B":
                     Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
 
                     Combat.FightMenu(player, EnemyList, action); //Fight with NPC
                     if (!player.isAlive()) {
-                        Game.gameRunning=false; //if player is not alive, user will be sent back to main menu
                         return;
                     }
 
@@ -219,7 +219,6 @@ public class Prologue {
                     EnemyList.add(new NPC(100, 100, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, null));
                     Combat.FightMenu(player, EnemyList, action); //Fight with NPC
                     if (!player.isAlive()) {
-                        Game.gameRunning=false; //if player is not alive, user will be sent back to main menu
                         return;
                     }
 
@@ -250,7 +249,6 @@ public class Prologue {
 
         Combat.FightMenu(player, EnemyList, action); //Fight the boss
         if (!player.isAlive()) {
-            Game.gameRunning=false; //if player is not alive, user will be sent back to main menu
             return;
         }
        

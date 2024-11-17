@@ -26,7 +26,7 @@ public class CalyraBunker {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action);
+                    //player.Character(action);
                     break;
                 case "B":
                     if (!checkedLocker) {
@@ -73,7 +73,6 @@ public class CalyraBunker {
 
         Combat.FightMenu(player, EnemyList, action);
         if (!player.isAlive()) {
-            Game.gameRunning=false;
             return;
         }
 
@@ -90,7 +89,6 @@ public class CalyraBunker {
 
         Combat.FightMenu(player, EnemyList, action);
         if (!player.isAlive()) {
-            Game.gameRunning=false;
             return;
         }
 
@@ -125,7 +123,7 @@ public class CalyraBunker {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action);
+                    //player.Character(action);
                     break;
                 case "B":
                     if (player.getPlayerSkills().contains(Skills.Lockpicking) && !player.flagExists(cabinetUnlocked)) {
@@ -216,7 +214,7 @@ public class CalyraBunker {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action);
+                    //player.Character(action);
                     break;
                 case "B":
                     Utility.Print("Jaxon: Im gonna rest a while\n", Utility.ActionSpeed);
@@ -259,7 +257,6 @@ public class CalyraBunker {
             EnemyList.add(new NPC(75, 75, "Bandit Leader", 40, true, Weapon.PULSE_RIFLE, null));
             Combat.FightMenu(player, EnemyList, action);
             if (!player.isAlive()) {
-                Game.gameRunning=false;
                 return;
             }
             player.addProgressFlag(new ProgressFlags(PathToColony, true));
@@ -274,7 +271,7 @@ public class CalyraBunker {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action);
+                    //player.Character(action);
                     break;
                 case "B":
                     Utility.Print("Jaxon: Lets find ourselves a ship.\n", Utility.ActionSpeed);

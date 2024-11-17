@@ -1,5 +1,14 @@
+import javafx.scene.control.TextArea;
+
 public class Utility {
     
+    public static Interface root = (Interface)Game.gameRunningScene.getRoot();
+    public static VerticalContainer bottomContainer = (VerticalContainer)root.getBottom();
+    public static VerticalContainer leftContainer = (VerticalContainer)root.getLeft();
+    public static VerticalStoryPrint centerContainer = (VerticalStoryPrint)root.getCenter();
+    public static VerticalContainer rightContainer = (VerticalContainer)root.getRight();
+
+
     public static String cantDoThat = "Jaxon: I cant do that right now\n"; //For Switch case defaults
     public static String areaClear = "Jaxon: I have cleared that area\n";
     public static String lockerIsEmpty = "Locker is empty.\n";
@@ -22,26 +31,18 @@ public class Utility {
 
 
     //Function that sets parameter String to character array, prints characters with delay, parameter speed
+    // IMPLEMENT CHARACTER BY CHARACTER PRINTING!!
     public static void Print(String toPrint, int speed){
-
+        
+        TextArea textArea = centerContainer.getTextArea();
+        
         char[] toPrintArray = toPrint.toCharArray();
+
         for (int i = 0; i < toPrint.length(); i++) {
-            System.out.print(toPrintArray[i]);
-
-            try {
-                Thread.sleep(speed);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            textArea.appendText(Character.toString(toPrintArray[i]));
+          
         }
-
-        //Delays program after printing text 500ms
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
 
     }
 }
+

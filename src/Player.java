@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javafx.geometry.Pos;
+
 public class Player {
 
     private String name;
@@ -14,6 +16,7 @@ public class Player {
     private int experience;
     private int expNeeded;
     private boolean alive;
+    private VerticalPlayerStatus statusContainer;
 
     public boolean isAlive() {
         return alive;
@@ -37,6 +40,7 @@ public class Player {
 
     public void setHealth(int health) {
         this.health = health;
+        CharacterInfo();
     }
 
     public int getMaxHealth() {
@@ -203,6 +207,7 @@ public class Player {
                     Weapon equipWeapon = (Weapon) selectedItem; //Convert Items to Weapon
                     setEquipped(equipWeapon); //set Weapon object equipped for player
                     Utility.Print("Equipped: " + equipWeapon.getItem() + "\n", Utility.ActionSpeed);
+                    CharacterInfo();
                     break;
                 }
             } else {
@@ -226,40 +231,29 @@ public class Player {
     }
 
     //Show character details 
-    public void Character(Scanner action) {
-        String userAction;
-        do {
+    public VerticalContainer Character() {   
 
-            CharacterInfo(); //Print info of player
-            System.out.println("A) Show Skills\nB) Level Up\nC) Show Inventory\nD) Back");
+       
+             
+        VerticalContainer characterContainer = new VerticalContainer(20, "Character");
+        characterContainer.setAlignment(Pos.CENTER);
 
-            userAction = Validation.UserInput(action);
-            switch (userAction) {
-                case "A":
-                    ShowSkills(action); //Open acquired skills menu
-                    break;
-                case "B":
-                    if (experience >= expNeeded) {
-                        LevelUp(action); //Level up character if experience requirements is met
-                        break;
-                    } else {
-                        Utility.Print("Not enough of experience!\n", Utility.ActionSpeed);
-                        break;
-                    }
-                case "C":
-                    ShowInventory(action); //Show player inventory
-                    break;
-                case "D":
-                    return;
-                case "E":
-                    ShowProgressFlags();
-                    return;
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
-            }
-        } while (!userAction.equals("D")); //Go back 
+        VerticalContainer skillsContainer = new VerticalContainer(10, "Skills");
+        skillsContainer.setAlignment(Pos.CENTER);
 
+        VerticalContainer levelUpContainer = new VerticalContainer(10, "Level");
+        levelUpContainer.setAlignment(Pos.CENTER);
+
+        VerticalContainer inventoryContainer = new VerticalContainer(10, "Inventory");
+        inventoryContainer.setAlignment(Pos.CENTER);
+
+        characterContainer.getChildren().addAll(skillsContainer, levelUpContainer, inventoryContainer);
+
+
+        //MAKE MOUSECLICKED ACTION HERE
+
+        return characterContainer;
+  
     }
 
     //Reduce taken damage from player health
@@ -270,6 +264,8 @@ public class Player {
         if (health <= 0) {
             setAlive(false);
         }
+
+        CharacterInfo();
     }
 
 
@@ -289,10 +285,12 @@ public class Player {
         if (health > maxHealth) {
             health = maxHealth;
         }
+
+        CharacterInfo();
     }
 
     //Prints info of character
-    private void CharacterInfo() {
+    public void CharacterInfo() {
         String isEquipped = "";
         String levelUp = "";
 
@@ -305,9 +303,13 @@ public class Player {
         } else {
             isEquipped = equipped.getItem();
         }
-        System.out.printf("[%s  | Level: %d | XP: %d/%d %s]\n[Health: %d/%d | Equipped: %s]\n",
-                name, level, experience, expNeeded, levelUp, health, maxHealth, isEquipped);
 
+        String levelXp = "Level: " + level + " | XP: " + experience + "/" + expNeeded;
+        String level = levelUp;
+        String healthStatus = "Health: " + health + "/" + maxHealth;
+        String equipped = "Equipped: " + isEquipped;
+       
+        statusContainer.updateStatus(levelXp, level, healthStatus, equipped);
     }
 
     //Level up character
@@ -348,16 +350,20 @@ public class Player {
             }
 
         } while (!skillChosen);
+
+        CharacterInfo();
     }
 
     public void LoreExperience(){
         Utility.Print("You gained " + Utility.LoreItemEXP + " experience.\n", Utility.ActionSpeed);
         setExperience(experience + Utility.LoreItemEXP);
+        CharacterInfo();
     }
 
     public void LootExperience(){
         Utility.Print("You gained " + Utility.LootItemEXP + " experience.\n", Utility.ActionSpeed);
         setExperience(experience + Utility.LootItemEXP);
+        CharacterInfo();
     }
 
     public void addProgressFlag(ProgressFlags flag){
@@ -388,5 +394,9 @@ public class Player {
         }
         //System.out.println("Flag not found!" + flagFound);
         return flagFound;
+    }
+
+    public void setStatusContainer(VerticalPlayerStatus statusContainer) {
+        this.statusContainer = statusContainer;
     }
 }

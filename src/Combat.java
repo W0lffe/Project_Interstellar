@@ -29,7 +29,7 @@ public class Combat {
 
                 switch (userAction) {
                     case "A":
-                        player.Character(action); //Show character
+                        //player.Character(action); //Show character
                         break;
                     case "B":
                         Attack(player, enemy.get(0)); //Attack enemy
@@ -56,7 +56,7 @@ public class Combat {
 
                 switch (userAction) {
                     case "A":
-                        player.Character(action); //Show character
+                        //player.Character(action); //Show character
                         break;
                     case "B":
                         Attack(player, enemy.get(0)); //Attack enemy
@@ -90,7 +90,7 @@ public class Combat {
 
                 switch (userAction) {
                     case "A":
-                        player.Character(action); //Show character
+                        //player.Character(action); //Show character
                         break;
                     case "B":
                         Attack(player, enemy.get(0)); //Attack enemy
@@ -131,7 +131,7 @@ public class Combat {
 
                 switch (userAction) {
                     case "A":
-                        player.Character(action); //Show character
+                        //player.Character(action); //Show character
                         break;
                     case "B":
                         Attack(player, enemy.get(0)); //Attack enemy

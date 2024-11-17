@@ -27,7 +27,6 @@ public class CalyraCave {
 
             Combat.FightMenu(player, EnemyList, action);
             if (!player.isAlive()) {
-                Game.gameRunning = false;
                 return;
             }
 
@@ -49,13 +48,12 @@ public class CalyraCave {
 
             switch (userAction) {
                 case "A":
-                    player.Character(action);
+                    //player.Character(action);
                     break;
                 case "B":
                     EnemyList.add(new NPC(300, 300, "Fangdweller Alpha", 250, true, claws, null));
                     Combat.FightMenu(player, EnemyList, action);
                     if (!player.isAlive()) {
-                        Game.gameRunning = false;
                         return;
                     }
                     Utility.Print("Jaxon: Alpha down. Guess he wasn't so invincible after all.\n", Utility.ActionSpeed);
