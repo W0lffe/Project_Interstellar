@@ -71,7 +71,7 @@ public class CalyraBunker {
         EnemyList.add(new NPC(50, 50, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null));
         EnemyList.add(new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_RIFLE, null));
 
-        Combat.FightMenu(player, EnemyList, action);
+        Combat.FightMenu(player, EnemyList);
         if (!player.isAlive()) {
             return;
         }
@@ -87,7 +87,7 @@ public class CalyraBunker {
         EnemyList.add(new NPC(50, 50, "Skitter Guardian", 25, true, acidSpit, null));
         EnemyList.add(new NPC(100, 100, "Alpha Skitter", 50, true, acidSpit, null));
 
-        Combat.FightMenu(player, EnemyList, action);
+        Combat.FightMenu(player, EnemyList);
         if (!player.isAlive()) {
             return;
         }
@@ -255,7 +255,7 @@ public class CalyraBunker {
 
             EnemyList.add(new NPC(50, 50, "Bandit", 25, true, Weapon.LASER_PISTOL, null));
             EnemyList.add(new NPC(75, 75, "Bandit Leader", 40, true, Weapon.PULSE_RIFLE, null));
-            Combat.FightMenu(player, EnemyList, action);
+            Combat.FightMenu(player, EnemyList);
             if (!player.isAlive()) {
                 return;
             }

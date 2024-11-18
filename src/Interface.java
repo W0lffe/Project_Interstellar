@@ -3,6 +3,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.geometry.Pos;
+import java.util.ArrayList;
 
 
 
@@ -46,6 +47,7 @@ class HorizontalContainer extends HBox{
 
         this.getChildren().add(title);
         this.getStyleClass().add("horizontal-container");
+        this.setAlignment(Pos.TOP_CENTER);
     }
 
     public void setHorizontalTitle(String labelText) {
@@ -122,6 +124,7 @@ class HorizontalPlayerActions extends HorizontalContainer{
     public Button getFifthButton() {
         return button5;
     }
+    
 }
 
 class VerticalContainer extends VBox{
@@ -143,38 +146,78 @@ class VerticalContainer extends VBox{
     public Label getVerticalTitle() {
         return title;
     }
+
     
 }
 
-class VerticalPlayerStatus extends VerticalContainer{
+class CombatChoicesBox extends VerticalContainer{
+
+    private ChoiceBox<String> enemies;
+
+    public CombatChoicesBox(double arg0, String labelText) {
+        super(arg0, labelText);
+        this.enemies = new ChoiceBox<String>();
+
+        this.getChildren().add(enemies);
+        this.setAlignment(Pos.CENTER);
+    }
+
+    public ChoiceBox<String> getEnemiesChoiceBox() {
+        return enemies;
+    }
+
+    public void updateEnemyList(ArrayList<NPC> enemyList){
+        for (NPC enemy : enemyList){
+            this.enemies.getItems().add(enemy.getName());
+        }
+    }
+    
+    public void deleteEnemyFromList(int indexOfEnemy){
+        enemies.getItems().remove(indexOfEnemy);
+    }
+}
+
+class VerticalStatus extends VerticalContainer{
 
     private Label levelXp;
-    private Label levelUp;
     private Label health;
     private Label equipped;
-    
-    public VerticalPlayerStatus(double arg0, String playerName, String levelXpLabel, String levelUpLabel, String healthLabel, String equippedLabel) {
+
+    public VerticalStatus(double arg0, String playerName, String levelXpLabel,String healthLabel, String equippedLabel) {
         super(arg0, playerName);
         this.levelXp = new Label(levelXpLabel);
-        this.levelUp = new Label(levelUpLabel);
         this.health = new Label(healthLabel);
         this.equipped = new Label(equippedLabel);
 
-        this.getChildren().addAll(levelUp, levelXp, health, equipped);
+        this.getChildren().addAll(levelXp, health, equipped);
         this.setAlignment(Pos.TOP_CENTER);
     }
 
-    public void updateStatus(String levelXPlabel, String levelUpLabel, String healthStatusLabel, String equippedLabel){
+
+    public VerticalStatus(double arg0, String labelText, String healthLabel) {
+        super(arg0, labelText);
+        this.health = new Label(healthLabel);
+
+        this.getChildren().addAll(health);
+        this.setAlignment(Pos.BOTTOM_CENTER);
+    }
+
+    public void updatePlayerStatus(String levelXPlabel, String healthStatusLabel, String equippedLabel){
         levelXp.setText(levelXPlabel);
-        levelUp.setText(levelUpLabel);
         health.setText(healthStatusLabel);
         equipped.setText(equippedLabel);
     }
+
+    public void updateEnemyStatus(String healthStatusLabel){
+        health.setText(healthStatusLabel);
+    }
+
 }
 
 class VerticalStoryPrint extends VerticalContainer{
 
     private TextArea textArea;
+    private HorizontalPlayerActions playerActions;
    
     public VerticalStoryPrint(double arg0, String labelText) {
         super(arg0, labelText);
@@ -197,7 +240,15 @@ class VerticalStoryPrint extends VerticalContainer{
     public void appendText(String textToAppend){
         textArea.appendText(textToAppend);
     }
-    
+
+    public HorizontalPlayerActions getPlayerActions() {
+        return playerActions;
+    }
+
+    public void setPlayerActions(HorizontalPlayerActions playerActions) {
+        this.playerActions = playerActions;
+    }
+
 }
 
 class VerticalMainMenu extends VerticalContainer{
@@ -225,7 +276,34 @@ class VerticalMainMenu extends VerticalContainer{
     public Button getThirdButton() {
         return button3;
     }
+    
+}
 
+class VerticalSkillsMenu extends VerticalContainer{
+    
+    private ListView<Skills> skillsList;
+
+    public VerticalSkillsMenu(double arg0, String labelText) {
+        super(arg0, labelText);
+        this.skillsList = new ListView<Skills>();
+
+        this.getChildren().add(skillsList);
+        this.setAlignment(Pos.TOP_CENTER);
+    }
+
+    public ListView<Skills> getSkillsList() {
+        return skillsList;
+    }
+
+    public void setSkillsList(ListView<Skills> skillsList) {
+        this.skillsList = skillsList;
+    }
+
+    public void addSkillToList(ArrayList<Skills> playerSkills){
+        skillsList.getItems().setAll(playerSkills);
+    }
+
+    
 
     
 }

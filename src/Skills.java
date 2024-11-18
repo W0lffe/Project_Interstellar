@@ -45,8 +45,6 @@ public class Skills {
         SkillList.add(Speech);
         SkillList.add(Engineering);
         SkillList.add(Stealth);
-        
-        
     }
 
     //Predefined Skills

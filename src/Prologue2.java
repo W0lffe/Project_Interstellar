@@ -99,18 +99,21 @@ public class Prologue2 {
         Utility.centerContainer.getChildren().addAll(container);
 
         actions.getFirstButton().setOnAction(e -> {
+            boolean fightWon = false;
 
             String option1 = Files.ReadFile(storyFile, "S2-OPTION1", "S2-OPTION1,2");
             Utility.Print(option1, Utility.StoryPrintSpeed);  
 
             EnemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
-            //Combat.FightMenu(player, EnemyList);  //Fight with NPC
-
-            String s2o1 = Files.ReadFile(storyFile, "S2-OPTION1,2", "S2-OPTION2");
-            Utility.Print(s2o1, Utility.StoryPrintSpeed);
-
-            Utility.centerContainer.getChildren().remove(container);
-            Scene2Battle(player);
+            fightWon = Combat.FightMenu(player, EnemyList, actions);  //Fight with NPC
+            if (fightWon) {
+                String s2o1 = Files.ReadFile(storyFile, "S2-OPTION1,2", "S2-OPTION2");
+                Utility.Print(s2o1, Utility.StoryPrintSpeed);
+    
+                Utility.centerContainer.getChildren().remove(container);
+                Scene2Battle(player);
+            }
+            
         });
 
         actions.getSecondButton().setOnAction(e -> {

@@ -25,7 +25,7 @@ public class CalyraCave {
             EnemyList.add(new NPC(75, 75, "Fangdweller", 100, true, claws, null));
             EnemyList.add(new NPC(75, 75, "Fangdweller", 100, true, claws, null));
 
-            Combat.FightMenu(player, EnemyList, action);
+            Combat.FightMenu(player, EnemyList);
             if (!player.isAlive()) {
                 return;
             }
@@ -52,7 +52,7 @@ public class CalyraCave {
                     break;
                 case "B":
                     EnemyList.add(new NPC(300, 300, "Fangdweller Alpha", 250, true, claws, null));
-                    Combat.FightMenu(player, EnemyList, action);
+                    Combat.FightMenu(player, EnemyList);
                     if (!player.isAlive()) {
                         return;
                     }
