@@ -5,6 +5,14 @@ public class Items {
     private String description;
     private int quantity;
 
+    /**
+     * @description Constructor for Items object
+     * @param item name of item
+     * @param type type of item
+     * @param description brief description for item
+     * @param quantity how many
+     * @info THIS IS PARENT FOR WEAPON AND CONSUMABLES
+     */
     public Items(String item, String type, String description, int quantity) {
         this.item = item;
         this.type = type;

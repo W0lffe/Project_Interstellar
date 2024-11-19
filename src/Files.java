@@ -1,12 +1,22 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+/**@class Files
+ * @description Class contains file reading functions
+ */
 public class Files {
     
-    //Directory where the files are
+    /**@description contains path to directory where textfiles are */
     private static String Directory = "scripts/";
 
-    //Function reads files, function gets file name, string where to start and where to end as parameters
+    /**
+     * @description function reads textfiles
+     * @param file name of file as String
+     * @param start String of word where function starts to read
+     * @param end String of word where function will stop reading
+     * @return text as string that was read from file
+     */
     public static String ReadFile(String file, String start, String end){
         StringBuilder dataToReturn = new StringBuilder(); //create Stringbuilder
         

@@ -3,24 +3,44 @@ public class Weapon extends Items{
     private int minDamage;
     private int maxDamage;
 
+    /**
+     * @description Constructor for Weapon object
+     * @param item weapon name
+     * @param type Type of weapon
+     * @param minDamage minimum damage of weapon
+     * @param maxDamage maximum damage of weapon
+     * @param description brief description of weapon
+     * @param quantity how many weapons
+     */
     public Weapon(String item, String type, int minDamage, int maxDamage, String description ,int quantity) {
         super(item, type, description, quantity);
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
     }
 
+    /**@return minimun damage of weapon as Integer */
     public int getMinDamage() {
         return minDamage;
     }
 
+    /**
+     * @description set minimum damage for weapon
+     * @param minDamage value to be set
+     */
     public void setMinDamage(int minDamage) {
         this.minDamage = minDamage;
     }
 
+    /**@return maximum damage of weapon as Integer */
     public int getMaxDamage() {
         return maxDamage;
     }
 
+    
+    /**
+     * @description set maximum damage for weapon
+     * @param minDamage value to be set
+     */
     public void setMaxDamage(int maxDamage) {
         this.maxDamage = maxDamage;
     }

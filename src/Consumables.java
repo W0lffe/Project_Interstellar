@@ -2,15 +2,27 @@ class Consumables extends Items {
 
     private int healPoints;
 
+    /**
+     * @description Constructor for Consumable object
+     * @param item name for consumable
+     * @param type type of consumable
+     * @param healPoints healing points of consumable
+     * @param description brief description of consumable
+     * @param quantity how many
+     */
     public Consumables(String item, String type, int healPoints, String description, int quantity) {
         super(item, type, description, quantity);
         this.healPoints = healPoints;
     }
 
+    /** @return healing points of consumable as Integer*/
     public int getHealPoints() {
         return healPoints;
     }
-
+    /**
+     * @description sets healing points for consumable
+     * @param healPoints value to be set
+     */
     public void setHealPoints(int healPoints) {
         this.healPoints = healPoints;
     }
@@ -20,6 +32,7 @@ class Consumables extends Items {
         return "[" + getItem() + " | " + getType() + " | Heals: " + healPoints + " | " + getDescription() + " | " + "Qty: " + getQuantity() + "]";
     }
 
+    /**@return String formated to found item, differs from "toString" method*/
     public String Found(){
         return "[" + getItem() + " | " + getType() + " | Heals: " + healPoints + " | " + getDescription() +"]";
     }

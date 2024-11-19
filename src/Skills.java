@@ -1,42 +1,70 @@
 import java.util.ArrayList;
 
+/**@class Skills
+ * @description contains object creating of Skills and object methods
+ */
 public class Skills {
     
     private String skill;
     private boolean playerHas;
     private String description;
     
+    /**
+     * @description Constructor for skill
+     * @param skill name for skill
+     * @param playerHas true or false, based on if player has skill
+     * @param description brief description of skill
+     */
     public Skills(String skill, boolean playerHas, String description) {
         this.skill = skill;
         this.playerHas = playerHas;
         this.description = description;
     }
 
+    /** @return skill object name*/
     public String getSkill() {
         return skill;
     }
+    /**
+     * @description set a name for skill
+     * @param skill string to be set as name
+     */
     public void setSkill(String skill) {
         this.skill = skill;
     }
+
+    /** @return true or false based on if player has skill*/
     public boolean isPlayerHas() {
         return playerHas;
     }
+      /**
+     * @description set skill true or false if player has or not
+     * @param skill true or false
+     */
     public void setPlayerHas(boolean playerHas) {
         this.playerHas = playerHas;
     }
 
+    /** @return skill object name*/
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @description set a description for skill
+     * @param description string to be set as description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    //Arraylist for Skills
+    /**@decsription Initialized list of skills */
     public static ArrayList<Skills> SkillList = new ArrayList<>();
 
     //Add predefined skills to arraylist, function called from Game.newGame
+    /**@function initializeSkillArray
+     * @description initializes list of skills with predefined skills
+     */
     public static void initializeSkillArray(){
         SkillList.add(Weapons);
         SkillList.add(Lockpicking);

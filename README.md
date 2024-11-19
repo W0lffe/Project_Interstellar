@@ -2,8 +2,9 @@
 
 ## State of Project
 
-The game is currently playable up to a certain point, featuring functional core mechanics such as combat, skill checks, inventory management, and progress tracking. 
-The story is actively unfolding, and players can explore a variety of environments, interact with characters, and make choices that shape their journey.
+The current JavaFX version of the project is not yet playable, as a few core mechanics are still under development. 
+While some mechanics have undergone minor adjustments, the overall design and functionality remain consistent with the original vision. 
+I am actively refining and honing these mechanics to ensure a smooth and engaging experience once the project becomes playable.
 
 As this is a work in progress, certain features are still being developed, and the game may contain bugs or issues. 
 Updates will continue as new content and features are added, with an ongoing focus on polishing gameplay and expanding the storyline.
@@ -22,7 +23,7 @@ java -cp out/ Main
 or
 
 In Visual Studio Code:
-* Run task using tasks.json tasks, compile and run
+* Run task using tasks.json tasks, Compile -> Build JAR -> Run JAR
 
 
 ## Brief:

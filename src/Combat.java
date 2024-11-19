@@ -1,38 +1,40 @@
 import java.util.ArrayList;
-import javafx.scene.Scene;
-
+/**@class Combat
+ * @description Holds all combat related mechanics of game
+ */
 public class Combat {
 
-    public static Scene combatScene;
-
-
+    /**
+     * @description creates fight menu to screen by updating player actions and status containers
+     * @param player player object
+     * @param enemyList ArrayList of enemis typed to NPC
+     * @param onCombatEnd Runnable function after combat ending
+     */
     public static void FightMenu(Player player, ArrayList<NPC> enemyList, Runnable onCombatEnd) {
-        ArrayList<VerticalStatus> enemyStatusList = new ArrayList<>();
 
-        for (NPC npc : enemyList) {
-            if (npc.getStatusContainer() == null) {
-                VerticalStatus enemy = new VerticalStatus(5, npc.getName() , "");
-                npc.setStatusContainer(enemy);
-                npc.enemyStatusUpdate();
-                enemyStatusList.add(enemy);
-
-                if (Utility.rightContainer.getChildren().contains(player.getStatusContainer())) {
-                    Utility.rightContainer.getChildren().addAll(enemy);
-                }
-            }
-        }
-
-        Utility.centerContainer.getChildren().remove(Utility.centerContainer.getPlayerActions());
-
+        //Create new actions for player
         HorizontalPlayerActions playerActions = new HorizontalPlayerActions(10, "", "Show Character", "Attack");
+
+        //Create choice box for enemies, update it with list of enemies, add to container
         CombatChoicesBox enemies = new CombatChoicesBox(5, "Select opponent");
-        enemies.updateEnemyList(enemyList);
+        enemies.updateEnemyChoices(enemyList);
         playerActions.getChildren().add(enemies);
 
+        //Append player actions container to root
         Utility.centerContainer.getChildren().addAll(playerActions);
 
-        playerActions.getFirstButton().setOnAction(e -> {
+        //Init list of status containers of enemies
+        ArrayList<VerticalStatus> enemyStatusList = initList(player, enemyList);
+
+        playerActions.getFirstButton().setOnAction(e -> { 
+            
+            //toggle player character info and status containers
+            player.toggleCharacterInfoStatus(); 
+            
+            //Loop vertical status containers in list
             for (VerticalStatus verticalStatus : enemyStatusList) {
+
+                //if containers are not in root, then append, else remove
                 if (!Utility.rightContainer.getChildren().contains(verticalStatus)) {
                         Utility.rightContainer.getChildren().add(verticalStatus);
                 }
@@ -40,36 +42,48 @@ public class Combat {
                     Utility.rightContainer.getChildren().remove(verticalStatus);
                 }
             }
-
-            if (!Utility.leftContainer.getChildren().contains(player.getCharacterInfo()) && 
-                !Utility.rightContainer.getChildren().contains(player.getStatusContainer())) {
-
-                Utility.leftContainer.getChildren().add(player.getCharacterInfo());
-                Utility.rightContainer.getChildren().add(player.getStatusContainer());
-                
-            }
-            else{
-                Utility.leftContainer.getChildren().remove(player.getCharacterInfo());
-                Utility.rightContainer.getChildren().remove(player.getStatusContainer());
-            }
         });
 
         playerActions.getSecondButton().setOnAction(e -> {
+
+            //When button is pressed, selected value of choicebox is placed to this variable
             String selectedEnemy = enemies.getEnemiesChoiceBox().getValue();
 
+            //if value is not null
             if (selectedEnemy != null) {
+
+                //Get index of selected value from choicebox
                 int selectedEnemyIndex = enemies.getEnemiesChoiceBox().getItems().indexOf(selectedEnemy);
+
+                //Place selected enemy to object by selecting the enemy from arraylist with index
                 NPC enemy = enemyList.get(selectedEnemyIndex);
+
+                //Attack enemy
                 Attack(player, enemy);
 
+                    //If enemy health is 0 or less
                     if(enemy.getHealth() <= 0){
+
+                        //Remove status container of enemy from root
                         Utility.rightContainer.getChildren().remove(enemy.getStatusContainer());
                         enemy.setAlive(false);
+
+                        //Remove status container from list
                         enemyStatusList.remove(enemy.getStatusContainer());
+
+                        //Remove enemy NPC from list
                         enemyList.remove(enemy);
-                        enemies.deleteEnemyFromList(selectedEnemyIndex);
+
+                        //Remove choice from choicebox
+                        enemies.deleteEnemyFromChoices(selectedEnemyIndex);
+                        
+                        //If list of enemies is not empty, choicebox value will be set to first value
+                        if (!enemyList.isEmpty()) {
+                            enemies.getEnemiesChoiceBox().setValue(enemies.getEnemiesChoiceBox().getItems().getFirst());
+                        }
                     }
 
+                    //If enemy list is empty or player is not alive, player actions container will be removed and combat ends
                     if (enemyList.isEmpty() || !player.isAlive()) {
                         Utility.centerContainer.getChildren().remove(playerActions);
                         onCombatEnd.run();
@@ -80,6 +94,40 @@ public class Combat {
             }
         });
 
+    }
+
+    /**
+     * @description Function initiates arraylist with status containers of NPC objects in list of enemies
+     * @param player player object
+     * @param enemyList ArrayList of enemies typed to NPC
+     * @return ArrayList of status containers
+     */
+    private static ArrayList<VerticalStatus> initList(Player player, ArrayList<NPC> enemyList){
+        //Create temporary arraylist
+        ArrayList<VerticalStatus> temporary = new ArrayList<>();
+
+        //Loop NPC in enemyList
+        for (NPC npc : enemyList) {
+            //If NPC doesnt have status container
+            if (npc.getStatusContainer() == null) {
+                //Create container initialized with NPC name
+                VerticalStatus enemy = new VerticalStatus(5, npc.getName() , "");
+                //Set status container for NPC
+                npc.setStatusContainer(enemy);
+                //Update status container
+                npc.enemyStatusUpdate();
+                //Add to temporary list
+                temporary.add(enemy);
+
+                //If root container has players status container, enemy containers will be appended
+                if (Utility.rightContainer.getChildren().contains(player.getStatusContainer())) {
+                    Utility.rightContainer.getChildren().addAll(enemy);
+                }
+            }
+        }
+
+        //Return arraylist of status containers
+        return temporary;
     }
 
        
@@ -123,12 +171,14 @@ public class Combat {
 
         //if player health is 0 or less
         if (player.getHealth() <= 0) {
-            String eliminated = "You have been eliminated... Returning to Main Menu.\n";
+            String eliminated = "You have been eliminated...\n";
             Utility.Print(eliminated, Utility.ActionSpeed);
             player.setAlive(false); //player is not alive
             return;
         }
 
     }
+
+
 }
 
