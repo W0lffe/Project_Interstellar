@@ -6,7 +6,10 @@ import javafx.geometry.Pos;
 import java.util.ArrayList;
 
 
-
+/**
+ * @description Borderpane with containers
+ * @purpose to create root for scenes
+ */
 public class Interface extends BorderPane {
 
     private HBox top;
@@ -424,12 +427,19 @@ class VerticalMainMenu extends VerticalContainer{
 }
 
 
-/**@WorkInProgress */
-class VerticalSkillsMenu extends VerticalContainer{
+/**@description Vertical ListView container with label
+ * @methods getSkillsList(), setSkillsList(), addSkillToList()
+ */
+class VerticalListView extends VerticalContainer{
     
     private ListView<Skills> skillsList;
 
-    public VerticalSkillsMenu(double arg0, String labelText) {
+    /**
+     * @description Create vertical container with listview and label
+     * @param arg0 spacing between elements
+     * @param labelText string to label
+     */
+    public VerticalListView(double arg0, String labelText) {
         super(arg0, labelText);
         this.skillsList = new ListView<Skills>();
 
@@ -437,22 +447,34 @@ class VerticalSkillsMenu extends VerticalContainer{
         this.setAlignment(Pos.TOP_CENTER);
     }
 
+    /**@return listview element of container */
     public ListView<Skills> getSkillsList() {
         return skillsList;
     }
 
-    public void setSkillsList(ListView<Skills> skillsList) {
-        this.skillsList = skillsList;
-    }
-
+    /**
+     * @description Adds player acquired skills to listview
+     * @param playerSkills ArrayList of player acquired skills, typed to Skills
+     */
     public void addSkillToList(ArrayList<Skills> playerSkills){
-        skillsList.getItems().setAll(playerSkills);
+        if (playerSkills.isEmpty()) {
+            this.setVerticalTitle("You have not acquired any skills");
+        }
+        else{
+            this.setVerticalTitle("You have acquired skills");
+            for (Skills skill : playerSkills) {
+                if (!skillsList.getItems().contains(skill)) {
+                    skillsList.getItems().add(skill);
+                }
+            }
+        }
     }
-
-    
-
-    
 }
+
+    
+
+    
+
 
 
 

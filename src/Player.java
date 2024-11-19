@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 
 public class Player {
     
@@ -15,10 +16,12 @@ public class Player {
     private int experience;
     private int expNeeded;
     private boolean alive;
+    
     private VerticalStatus statusContainer;
     private VerticalContainer characterInfo;
+    private VerticalListView levelUpMenu;
+    private VerticalContainer levelUpContainer;
 
-    
     /**
      * @description Constructor of Player Object
      * @param name name for player
@@ -214,7 +217,7 @@ public class Player {
         skillsContainer.setAlignment(Pos.CENTER);
 
         //Create container for level menu
-        VerticalContainer levelUpContainer = new VerticalContainer(10, "Level");
+        this.levelUpContainer = new VerticalContainer(10, "Level");
         levelUpContainer.setAlignment(Pos.CENTER);
 
         //Create container for inventory menu
@@ -225,15 +228,25 @@ public class Player {
         characterContainer.getChildren().addAll(skillsContainer, levelUpContainer, inventoryContainer);
 
         //Create skills menu
-        VerticalSkillsMenu playerSkillsMenu = new VerticalSkillsMenu(10, "Your acquired skills");
-        playerSkillsMenu.addSkillToList(PlayerSkills);
+        VerticalListView playerSkillsMenu = new VerticalListView(10, "");
 
         skillsContainer.setOnMouseClicked(e -> {
             if (!skillsContainer.getChildren().contains(playerSkillsMenu)) {
                 skillsContainer.getChildren().add(playerSkillsMenu);
+                playerSkillsMenu.addSkillToList(PlayerSkills);
             }
             else{
                 skillsContainer.getChildren().remove(playerSkillsMenu);
+            }
+        });
+
+        levelUpContainer.setOnMouseClicked(e -> {
+            if (!levelUpContainer.getChildren().contains(levelUpMenu)) {
+                this.levelUpMenu = levelUp();
+                levelUpContainer.getChildren().add(levelUpMenu);
+            }
+            else{
+                levelUpContainer.getChildren().remove(levelUpMenu);
             }
         });
 
@@ -247,13 +260,13 @@ public class Player {
     public void toggleCharacterInfoStatus(){
         
         //If container doesnt contain info and status containers, they will be added, otherwise removed
-        if (!Utility.leftContainer.getChildren().contains(characterInfo) && !Utility.rightContainer.getChildren().contains(statusContainer)) {
-            Utility.leftContainer.getChildren().add(characterInfo);
-            Utility.rightContainer.getChildren().add(statusContainer);
+        if (!Utility.leftContainer.getChildren().contains(this.characterInfo) && !Utility.rightContainer.getChildren().contains(this.statusContainer)) {
+            Utility.leftContainer.getChildren().add(this.characterInfo);
+            Utility.rightContainer.getChildren().add(this.statusContainer);
         }
         else{
-            Utility.leftContainer.getChildren().remove(characterInfo);
-            Utility.rightContainer.getChildren().remove(statusContainer);
+            Utility.leftContainer.getChildren().remove(this.characterInfo);
+            Utility.rightContainer.getChildren().remove(this.statusContainer);
         }
     }
 
@@ -273,7 +286,7 @@ public class Player {
         String equipped = "Equipped: " + isEquipped;
         
         //update containers with new details
-        statusContainer.updatePlayerStatus(levelXp, healthStatus, equipped);
+        this.statusContainer.updatePlayerStatus(levelXp, healthStatus, equipped);
     }
     
     /**
@@ -340,5 +353,62 @@ public class Player {
      */
     public void addProgressFlag(ProgressFlags flag){
         ProgressFlags.add(flag);
+    }
+
+
+    /**
+     * @description creates list view container for level up menu
+     * @return ListView levelUpMenu
+     */
+    public VerticalListView levelUp(){
+        
+        VerticalListView temporary;
+        //If player has required amount of experience
+        if (experience >= expNeeded) {
+            
+            //Create list view container
+            temporary = new VerticalListView(10, "Select a new skill");
+
+            //Loop skills in initialized arraylist
+            for (Skills skill : Skills.SkillList) {
+
+                //add skills to list view
+                temporary.getSkillsList().getItems().add(skill);
+            }
+
+            Button button = new Button("Level Up!");
+            temporary.getChildren().add(button);
+
+            button.setOnAction(e -> {
+                //When button is clicked, store selected skill
+                Skills selectedSkill = temporary.getSkillsList().getSelectionModel().getSelectedItem();
+                
+                //If selection is not null
+                if (selectedSkill != null) {
+
+                    //Add skill to player skill list
+                    PlayerSkills.add(selectedSkill); 
+
+                    //Remove from initialized skill list
+                    Skills.SkillList.remove(selectedSkill);
+                    
+                    setLevel(getLevel() + 1); //Gets current level and adds 1, sets to player level property
+                    int remainingExp = experience - expNeeded; //checks how much exp was leftover
+                    setExperience(remainingExp); //Set leftover as current experience amount
+                    setMaxHealth(getMaxHealth() + 10); //Adds 10 points to max health 
+                    setHealth(getMaxHealth()); //Restores character's max health
+                    setExpNeeded(getExpNeeded() + 250); //Increases required experience for next level
+                    this.levelUpContainer.getChildren().remove(this.levelUpMenu); //Remove level up menu from container
+                    characterStatusUpdate(); //Update character status container
+                }
+                else{
+                    temporary.setVerticalTitle("Please select a skill!");
+                }
+            });
+        }
+        else{
+            temporary = new VerticalListView(10, "Not enough experience for level up!");
+        }
+        return temporary;
     }
 }
