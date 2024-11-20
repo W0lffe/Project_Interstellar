@@ -1,29 +1,22 @@
 # Codename: Project_Interstellar
 
 ## State of Project
-# NOTE: This state is only for master branch, currently taking a step back and converting to GUI(JavaFX). Will be merged when ready.
-The game is currently playable up to a certain point, featuring functional core mechanics such as combat, skill checks, inventory management, and progress tracking. 
-The story is actively unfolding, and players can explore a variety of environments, interact with characters, and make choices that shape their journey.
+
+The game has been successfully converted to run with a JavaFX GUI and is now playable up to a certain point. 
+It features functional core mechanics such as combat, skill checks, inventory management, and progress tracking. 
+Players can explore varied environments, engage with characters, and make impactful choices that shape their journey as the story unfolds. 
+
+
 
 As this is a work in progress, certain features are still being developed, and the game may contain bugs or issues. 
 Updates will continue as new content and features are added, with an ongoing focus on polishing gameplay and expanding the storyline.
 
-To run the game in terminal (from project folder):
-
-compile: 
-```
-javac src/*.java -d out
-```
-run:
-```
-java -cp out/ Main
-```
-
-or
+#### Run the game
 
 In Visual Studio Code:
-* Run task using tasks.json tasks, compile and run
+* Run task using tasks.json tasks, Compile -> Build JAR -> Run JAR
 
+Executable file coming soon!
 
 ## Brief:
 #### Objective:
@@ -46,24 +39,26 @@ The project will be iteratively refined as new skills are developed, with the po
 * [ ] Final Act - The Reckoning
 
 ### Game World
-* [X] Characters
+* [] Characters
     * [X] Player
     * [X] NPC
-* [X] Items
+* [ ] Items
     * [X] Weapons - few different types, mostly ranged
+        * [ ] Tiered
     * [X] Consumables - medicine, food
+    * [ ] Ammo
     * [ ] (Optional) More all above
 * [ ] Locations
     * [ ] Planet 
         * [ ] Sub-locations - like outposts
     * [ ] Ships
         * [ ] Sub-locations - like bridge, mess hall etc..
-* [X] (optional) Lore
-* [X] Interactable Objects - hackable computers, readable datapads etc..
-
+* [X] Interactable Lore Objects - hackable computers, readable datapads etc..
  
-
 ### Game Mechanics
+* [X] New Game
+* [ ] Save Game
+* [ ] Load Game
 * [ ] Player Skills
     * [X] Weapons
     * [X] Lockpicking
@@ -72,21 +67,28 @@ The project will be iteratively refined as new skills are developed, with the po
     * [ ] Speech
     * [ ] Engineering
     * [ ] Stealth
+    * [ ] More Skills???
 * [X] Experience and Level System
-* [X] Character/Player health
-* [X] Character Death
+* [X] NPC/Player Health
+* [ ] Player Death (only jumping to main menu right now)
 * [X] Player Inventory
-* [X] Combat
-* [X] Players Choice System (kind of)
+* [ ] Weapon Ammo System
+* [ ] (Optional) Weapon Condition
+* [ ] Dynamic Object Creating
+    * [ ] Loot Lists (3 different tier lists, NPC gets one with shuffle as of now)
+    * [ ] Dynamic and Randomized NPC creating
+    * [ ] Dynamic Weapon Creating with Randomized stats
+* [X] Combat 
+    * [ ] (Optional) Make weapons have somekind of charges per turn
+* [ ] (Optional) Crafting System
+    * [ ] Recipes for crafting
+* [X] Players Choice System
  * [ ] (Optional) Endings Based On Players Choices
 * [ ] Journal
 * [X] Progress Flags
 
-* [ ] Save Game
-* [ ] Load Game
 
-### GUI
-* [ ] JavaFX
+
 
 
     

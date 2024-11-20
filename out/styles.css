@@ -1,0 +1,104 @@
+/* General Styling for the Interface */
+.interface {
+    -fx-background-color: #2e3b4e; /* Dark blue-gray background */
+    -fx-padding: 10px;            /* Adds padding around the edges */
+}
+
+/* Styling for Horizontal Containers */
+.horizontal-container {
+    -fx-spacing: 10px;            /* Spacing between child elements */
+    -fx-alignment: center;        /* Align elements to the center */
+    -fx-background-color: #4a6572; /* Muted teal background */
+    -fx-padding: 5px;             /* Internal padding */
+    -fx-border-color: #1a252f;    /* Dark border */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Styling for Vertical Containers */
+.vertical-container {
+    -fx-spacing: 10px;            /* Spacing between child elements */
+    -fx-alignment: center;        /* Align elements to the center */
+    -fx-background-color: #344955; /* Dark greenish-blue background */
+    -fx-padding: 5px;             /* Internal padding */
+    -fx-border-color: #232f34;    /* Darker border */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Styling for Labels */
+.label {
+    -fx-text-fill: #ffffff;       /* White text */
+    -fx-font-family: "Arial", sans-serif;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Styling for Buttons */
+.button {
+    -fx-background-color: #ff6f61; /* Soft red background */
+    -fx-text-fill: #ffffff;        /* White text */
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px 10px;
+    -fx-border-color: #d35400;    /* Slightly darker orange border */
+    -fx-border-width: 2px;
+}
+
+.button:hover {
+    -fx-background-color: #e74c3c; /* Darker red on hover */
+}
+
+.button:pressed {
+    -fx-background-color: #c0392b; /* Even darker red when pressed */
+}
+
+/* Styling for ChoiceBoxes */
+.choice-box {
+    -fx-background-color: #ecf0f1; /* Light gray background */
+    -fx-border-color: #bdc3c7;     /* Gray border */
+    -fx-border-width: 1px;
+    -fx-padding: 5px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+/* Styling for TextArea */
+.text-area {
+    -fx-background-color: #1e272e; /* Dark gray */
+    -fx-text-fill: #dcdde1;        /* Light text */
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-padding: 10px;
+    -fx-border-color: #353b48;     /* Slightly lighter gray border */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Styling for ListViews */
+.list-view {
+    -fx-background-color: #2f3640; /* Dark gray */
+    -fx-border-color: #7f8c8d;     /* Muted gray border */
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-background-radius: 3px;
+}
+
+/* Specific styling for VerticalStoryPrint */
+.vertical-container .text-area {
+    -fx-pref-height: 200px;       /* Fixed height for story text area */
+}
+
+/* Styling for Main Menu Buttons */
+.vertical-container .button {
+    -fx-background-color: #3498db; /* Blue buttons in Main Menu */
+}
+
+.vertical-container .button:hover {
+    -fx-background-color: #2980b9; /* Darker blue on hover */
+}

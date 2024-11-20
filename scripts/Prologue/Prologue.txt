@@ -225,8 +225,7 @@ The mechanism beeps as you swipe the card, and the heavy doors slide open with a
 
 You and Teth move cautiously through the engineering bay. 
 Suddenly, Teth spots a supply crate tucked away against the wall. He rushes over, prying it open to reveal a stash of medical supplies.
-He quickly grabs a medkit, then turns to you,
-Teth: "Took this from that supply crate, you will need it", and shoves the medkit into your hands.
+Teth: "Look at this! You will need it more than I do", Teth laughs.
 
 The sounds of chaos echoing in the distance, until you reach the corridor that leads to your starship, the Orion.
 
@@ -254,9 +253,7 @@ You both stop in your tracks, watching in horror as the engineer races forward, 
 Regret floods your mind. I should have taken the keycard from him earlier…
 
 Suddenly, Teth spots a supply crate tucked away against the wall. He rushes over, prying it open to reveal a stash of medical supplies.
-He quickly grabs a medkit, then turns to you, urgency etched on his face.
-
-Teth: "Took this from that supply crate, you will need it", and shoves the medkit into your hands.
+Teth: "Look at this! You will need it more than I do", Teth laughs.
 
 With a shared glance, you and Teth quickly take cover, bracing yourselves for the battle that lies ahead.
 

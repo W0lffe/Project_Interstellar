@@ -1,169 +1,141 @@
 import java.util.ArrayList;
-import java.util.Scanner;;
-
+/**@class Combat
+ * @description Holds all combat related mechanics of game
+ */
 public class Combat {
 
-    private static boolean fight = false;
+    /**
+     * @description creates fight menu to screen by updating player actions and status containers
+     * @param player player object
+     * @param enemyList ArrayList of enemis typed to NPC
+     * @param onCombatEnd Runnable function after combat ending
+     */
+    public static void FightMenu(Player player, ArrayList<NPC> enemyList, Runnable onCombatEnd) {
 
-    public static void FightMenu(Player player, ArrayList<NPC> enemy, Scanner action) {
-        fight = true; //set fight true
-        String userAction;
+        //Create new actions for player
+        HorizontalPlayerActions playerActions = new HorizontalPlayerActions(10, "", "Character", "Attack");
 
-        do {
-         
-            //print player and enemy healths
-            int enemies = enemy.size();
-            if (enemy.isEmpty()) {
-                fight = false;
-                break;
-            }
-          
-            if (enemies == 1) {
-                    
-                System.out.println(
-                        player.getName() + " Health: " + player.getHealth() + "/" + player.getMaxHealth() + "       " +
-                        enemy.get(0).getName() + " Health: " + enemy.get(0).getHealth() + "/" + enemy.get(0).getMaxHealth());
+        //Create choice box for enemies, update it with list of enemies, add to container
+        CombatChoicesBox enemies = new CombatChoicesBox(5, "Select opponent");
+        enemies.updateEnemyChoices(enemyList);
+        playerActions.getChildren().add(enemies);
 
-                System.out.println("A) Character \nB) Attack " + enemy.get(0).getName());
-                userAction = Validation.UserInput(action);
+        //Append player actions container to root
+        Utility.centerContainer.getChildren().addAll(playerActions);
 
-                switch (userAction) {
-                    case "A":
-                        player.Character(action); //Show character
-                        break;
-                    case "B":
-                        Attack(player, enemy.get(0)); //Attack enemy
-                        if(!enemy.get(0).isAlive()){
-                            enemy.remove(0);
-                        }
-                        break;
-                    default:
-                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                        break;
+        //Init list of status containers of enemies
+        ArrayList<VerticalStatus> enemyStatusList = initList(player, enemyList);
+
+        playerActions.getFirstButton().setOnAction(e -> { 
+            
+            //toggle player character info and status containers
+            player.toggleCharacterInfoStatus(); 
+            
+            //Loop vertical status containers in list
+            for (VerticalStatus verticalStatus : enemyStatusList) {
+
+                //if containers are not in root, then append, else remove
+                if (!Utility.rightContainer.getChildren().contains(verticalStatus)) {
+                        Utility.rightContainer.getChildren().add(verticalStatus);
+                }
+                else{
+                    Utility.rightContainer.getChildren().remove(verticalStatus);
                 }
             }
-            else if (enemies == 2) {
-                    
-                System.out.println(player.getName() + " Health: " + player.getHealth() + "/" + player.getMaxHealth() + "\n");
-                for (NPC npc : enemy) {
-                    System.out.println(npc.getName() + " Health: " + npc.getHealth() + "/" + npc.getMaxHealth());
-                }
+        });
 
-                System.out.println("\nA) Show Character" +
-                                    "\nB) Attack " + enemy.get(0).getName() +
-                                    "\nC) Attack " + enemy.get(1).getName());
-                userAction = Validation.UserInput(action);
+        playerActions.getSecondButton().setOnAction(e -> {
 
-                switch (userAction) {
-                    case "A":
-                        player.Character(action); //Show character
-                        break;
-                    case "B":
-                        Attack(player, enemy.get(0)); //Attack enemy
-                        if(!enemy.get(0).isAlive()){
-                            enemy.remove(0);
+            //When button is pressed, selected value of choicebox is placed to this variable
+            String selectedEnemy = enemies.getEnemiesChoiceBox().getValue();
+
+            //if value is not null
+            if (selectedEnemy != null) {
+
+                //Get index of selected value from choicebox
+                int selectedEnemyIndex = enemies.getEnemiesChoiceBox().getItems().indexOf(selectedEnemy);
+
+                //Place selected enemy to object by selecting the enemy from arraylist with index
+                NPC enemy = enemyList.get(selectedEnemyIndex);
+
+                //Attack enemy
+                Attack(player, enemy);
+
+                    //If enemy health is 0 or less
+                    if(enemy.getHealth() <= 0){
+
+                        //If enemy object has inventory, player loots inventory
+                        if (enemy.getInventory() != null) {
+                            player.lootItems(enemy.getInventory(), enemy.getName());
                         }
-                        break;
-                    case "C":
-                        Attack(player, enemy.get(1)); //Attack enemy
-                        if(!enemy.get(1).isAlive()){
-                            enemy.remove(1);
+
+                        //Remove status container of enemy from root
+                        Utility.rightContainer.getChildren().remove(enemy.getStatusContainer());
+                        enemy.setAlive(false);
+
+                        //Remove status container from list
+                        enemyStatusList.remove(enemy.getStatusContainer());
+
+                        //Remove enemy NPC from list
+                        enemyList.remove(enemy);
+
+                        //Remove choice from choicebox
+                        enemies.deleteEnemyFromChoices(selectedEnemyIndex);
+                        
+                        //If list of enemies is not empty, choicebox value will be set to first value
+                        if (!enemyList.isEmpty()) {
+                            enemies.getEnemiesChoiceBox().setValue(enemies.getEnemiesChoiceBox().getItems().getFirst());
                         }
-                        break;
-                    default:
-                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                        break;
-                }
+                    }
+
+                    //If enemy list is empty or player is not alive, player actions container will be removed and combat ends
+                    if (enemyList.isEmpty() || !player.isAlive()) {
+                        Utility.centerContainer.getChildren().remove(playerActions);
+                        onCombatEnd.run();
+                    }
             }
-            else if (enemies == 3) {
-                    
-                System.out.println(player.getName() + " Health: " + player.getHealth() + "/" + player.getMaxHealth() + "\n");
-                for (NPC npc : enemy) {
-                    System.out.println(npc.getName() + " Health: " + npc.getHealth() + "/" + npc.getMaxHealth());
-                }
-
-                System.out.println("\nA) Show Character" +
-                                    "\nB) Attack " + enemy.get(0).getName() +
-                                    "\nC) Attack " + enemy.get(1).getName() +
-                                    "\nD) Attack " + enemy.get(2).getName());
-                userAction = Validation.UserInput(action);
-
-                switch (userAction) {
-                    case "A":
-                        player.Character(action); //Show character
-                        break;
-                    case "B":
-                        Attack(player, enemy.get(0)); //Attack enemy
-                        if(!enemy.get(0).isAlive()){
-                            enemy.remove(0);
-                        }
-                        break;
-                    case "C":
-                        Attack(player, enemy.get(1)); //Attack enemy
-                        if(!enemy.get(1).isAlive()){
-                            enemy.remove(1);
-                        }
-                        break;
-                    case "D":
-                        Attack(player, enemy.get(2)); //Attack enemy
-                        if(!enemy.get(2).isAlive()){
-                            enemy.remove(2);
-                        }
-                        break;
-                    default:
-                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                        break;
-                }
+            else{
+                Utility.Print("Select opponent first!\n", Utility.ActionSpeed);
             }
-            else if (enemies == 4) {
-                    
-                System.out.println(player.getName() + " Health: " + player.getHealth() + "/" + player.getMaxHealth() + "\n");
-                for (NPC npc : enemy) {
-                    System.out.println(npc.getName() + " Health: " + npc.getHealth() + "/" + npc.getMaxHealth());
-                }
+        });
 
-                System.out.println("\nA) Show Character" +
-                                    "\nB) Attack " + enemy.get(0).getName() +
-                                    "\nC) Attack " + enemy.get(1).getName() +
-                                    "\nD) Attack " + enemy.get(2).getName() +
-                                    "\nE) Attack " + enemy.get(3).getName());
-                userAction = Validation.UserInput(action);
-
-                switch (userAction) {
-                    case "A":
-                        player.Character(action); //Show character
-                        break;
-                    case "B":
-                        Attack(player, enemy.get(0)); //Attack enemy
-                        if(!enemy.get(0).isAlive()){
-                            enemy.remove(0);
-                        }
-                        break;
-                    case "C":
-                        Attack(player, enemy.get(1)); //Attack enemy
-                        if(!enemy.get(1).isAlive()){
-                            enemy.remove(1);
-                        }
-                        break;
-                    case "D":
-                        Attack(player, enemy.get(2)); //Attack enemy
-                        if(!enemy.get(2).isAlive()){
-                            enemy.remove(2);
-                        }
-                        break;
-                    case "E":
-                        Attack(player, enemy.get(3)); //Attack enemy
-                        if(!enemy.get(3).isAlive()){
-                            enemy.remove(3);
-                        }
-                        break;
-                    default:
-                        Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                        break;
-                }
-            }
-        } while (fight); //break when fight is set false or when player dies
     }
+
+    /**
+     * @description Function initiates arraylist with status containers of NPC objects in list of enemies
+     * @param player player object
+     * @param enemyList ArrayList of enemies typed to NPC
+     * @return ArrayList of status containers
+     */
+    private static ArrayList<VerticalStatus> initList(Player player, ArrayList<NPC> enemyList){
+        //Create temporary arraylist
+        ArrayList<VerticalStatus> temporary = new ArrayList<>();
+
+        //Loop NPC in enemyList
+        for (NPC npc : enemyList) {
+            //If NPC doesnt have status container
+            if (npc.getStatusContainer() == null) {
+                //Create container initialized with NPC name
+                VerticalStatus enemy = new VerticalStatus(5, npc.getName() , "");
+                //Set status container for NPC
+                npc.setStatusContainer(enemy);
+                //Update status container
+                npc.enemyStatusUpdate();
+                //Add to temporary list
+                temporary.add(enemy);
+
+                //If root container has players status container, enemy containers will be appended
+                if (Utility.rightContainer.getChildren().contains(player.getStatusContainer())) {
+                    Utility.rightContainer.getChildren().addAll(enemy);
+                }
+            }
+        }
+
+        //Return arraylist of status containers
+        return temporary;
+    }
+
+       
 
     public static void Attack(Player player, NPC enemy) {
         //get Weapon objects that player and enemy equips
@@ -177,7 +149,7 @@ public class Combat {
         int enemyMaxDmg = enemyEquipped.getMaxDamage();
 
         //if player has Weapons skill, increase damage
-        if (player.getPlayerSkills().contains(Skills.Weapons)){
+        if (player.getPlayerAcquiredSkills().contains(Skills.Weapons)){
             playerMaxDmg += 5;
             playerMinDmg += 5;
         }
@@ -193,7 +165,7 @@ public class Combat {
             enemy.setAlive(false); //enemy is not alive
             String eliminated = "You eliminated " + enemy.getName() + ", gaining " + enemy.getExperience() + " experience!\n";
             Utility.Print(eliminated, Utility.ActionSpeed);
-            player.setExperience(player.getExperience() + enemy.getExperience()); //Give player experience of enemy's experience property
+            player.actionExperience(enemy.getExperience()); //Give player experience of enemy's experience property
             return;
         }
 
@@ -204,12 +176,14 @@ public class Combat {
 
         //if player health is 0 or less
         if (player.getHealth() <= 0) {
-            String eliminated = "You have been eliminated... Returning to Main Menu.\n";
+            String eliminated = "You have been eliminated...\n";
             Utility.Print(eliminated, Utility.ActionSpeed);
             player.setAlive(false); //player is not alive
-            fight = false; //if player dies, fight is over
             return;
         }
 
     }
+
+
 }
+

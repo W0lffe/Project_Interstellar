@@ -1,392 +1,570 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+import javafx.scene.control.Button;
 
 public class Player {
-
+    
     private String name;
     private int maxHealth;
     private int health;
-    private ArrayList<Items> Inventory;
-    private ArrayList<Skills> PlayerSkills;
-    private ArrayList<ProgressFlags> ProgressFlags;
+    private ArrayList<Items> playerInventory;
+    private ArrayList<Skills> playerAcquiredSkills;
+    private ArrayList<ProgressFlags> playerAcquiredProgressFlags;
     private Weapon equipped;
     private int level;
     private int experience;
     private int expNeeded;
     private boolean alive;
+    
+    //Containers related to player character info and status
+    private VerticalStatus statusContainer;
+    private VerticalContainer characterInfo;
+    private VerticalContainer levelUpContainer;
+    private VerticalSkillList levelUpMenu;
+    private VerticalInventoryList playerInventoryMenu;
 
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean status) {
-        this.alive = status;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public ArrayList<Items> getInventory() {
-        return Inventory;
-    }
-
-    public void setInventory(ArrayList<Items> inventory) {
-        Inventory = inventory;
-    }
-
-    public ArrayList<Skills> getPlayerSkills() {
-        return PlayerSkills;
-    }
-
-    public void setPlayerSkills(ArrayList<Skills> playerSkills) {
-        PlayerSkills = playerSkills;
-    }
-    public ArrayList<ProgressFlags> getProgressFlags() {
-        return ProgressFlags;
-    }
-
-    public void setProgressFlags(ArrayList<ProgressFlags> progressFlags) {
-        ProgressFlags = progressFlags;
-    }
-    public Weapon getEquipped() {
-        return equipped;
-    }
-
-    public void setEquipped(Weapon equipped) {
-        this.equipped = equipped;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
-    public int getExpNeeded() {
-        return expNeeded;
-    }
-
-    public void setExpNeeded(int expNeeded) {
-        this.expNeeded = expNeeded;
-    }
-
+    /**
+     * @description Constructor of Player Object
+     * @param name name for player
+     * @param health current health for player
+     * @param maxHealth maximunm health for player
+     * @param inventory inventory for player
+     * @param playerSkills list of skills player has acquired
+     * @param equipped weapon object player equips
+     * @param level current level of player
+     * @param experience current experience points of player
+     * @param expNeeded experience needed for next level
+     * @param alive is player alive
+     * @param flags list of progress flags player has acquired
+     */
     public Player(String name, int health, int maxHealth, ArrayList<Items> inventory, ArrayList<Skills> playerSkills,
             Weapon equipped, int level, int experience, int expNeeded, boolean alive, ArrayList<ProgressFlags> flags) {
 
         this.name = name;
         this.health = health;
         this.maxHealth = maxHealth;
-        this.Inventory = inventory;
-        this.PlayerSkills = playerSkills;
+        this.playerInventory = inventory;
+        this.playerAcquiredSkills = playerSkills;
         this.equipped = equipped;
         this.level = level;
         this.experience = experience;
         this.expNeeded = expNeeded;
         this.alive = alive;
-        this.ProgressFlags = flags;
+        this.playerAcquiredProgressFlags = flags;
     }
 
-    //Function adds items to player inventory with parameter object
-    public void addItem(Items itemToAdd) {
-        //Loop through player inventory, check if has same items to increase quantity
-        for (Items items : Inventory) {
-            if (items.getItem().equals(itemToAdd.getItem())) {
-                items.setQuantity(itemToAdd.getQuantity() + 1);
-                String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
-                LootExperience();
-                Utility.Print(itemAdded, Utility.ActionSpeed);
-                return;
-            }
-        }
-        //Add item to invetory
-        Inventory.add(itemToAdd);
-        String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
-        Utility.Print(itemAdded, Utility.ActionSpeed);
-        LootExperience();
+
+    /***************************************PLAYER OBJECT GETTER & SETTERS**********************************************************/
+
+    /**@return name of player as String */
+    public String getName() {
+        return name;
     }
 
-    //Function shows invetory
-    private void ShowInventory(Scanner action) {
-        //Return if inventory is empty
-        if (Inventory.isEmpty()) {
-            Utility.Print("Inventory is empty\n", Utility.ActionSpeed);
-            return;
-        } else {
-
-            String userAction;
-            do {
-                int i = 1;
-                System.out.println("Inventory: ");
-                //Loop through inventory item objects
-                for (Items items : Inventory) {
-                    
-                    if (equipped.equals(items)) {
-                        System.out.println(i + ". " + items + " Equipped");
-                    }
-                    else{
-                        System.out.println(i + ". " + items);
-                    }
-                    i++;
-                }
-
-                //Ask player if they want to equip item
-                System.out.println("\nA) Use or Equip item\nB) Go back");
-                userAction = Validation.UserInput(action);
-                if (userAction.equals("A")) {
-                    EquipItem(action); //Go to function where player equips/uses item
-                    return;
-                }
-                if (!userAction.matches("A|B")) {
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                }
-               
-            } while (!userAction.equals("B"));
-
-        }
+    /**
+     * @description set name for player
+     * @param name string to set
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
-    //Function equips item for player or uses item
-    private void EquipItem(Scanner action) {
-        int choice;
-
-        while (true) {
-
-            //Ask wich item to equip
-            System.out.println("Wich item?");
-            choice = Validation.UserINput(action);
-            if (choice >= 0 && choice <= Inventory.size()) {
-
-                Items selectedItem = Inventory.get(choice - 1);
-
-                //If item is object class Consumables
-                if (selectedItem instanceof Consumables) {
-                    Consumables useItem = (Consumables) selectedItem; //Convert to Items to Consumables
-                    Utility.Print("Used: " + useItem.getItem() + "\n", Utility.ActionSpeed);
-                    RestoreHealth(useItem); //Send consumable to RestoreHealth function
-                    useItem.setQuantity(selectedItem.getQuantity() - 1); //Reduce quantity
-                    if (useItem.getQuantity() <= 0) {
-                        Inventory.remove(choice - 1); //If quantity is zero, remove object from inventory
-                    }
-                    break;
-                } else if (selectedItem instanceof Weapon) {
-                    Weapon equipWeapon = (Weapon) selectedItem; //Convert Items to Weapon
-                    setEquipped(equipWeapon); //set Weapon object equipped for player
-                    Utility.Print("Equipped: " + equipWeapon.getItem() + "\n", Utility.ActionSpeed);
-                    break;
-                }
-            } else {
-                Utility.Print("Jaxon: I dont have that item.\n", Utility.ActionSpeed);
-                return;
-            }
-        }
+    /**@return maximum health of player as Integer*/
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
-    //Print skills in playerSkills array
-    private void ShowSkills(Scanner action) {
-        if (!PlayerSkills.isEmpty()) {
-            System.out.println("You have: ");
-            for (Skills skill : PlayerSkills) {
-                System.out.println(skill);
-            }
+    /**
+     * @description set maximum health for player
+     * @param maxHealth value to set
+     */
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+    }
+
+    /**@return current health of player as integer*/
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * @description set current health for player
+     * @param health value to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
+        characterStatusUpdate();
+    }
+
+    /**@return inventory of player as ArrayList typed to Items*/
+    public ArrayList<Items> getPlayerInventory() {
+        return playerInventory;
+    }
+
+    /**
+     * @description set inventory for player
+     * @param inventory ArrayList typed to Items
+     */
+    public void setPlayerInventory(ArrayList<Items> inventory) {
+        playerInventory = inventory;
+    }
+
+    /**@return acquired skills of player as ArrayList typed to Skills */
+    public ArrayList<Skills> getPlayerAcquiredSkills() {
+        return playerAcquiredSkills;
+    }
+
+    /**
+     * @description set list of acquired skills for player
+     * @param playerSkills ArrayList typed to Skills
+     */
+    public void setPlayerAcquiredSkills(ArrayList<Skills> playerSkills) {
+        playerAcquiredSkills = playerSkills;
+    }
+
+    /**@return acquired progress flags of player as ArrayList typed to ProgressFlags */
+    public ArrayList<ProgressFlags> getPlayerAcquiredProgressFlags() {
+        return playerAcquiredProgressFlags;
+    }
+
+    /**
+     * @description set list of acquired progression flags for player
+     * @param progressFlags ArrayList typed to ProgressFlags
+     */
+    public void setPlayerAcquiredProgressFlags(ArrayList<ProgressFlags> progressFlags) {
+        playerAcquiredProgressFlags = progressFlags;
+    }
+
+    /**@return equipped weapon object of player */
+    public Weapon getEquipped() {
+        return equipped;
+    }
+
+    /**
+     * @description set Weapon object for player to equip
+     * @param equipped Weapon Object to equip
+     */
+    public void setEquipped(Weapon equipped) {
+        this.equipped = equipped;
+    }
+
+    /**@return current level of player as Integer */
+    public int getLevel() {
+        return level;
+    }
+
+    /**
+     * @description set current level for player
+     * @param level value to set
+     */
+    public void setLevel(int level) {
+        this.level = level;
+        characterStatusUpdate();
+    }
+
+    /**@return current experience points of player as Integer */
+    public int getExperience() {
+        return experience;
+    }
+
+    /**
+     * @description sets current experience for player
+     * @param experience value to set
+     * @additional calls characterStatusUpdate() 
+     */
+    public void setExperience(int experience) {
+        this.experience = experience;
+        characterStatusUpdate();
+    }
+
+    /**@return needed experience points of player as Integer*/
+    public int getExpNeeded() {
+        return expNeeded;
+    }
+
+    /**
+     * @description set experience needed for level for player
+     * @param expNeeded value to set
+     */
+    public void setExpNeeded(int expNeeded) {
+        this.expNeeded = expNeeded;
+    }
+
+    /**@return if player is alive, true or false */
+    public boolean isAlive() {
+        return alive;
+    }
+
+    /**
+     * @description set player alive status
+     * @param alive true or false
+     */
+    public void setAlive(boolean alive) {
+        this.alive = alive;
+    }
+
+
+/***************************************PLAYER RELATED CONTAINER GETTER & SETTERS**********************************************************/
+    /**@return status container of player */
+    public VerticalStatus getStatusContainer() {
+        return statusContainer;
+    }
+
+    /**
+     * @description set status container for player
+     * @param statusContainer container object to set
+     */
+    public void setStatusContainer(VerticalStatus statusContainer) {
+        this.statusContainer = statusContainer;
+    }
+
+    /**@return vertical container containing character info of player */
+     public VerticalContainer getCharacterInfo() {
+        return characterInfo;
+    }
+
+    /**
+     * @description set character info container for player
+     * @param characterInfo container object to set
+     */
+    public void setCharacterInfo(VerticalContainer characterInfo) {
+        this.characterInfo = characterInfo;
+    }
+
+     /**
+     * @description set level up container for player
+     * @param characterInfo container object to set
+     */
+    public void setLevelUpContainer(VerticalContainer levelUpContainer) {
+        this.levelUpContainer = levelUpContainer;
+    }
+    /**@return level up menu of player */
+    public VerticalSkillList getLevelUpMenu() {
+        return levelUpMenu;
+    }
+
+     /**
+     * @description set level up menu for player
+     * @param characterInfo container object to set
+     */
+    public void setLevelUpMenu(VerticalSkillList levelUpMenu) {
+        this.levelUpMenu = levelUpMenu;
+    }
+
+    /**@return player inventory menu  */
+    public VerticalInventoryList getPlayerInventoryMenu() {
+        return playerInventoryMenu;
+    }
+
+     /**
+     * @description set player inventory menu for player
+     * @param characterInfo container object to set
+     */
+    public void setPlayerInventoryMenu(VerticalInventoryList playerInventoryMenu) {
+        this.playerInventoryMenu = playerInventoryMenu;
+    }
+
+
+/***************************************PLAYER RELATED METHODS**********************************************************/
+
+
+    /**@description Toggles character info and status containers in root containers */
+    public void toggleCharacterInfoStatus(){
+        
+        //If container doesnt contain info and status containers, they will be added, otherwise removed
+        if (!Utility.leftContainer.getChildren().contains(this.characterInfo) && !Utility.rightContainer.getChildren().contains(this.statusContainer)) {
+            Utility.leftContainer.getChildren().add(this.characterInfo);
+            Utility.rightContainer.getChildren().add(this.statusContainer);
         }
         else{
-            Utility.Print("You have not acquired any skills yet!\n", Utility.ActionSpeed);
-        }
-    }
-
-    //Show character details 
-    public void Character(Scanner action) {
-        String userAction;
-        do {
-
-            CharacterInfo(); //Print info of player
-            System.out.println("A) Show Skills\nB) Level Up\nC) Show Inventory\nD) Back");
-
-            userAction = Validation.UserInput(action);
-            switch (userAction) {
-                case "A":
-                    ShowSkills(action); //Open acquired skills menu
-                    break;
-                case "B":
-                    if (experience >= expNeeded) {
-                        LevelUp(action); //Level up character if experience requirements is met
-                        break;
-                    } else {
-                        Utility.Print("Not enough of experience!\n", Utility.ActionSpeed);
-                        break;
-                    }
-                case "C":
-                    ShowInventory(action); //Show player inventory
-                    break;
-                case "D":
-                    return;
-                case "E":
-                    ShowProgressFlags();
-                    return;
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
-            }
-        } while (!userAction.equals("D")); //Go back 
-
-    }
-
-    //Reduce taken damage from player health
-    public void takeDamage(int damage) {
-        health -= damage;
-
-        //if player health is zero or less, player "dies"
-        if (health <= 0) {
-            setAlive(false);
+            Utility.leftContainer.getChildren().remove(this.characterInfo);
+            Utility.rightContainer.getChildren().remove(this.statusContainer);
         }
     }
 
 
-    //Restore health with Consumables object
-    private void RestoreHealth(Consumables item) {
-        int itemHeal = item.getHealPoints(); //Get healing points, property of object
-
-        if (PlayerSkills.contains(Skills.Medicine)) {
-            itemHeal += 5; //If player has medicine skill, object heals 5 points more
-        }
-
-        health += itemHeal;
-        String healed = item.getItem() + " healed you " + itemHeal + " hitpoints!";
-        Utility.Print(healed, Utility.ActionSpeed);
-
-        //if health goes over maxhealth, health is set to max
-        if (health > maxHealth) {
-            health = maxHealth;
-        }
-    }
-
-    //Prints info of character
-    private void CharacterInfo() {
+    /**@description updates character status container with player properties*/
+    public void characterStatusUpdate() {
         String isEquipped = "";
-        String levelUp = "";
-
-        if (experience >= expNeeded) {
-            levelUp = "- Level Up Available";
-        }
 
         if (equipped == null) {
             isEquipped = "None";
         } else {
             isEquipped = equipped.getItem();
         }
-        System.out.printf("[%s  | Level: %d | XP: %d/%d %s]\n[Health: %d/%d | Equipped: %s]\n",
-                name, level, experience, expNeeded, levelUp, health, maxHealth, isEquipped);
 
+        //Create strings of player properties
+        String levelXp = "Level: " + level + " | XP: " + experience + "/" + expNeeded;
+        String healthStatus = "Health: " + health + "/" + maxHealth;
+        String equipped = "Equipped: " + isEquipped;
+        
+        //update containers with new details
+        this.statusContainer.updatePlayerStatus(levelXp, healthStatus, equipped);
+    }
+    
+    /**
+     * @description Reduce taken damage from player health
+     * @param damage value to reduce
+     * @additional calls characterStatusUpdate()
+     */
+    public void takeDamage(int damage){
+        health -= damage;
+
+        if (health <= 0) {
+            setAlive(false);
+        }
+        //update player status container
+        characterStatusUpdate();
     }
 
-    //Level up character
-    private void LevelUp(Scanner action) {
-        setLevel(getLevel() + 1); //Gets current level and adds 1, sets to player level property
-        int remainingExp = experience - expNeeded; //checks how much exp was leftover
-        setExperience(remainingExp); //Set leftover as current experience amount
-        setMaxHealth(getMaxHealth() + 10); //Adds 10 points to max health 
-        setHealth(getMaxHealth()); //Restores character's max health
-        setExpNeeded(getExpNeeded() + 250); //Increases required experience for next level
+    /**
+     * @description Loops through items in itemlist, adds to inventory
+     * @param itemList ArrayList typed to Items, itemlist
+     * @param foundWhere Where player found items
+     */
+   public void lootItems(ArrayList<Items> itemList, String foundWhere){
 
-        int userInput;
-        boolean skillChosen = false;
-        do {
-            int i = 1;
-            String levelUp = "You have leveled up! \nChoose a skill: \n";
-            Utility.Print(levelUp, Utility.ActionSpeed);
-            //Loop through SkillList (initialized in Game.newGame)
-            for (Skills skill : Skills.SkillList) {
-                if (!PlayerSkills.contains(skill)) {
-                    System.out.printf("%d) %s \n", i, skill);
-                    i++;
-                }
+        String itemsFound = "You loot the " + foundWhere + " and find: \n";
+
+        for (Items item : itemList) {
+            itemsFound += item.toString() + "\n";
+        }
+        Utility.Print(itemsFound, 0);
+
+        for (Items item : itemList) {
+            addItemToInventory(item);
+        }
+    } 
+
+
+   /**
+    * @description Adds items to player inventory
+    * @param itemToAdd Item object
+    * @additional calls actionExperience()
+    * @NeedToBeReworked
+    */
+    public void addItemToInventory(Items itemToAdd){
+        
+        //Loop items in inventory
+        for (Items items : playerInventory) {
+            //If item in inventory equals item to add
+            if (items.getItem().equals(itemToAdd.getItem())) {
+
+                //THIS NEEDS RECHECKING
+                items.setQuantity(itemToAdd.getQuantity() + 1);
+                String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
+
+                //Get experience
+                actionExperience(Utility.LootItemEXP);
+                Utility.Print(itemAdded, Utility.ActionSpeed);
+                return;
             }
-            userInput = Validation.UserINput(action);
-
-            //Check if user selection of skill is in range
-            if (userInput > 0 && userInput <= Skills.SkillList.size()) {
-                Skills chosenSkill = Skills.SkillList.get(userInput - 1); //get skill from list
-                PlayerSkills.add(chosenSkill); //add to player acquired skills
-                String acquiredSkill = "You have acquired skill: " + chosenSkill.getSkill() + "\n";
-                Utility.Print(acquiredSkill, Utility.ActionSpeed);
-                //chosenSkill.setPlayerHas(true); no use for this yet
-                Skills.SkillList.remove(userInput - 1); //removes from SkillList so it wont show again when selecting skills
-                skillChosen = true; //break loop
-            } else {
-                Utility.Print("No way I can learn that!\n", Utility.ActionSpeed);
-            }
-
-        } while (!skillChosen);
+        }
+        //Add item to invetory
+        playerInventory.add(itemToAdd);
+        String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
+        Utility.Print(itemAdded, Utility.ActionSpeed);
+        
+        //Get experience
+        actionExperience(Utility.LootItemEXP);
     }
 
-    public void LoreExperience(){
-        Utility.Print("You gained " + Utility.LoreItemEXP + " experience.\n", Utility.ActionSpeed);
-        setExperience(experience + Utility.LoreItemEXP);
-    }
+    /**
+     * @description Handles players experience gain
+     * @param experienceGained value of experience to gain
+     */
+    public void actionExperience(int experienceGained){
 
-    public void LootExperience(){
-        Utility.Print("You gained " + Utility.LootItemEXP + " experience.\n", Utility.ActionSpeed);
-        setExperience(experience + Utility.LootItemEXP);
-    }
+        Utility.Print("You gained " + experienceGained + " experience.\n", Utility.ActionSpeed);
+        setExperience(experience + experienceGained);
+    }   
 
+
+    /**
+     * @description Adds progress flags to players ArrayList typed to progressFlags
+     * @param flag object progressFlag
+     */
     public void addProgressFlag(ProgressFlags flag){
-        ProgressFlags.add(flag);
+        playerAcquiredProgressFlags.add(flag);
     }
 
-    private void ShowProgressFlags() {
-        if (!ProgressFlags.isEmpty()) {
-            System.out.println("You have: ");
-            for (ProgressFlags flag : ProgressFlags) {
-                System.out.println(flag);
+
+    /**
+     * @description Use or equip item to player
+     * if item is Weapon class, it will be equipped, 
+     * if item is Consumables class it will be used
+     * (restores health)
+     * @param item Item object
+     */
+    public void useOrEquipItem(Items item){
+
+        //If item is weapon
+        if (item instanceof Weapon) {
+            Weapon itemToEquip = (Weapon)item;
+
+            //Return if item is already equipped
+            if (equipped.equals(itemToEquip)) {
+                return;
             }
+
+            //Set item as equipped weapon
+            setEquipped(itemToEquip);
+            String equipped = "Equipped weapon: " + itemToEquip.getItem() + "\n";
+            Utility.Print(equipped, Utility.ActionSpeed);
+        }
+        else {
+            Consumables itemToUse = (Consumables)item;
+            
+            //Decreases 1 from selected item quantity
+            itemToUse.setQuantity(itemToUse.getQuantity()-1);
+            
+            //Item quantity goes to 0, remove from player inventory
+            if (itemToUse.getQuantity() < 1) {
+                playerInventory.remove(itemToUse);
+            }
+
+            //Restore health = current health + selected item heal points
+            setHealth(health + itemToUse.getHealPoints());
+            String healed = itemToUse.getItem() + " healed you " + itemToUse.getHealPoints() + " points!\n";
+            Utility.Print(healed, Utility.ActionSpeed);
+
+            //If health is over maximum, set current to maximum
+            if (health > maxHealth) {
+                setHealth(maxHealth);
+            }
+        }
+
+        //update character status container
+        characterStatusUpdate();
+    }
+
+
+    /**
+     * @description creates list view container for level up menu
+     * @return ListView levelUpMenu
+     */
+    public VerticalSkillList createLevelUpMenu(){
+        
+        VerticalSkillList temporary;
+        //If player has required amount of experience
+        if (experience >= expNeeded) {
+            
+            //Create list view container
+            temporary = new VerticalSkillList(10, "Select a new skill");
+
+            //Loop skills in initialized arraylist
+            for (Skills skill : Skills.SkillList) {
+
+                //add skills to list view
+                temporary.getSkillsList().getItems().add(skill);
+            }
+
+            Button button = new Button("Level Up!");
+            temporary.getChildren().add(button);
+
+            button.setOnAction(e -> {
+                //When button is clicked, store selected skill
+                Skills selectedSkill = temporary.getSkillsList().getSelectionModel().getSelectedItem();
+                
+                //If selection is not null
+                if (selectedSkill != null) {
+
+                    //Add skill to player skill list
+                    playerAcquiredSkills.add(selectedSkill); 
+
+                    //Remove from initialized skill list
+                    Skills.SkillList.remove(selectedSkill);
+                    
+                    setLevel(getLevel() + 1); //Gets current level and adds 1, sets to player level property
+                    int remainingExp = experience - expNeeded; //checks how much exp was leftover
+                    setExperience(remainingExp); //Set leftover as current experience amount
+                    setMaxHealth(getMaxHealth() + 10); //Adds 10 points to max health 
+                    setHealth(getMaxHealth()); //Restores character's max health
+                    setExpNeeded(getExpNeeded() + 250); //Increases required experience for next level
+                    this.levelUpContainer.getChildren().remove(this.levelUpMenu); //Remove level up menu from container
+                    characterStatusUpdate(); //Update character status container
+                }
+                else{
+                    temporary.setVerticalTitle("Please select a skill!");
+                }
+            });
         }
         else{
-            Utility.Print("You have not acquired any skills yet!\n", Utility.ActionSpeed);
+            temporary = new VerticalSkillList(10, "Not enough experience for level up!");
         }
+        return temporary;
+    }
 
-    } 
-    
-    public boolean flagExists(String actionFlag){
-        boolean flagFound = false;
-        for (ProgressFlags flag : getProgressFlags()) {
-            if (flag.getAction().equals(actionFlag)) {
-                flagFound = true;
-                //System.out.println("Flag found!");
-                break;
+    /**
+     * @description create player inventory listview container
+     * @return listview container
+     */
+    public VerticalInventoryList createPlayerInventory(){
+
+        //Init temporary viewlist container
+        VerticalInventoryList temporary;
+
+        //if player inventory is not empty
+        if (!playerInventory.isEmpty()) {
+            
+            temporary = new VerticalInventoryList(10, "");
+
+            //Create button to list and append
+            Button button = new Button("Use Item");
+            temporary.getChildren().addAll(button);
+
+            //Loop items in player invetory, add to list
+            for (Items item : playerInventory) {
+                temporary.getInventoryList().getItems().add(item);
             }
+
+            //If user clicks item in list
+            temporary.getInventoryList().setOnMouseClicked(e -> {
+
+                //Get clicked item
+                Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
+
+                if (selectedItem != null) {
+                    
+                    //Sets button text value based on class of item
+                    if (selectedItem instanceof Weapon) {
+                        button.setText("Equip Weapon");
+                    }
+                    else {
+                        button.setText("Use Item");
+                    }
+                }
+            });
+            
+            button.setOnAction(e -> {
+
+                //Select item with button click
+                Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
+
+                //If selected item is not null
+                if (selectedItem != null) {
+
+                    //Call function with item parameter
+                    useOrEquipItem(selectedItem);
+                    
+                    //Clear inventory list
+                    temporary.getInventoryList().getItems().clear();
+
+                    //Loop items in inventory again to have current status
+                    for (Items item : playerInventory) {
+                        temporary.getInventoryList().getItems().add(item);
+                    }
+                }
+                else{
+                    button.setText("Select item first!");
+                }
+            });
+
+            //Return filled list
+            return temporary;
         }
-        //System.out.println("Flag not found!" + flagFound);
-        return flagFound;
+        else{
+            //If player inventory is empty, list is empty
+           return temporary = new VerticalInventoryList(10, "Inventory is empty");
+        }
     }
 }

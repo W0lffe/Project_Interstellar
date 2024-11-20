@@ -22,14 +22,18 @@
             "label": "Build JAR",
             "type": "shell",
             "command": "jar",
-            "args": [ "cfm", "Project_Interstellar.jar", "Manifest.txt",
+            "args": [ "cfm", "out/Project_Interstellar.jar", "Manifest.txt",
             "-C", "out", "."]
         },
         {
             "label": "Run JAR",
             "type": "shell",
             "command": "java",
-            "args": [ "-jar", "Project_Interstellar.jar"]
+            "args": [ "--module-path", "lib/javafx-sdk-23/lib/",
+                "--add-modules","javafx.controls,javafx.fxml",
+                "-jar", "out/Project_Interstellar.jar"]
         },
     ]
 }
+
+//javac -cp "lib/javafx-sdk-23/lib/*;lib/gson/*" src/*.java -d out

@@ -1,68 +1,64 @@
 import java.util.ArrayList;
-import java.util.Scanner;
+import javafx.scene.Scene;
 
+/**@class Game
+ * @description Holds main functions of game, creating new game, starting game and loading existing game
+ * @future-idea Change "startGame" to work as a portal to different sections of game
+ */
 public class Game {
+    
+    /**@description Reference to running game scene, created in game initializing */
+    public static Scene gameRunningScene;
 
-    public static boolean gameRunning = true; // Set game running TRUE
+    /**@Function newGame
+     * @description function starts a new game, creating initializations and creating player
+     */
+    public static void newGame(){
 
-    public static void newGame(Scanner inputScanner) {
-
-        ArrayList<Skills> playerSkills = new ArrayList<>(); // initialize empty list for player skills
-        ArrayList<Items> playerInventory = new ArrayList<>(); // initialize empty list for player inventory items
+        // initialize empty list for player skills, inventory and progress flags
+        ArrayList<Skills> playerSkills = new ArrayList<>(); 
+        ArrayList<Items> playerInventory = new ArrayList<>(); 
         ArrayList<ProgressFlags> progressFlags = new ArrayList<>();
-   
-        Skills.initializeSkillArray(); //Initialize array with set Skills
 
-        // create a new player
+        //Initialize array with predefined Skills
+        Skills.initializeSkillArray(); 
+        
+        //Initialize array with predefined arraylists of items
+        ItemLists.initItemLists();
+    
+        //Create a new player
         Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
-        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags);
+        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags); //cheat/test player
 
-        // start a new game with created player
-        startGame(player, inputScanner);
+        //Create scene for running game, and set active
+        gameRunningScene = Scenes.createGameScene(player);
+        Main.primaryStage.setScene(gameRunningScene);
+
+        //Start game with created player
+        startGame(player);
     }
 
+    /**@Function startGame
+     * @description starts game with player object
+     * @param player object of created player
+     * @future-idea Change to work as a portal to different sections of game
+     */
+    private static void startGame(Player player){
 
-    //WIP loadGame 
-    public static void loadGame(Scanner inputScanner) {
+        Utility.Print("Game is starting\n", Utility.ActionSpeed);
+
+        //Take player to prologue 
+        Prologue.PartOne(player); //take player to Prologue
+
+        //CalyraBunker.InstanceOne(player, action);
+        //CalyraBunker.BunkerMainRoom(player, action);
+    }
+
+    /**@Function loadGame
+     * @description WORK IN PROGRESS
+     */
+    public static void loadGame(){
         System.out.println("WIP");
         return;
-    }
-
-    //Start Game with earlier created player
-    private static void startGame(Player player, Scanner action) {
-        Utility.Print("Game is starting\n", Utility.ActionSpeed);
-        gameRunning = true; //sets gameRunning true again, incase for example player dies and starts again
-
-        while (gameRunning) {
-            Prologue.Start(player, action); //take player to Prologue
-
-            Continue(action);
-
-            ActOne.InstanceOne(player, action);
-            //ActOne.BunkerMainRoom(player, action);
-            gameRunning = false;
-
-            //Continue(action);
-        }
-
-    }
-
-    //Function asks player if they still want to play, if not player will be taken back to main menu
-    private static void Continue(Scanner action) {
-        String userInput;
-
-        while (true) {
-            Utility.Print("Do you want to continue your journey?\n", Utility.ActionSpeed);
-            System.out.println("A) Yes \nB) No");
-            userInput = Validation.UserInput(action);
-
-            if (userInput.equals("B")) {
-                gameRunning = false;
-                break;
-            } else {
-                break;
-            }
-        }
-
     }
 }
