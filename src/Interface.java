@@ -1,5 +1,6 @@
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.BorderPane;
 import javafx.geometry.Pos;
@@ -430,21 +431,21 @@ class VerticalMainMenu extends VerticalContainer{
 /**@description Vertical ListView container with label
  * @methods getSkillsList(), setSkillsList(), addSkillToList()
  */
-class VerticalListView extends VerticalContainer{
+class VerticalSkillList extends VerticalContainer{
     
     private ListView<Skills> skillsList;
-
     /**
      * @description Create vertical container with listview and label
      * @param arg0 spacing between elements
      * @param labelText string to label
      */
-    public VerticalListView(double arg0, String labelText) {
+    public VerticalSkillList(double arg0, String labelText) {
         super(arg0, labelText);
         this.skillsList = new ListView<Skills>();
 
         this.getChildren().add(skillsList);
         this.setAlignment(Pos.TOP_CENTER);
+        this.setPrefSize(Main.WINDOW_WIDTH/5, Main.WINDOW_HEIGHT/2.5);
     }
 
     /**@return listview element of container */
@@ -470,11 +471,33 @@ class VerticalListView extends VerticalContainer{
         }
     }
 }
+    /**@description Vertical ListView container with label
+    * @methods getInventoryList()
+    */
+class VerticalInventoryList extends VerticalContainer{
+        
+    private ListView<Items> inventoryList;
 
-    
+   /**
+     * @description Create vertical container with listview and label
+     * @param arg0 spacing between elements
+     * @param labelText string to label
+     */
+    public VerticalInventoryList(double arg0, String labelText) {
+        super(arg0, labelText);
+        this.inventoryList = new ListView<Items>();
 
-    
+        this.getChildren().add(inventoryList);
+        this.setAlignment(Pos.TOP_CENTER);
+        this.setPrefSize(Main.WINDOW_WIDTH/5, Main.WINDOW_HEIGHT/2.5);
+    }
 
+    /**@return listview element of container */
+    public ListView<Items> getInventoryList() {
+        return inventoryList;
+    }
+        
+}
 
 
 

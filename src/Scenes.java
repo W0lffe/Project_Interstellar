@@ -35,7 +35,7 @@ public class Scenes {
 
         //Create root for scene, using created containers, set stylesheet
         Interface root = new Interface(top, bottom, left, right, center);
-        //root.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        root.getStylesheets().add(Interface.class.getResource("styles.css").toExternalForm());
         
         //First button calls new game function
         center.getFirstButton().setOnAction(event -> Game.newGame());
@@ -95,23 +95,11 @@ public class Scenes {
 
         //Create root for scene, using created containers, set stylesheet
         Interface gameRoot = new Interface(top, bottom, left, right, center);
-        //gameRoot.getStylesheets().add(Interface.class.getResource("styles.css").toExternalForm());
+        gameRoot.getStylesheets().add(Interface.class.getResource("styles.css").toExternalForm());
 
         //Create scene for running game, returns scene to game initialization
         Scene gameScene = new Scene(gameRoot, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
         return gameScene;
     }
-    
-  /*   public static Scene createCombatScene(){
-     
-        VerticalStoryPrint center = new VerticalStoryPrint(10, "");
-        center.setPrefSize(Main.WINDOW_WIDTH/2, 500);
-
-        Interface combatRoot = new Interface(Utility.topContainer, Utility.bottomContainer, Utility.leftContainer, Utility.rightContainer, center);
-
-        Scene combatScene = new Scene(combatRoot, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
-        return combatScene;
-
-    } */
-
+  
 }

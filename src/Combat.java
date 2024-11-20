@@ -144,7 +144,7 @@ public class Combat {
         int enemyMaxDmg = enemyEquipped.getMaxDamage();
 
         //if player has Weapons skill, increase damage
-        if (player.getPlayerSkills().contains(Skills.Weapons)){
+        if (player.getPlayerAcquiredSkills().contains(Skills.Weapons)){
             playerMaxDmg += 5;
             playerMinDmg += 5;
         }

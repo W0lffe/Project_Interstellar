@@ -79,7 +79,7 @@ public class Skills {
     public static Skills Weapons = new Skills("Weapons", false, "Every weapon now deals 5 extra damage!");
     public static Skills Lockpicking = new Skills("Lockpicking", false, "Enables lockpicking");
     public static Skills Computers = new Skills("Computers", false, "Learn hacking/programming");
-    public static Skills Medicine = new Skills("Medicine", false, "Healing items now heals 5 extra points!");
+    public static Skills Medicine = new Skills("Medicine", false, "Consumable items now heals 5 extra points!");
     public static Skills Speech = new Skills("Speech", false, "Chance to speak your way out");
     public static Skills Engineering = new Skills("Engineering", false, "Allow repair and enhancements");
     public static Skills Stealth = new Skills("Stealth", false, "You become a silhouette in the dark");

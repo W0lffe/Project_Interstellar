@@ -250,7 +250,7 @@ public class Prologue {
         playerActions.getFirstButton().setOnAction(e -> {
             
             //if player has object in inventory
-            if(player.getInventory().contains(Consumables.BASIC_MEDKIT)){
+            if(player.getPlayerInventory().contains(Consumables.BASIC_MEDKIT)){
 
                 //remove player actions before going to next part
                 playerActionsContainer.getChildren().remove(playerActions);

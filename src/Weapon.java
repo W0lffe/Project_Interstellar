@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Weapon extends Items{
     
     private int minDamage;
@@ -51,7 +53,6 @@ public class Weapon extends Items{
     public String toString() {
         return "[" + getItem() + " | " + getType() + " | Damage: " + minDamage + "-" + maxDamage + " | " + getDescription() + "]";
     }
-
 
     //predefined weapons
     public static Weapon NONE = new Weapon("Hands", "Hands", 0, 0, "Hands", 0);

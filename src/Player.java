@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
@@ -8,9 +7,9 @@ public class Player {
     private String name;
     private int maxHealth;
     private int health;
-    private ArrayList<Items> Inventory;
-    private ArrayList<Skills> PlayerSkills;
-    private ArrayList<ProgressFlags> ProgressFlags;
+    private ArrayList<Items> playerInventory;
+    private ArrayList<Skills> playerAcquiredSkills;
+    private ArrayList<ProgressFlags> playerAcquiredProgressFlags;
     private Weapon equipped;
     private int level;
     private int experience;
@@ -19,8 +18,10 @@ public class Player {
     
     private VerticalStatus statusContainer;
     private VerticalContainer characterInfo;
-    private VerticalListView levelUpMenu;
     private VerticalContainer levelUpContainer;
+    private VerticalSkillList levelUpMenu;
+    private VerticalInventoryList playerInventoryMenu;
+
 
     /**
      * @description Constructor of Player Object
@@ -42,14 +43,14 @@ public class Player {
         this.name = name;
         this.health = health;
         this.maxHealth = maxHealth;
-        this.Inventory = inventory;
-        this.PlayerSkills = playerSkills;
+        this.playerInventory = inventory;
+        this.playerAcquiredSkills = playerSkills;
         this.equipped = equipped;
         this.level = level;
         this.experience = experience;
         this.expNeeded = expNeeded;
         this.alive = alive;
-        this.ProgressFlags = flags;
+        this.playerAcquiredProgressFlags = flags;
     }
 
     /**@return name of player as String */
@@ -86,37 +87,37 @@ public class Player {
         this.health = health;
     }
     /**@return inventory of player as ArrayList typed to Items*/
-    public ArrayList<Items> getInventory() {
-        return Inventory;
+    public ArrayList<Items> getPlayerInventory() {
+        return playerInventory;
     }
     /**
      * @description set inventory for player
      * @param inventory ArrayList typed to Items
      */
-    public void setInventory(ArrayList<Items> inventory) {
-        Inventory = inventory;
+    public void setPlayerInventory(ArrayList<Items> inventory) {
+        playerInventory = inventory;
     }
     /**@return acquired skills of player as ArrayList typed to Skills */
-    public ArrayList<Skills> getPlayerSkills() {
-        return PlayerSkills;
+    public ArrayList<Skills> getPlayerAcquiredSkills() {
+        return playerAcquiredSkills;
     }
     /**
      * @description set list of acquired skills for player
      * @param playerSkills ArrayList typed to Skills
      */
-    public void setPlayerSkills(ArrayList<Skills> playerSkills) {
-        PlayerSkills = playerSkills;
+    public void setPlayerAcquiredSkills(ArrayList<Skills> playerSkills) {
+        playerAcquiredSkills = playerSkills;
     }
     /**@return acquired progress flags of player as ArrayList typed to ProgressFlags */
-    public ArrayList<ProgressFlags> getProgressFlags() {
-        return ProgressFlags;
+    public ArrayList<ProgressFlags> getPlayerAcquiredProgressFlags() {
+        return playerAcquiredProgressFlags;
     }
     /**
      * @description set list of acquired progression flags for player
      * @param progressFlags ArrayList typed to ProgressFlags
      */
-    public void setProgressFlags(ArrayList<ProgressFlags> progressFlags) {
-        ProgressFlags = progressFlags;
+    public void setPlayerAcquiredProgressFlags(ArrayList<ProgressFlags> progressFlags) {
+        playerAcquiredProgressFlags = progressFlags;
     }
     /**@return equipped weapon object of player */
     public Weapon getEquipped() {
@@ -210,7 +211,7 @@ public class Player {
 
         //Create container for character info
         VerticalContainer characterContainer = new VerticalContainer(20, "Character");
-        characterContainer.setAlignment(Pos.CENTER);
+        characterContainer.setAlignment(Pos.TOP_CENTER);
 
         //Create container for skills menu
         VerticalContainer skillsContainer = new VerticalContainer(10, "Skills");
@@ -228,12 +229,12 @@ public class Player {
         characterContainer.getChildren().addAll(skillsContainer, levelUpContainer, inventoryContainer);
 
         //Create skills menu
-        VerticalListView playerSkillsMenu = new VerticalListView(10, "");
+        VerticalSkillList playerSkillsMenu = new VerticalSkillList(10, "");
 
         skillsContainer.setOnMouseClicked(e -> {
             if (!skillsContainer.getChildren().contains(playerSkillsMenu)) {
+                playerSkillsMenu.addSkillToList(playerAcquiredSkills);
                 skillsContainer.getChildren().add(playerSkillsMenu);
-                playerSkillsMenu.addSkillToList(PlayerSkills);
             }
             else{
                 skillsContainer.getChildren().remove(playerSkillsMenu);
@@ -242,7 +243,7 @@ public class Player {
 
         levelUpContainer.setOnMouseClicked(e -> {
             if (!levelUpContainer.getChildren().contains(levelUpMenu)) {
-                this.levelUpMenu = levelUp();
+                this.levelUpMenu = createLevelUpMenu();
                 levelUpContainer.getChildren().add(levelUpMenu);
             }
             else{
@@ -250,8 +251,15 @@ public class Player {
             }
         });
 
-        
-        //MAKE MOUSECLICKED ACTION HERE
+        inventoryContainer.setOnMouseClicked(e -> {
+            if (!inventoryContainer.getChildren().contains(playerInventoryMenu)) {
+                this.playerInventoryMenu = createPlayerInventory();
+                inventoryContainer.getChildren().add(playerInventoryMenu);
+            }
+            else{
+                inventoryContainer.getChildren().remove(playerInventoryMenu);
+            }
+        });
 
         return characterContainer;
     }
@@ -313,7 +321,7 @@ public class Player {
     public void addItemToInventory(Items itemToAdd){
         
         //Loop items in inventory
-        for (Items items : Inventory) {
+        for (Items items : playerInventory) {
             //If item in inventory equals item to add
             if (items.getItem().equals(itemToAdd.getItem())) {
 
@@ -328,7 +336,7 @@ public class Player {
             }
         }
         //Add item to invetory
-        Inventory.add(itemToAdd);
+        playerInventory.add(itemToAdd);
         String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
         Utility.Print(itemAdded, Utility.ActionSpeed);
         
@@ -352,7 +360,35 @@ public class Player {
      * @param flag object progressFlag
      */
     public void addProgressFlag(ProgressFlags flag){
-        ProgressFlags.add(flag);
+        playerAcquiredProgressFlags.add(flag);
+    }
+
+    public void useOrEquipItem(Items item){
+
+        if (item instanceof Weapon) {
+            Weapon itemToEquip = (Weapon)item;
+
+            if (equipped.equals(itemToEquip)) {
+                return;
+            }
+
+            setEquipped(itemToEquip);
+            String equipped = "Equipped weapon: " + itemToEquip.getItem() + "\n";
+            Utility.Print(equipped, Utility.ActionSpeed);
+        }
+        else {
+            Consumables itemToUse = (Consumables)item;
+            
+            itemToUse.setQuantity(itemToUse.getQuantity()-1);
+            setHealth(health + itemToUse.getHealPoints());
+            String healed = itemToUse.getItem() + " healed you " + itemToUse.getHealPoints() + " points!\n";
+            Utility.Print(healed, Utility.ActionSpeed);
+
+            if (health > maxHealth) {
+                setHealth(maxHealth);
+            }
+        }
+        characterStatusUpdate();
     }
 
 
@@ -360,14 +396,14 @@ public class Player {
      * @description creates list view container for level up menu
      * @return ListView levelUpMenu
      */
-    public VerticalListView levelUp(){
+    public VerticalSkillList createLevelUpMenu(){
         
-        VerticalListView temporary;
+        VerticalSkillList temporary;
         //If player has required amount of experience
         if (experience >= expNeeded) {
             
             //Create list view container
-            temporary = new VerticalListView(10, "Select a new skill");
+            temporary = new VerticalSkillList(10, "Select a new skill");
 
             //Loop skills in initialized arraylist
             for (Skills skill : Skills.SkillList) {
@@ -387,7 +423,7 @@ public class Player {
                 if (selectedSkill != null) {
 
                     //Add skill to player skill list
-                    PlayerSkills.add(selectedSkill); 
+                    playerAcquiredSkills.add(selectedSkill); 
 
                     //Remove from initialized skill list
                     Skills.SkillList.remove(selectedSkill);
@@ -407,8 +443,63 @@ public class Player {
             });
         }
         else{
-            temporary = new VerticalListView(10, "Not enough experience for level up!");
+            temporary = new VerticalSkillList(10, "Not enough experience for level up!");
         }
+        return temporary;
+    }
+
+    public VerticalInventoryList createPlayerInventory(){
+
+        VerticalInventoryList temporary;
+
+        if (!playerInventory.isEmpty()) {
+            
+            temporary = new VerticalInventoryList(10, "");
+
+            Button button = new Button("Use Item");
+            temporary.getChildren().addAll(button);
+
+            for (Items item : playerInventory) {
+                temporary.getInventoryList().getItems().add(item);
+            }
+
+            temporary.getInventoryList().setOnMouseClicked(e -> {
+
+                Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
+
+                if (selectedItem != null) {
+                    
+                    if (selectedItem instanceof Weapon) {
+                        button.setText("Equip Weapon");
+                    }
+                    else {
+                        button.setText("Use Item");
+                    }
+                }
+            });
+
+            button.setOnAction(e -> {
+
+                Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
+
+                if (selectedItem != null) {
+                  useOrEquipItem(selectedItem);
+                  
+                  if (selectedItem.getQuantity() < 1) {
+                    temporary.getInventoryList().getItems().remove(selectedItem);
+                  }
+                }
+                else{
+                    button.setText("Select item first!");
+                }
+            });
+
+            return temporary;
+        }
+        else{
+            temporary = new VerticalInventoryList(10, "Inventory is empty");
+        }
+
         return temporary;
     }
 }
