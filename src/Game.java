@@ -22,10 +22,13 @@ public class Game {
 
         //Initialize array with predefined Skills
         Skills.initializeSkillArray(); 
+        
+        //Initialize array with predefined arraylists of items
+        ItemLists.initItemLists();
     
         //Create a new player
         //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
-        Player player = new Player("Jaxon Ryker", 50, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags);
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags);
 
         //Create scene for running game, and set active
         gameRunningScene = Scenes.createGameScene(player);
@@ -38,6 +41,7 @@ public class Game {
     /**@Function startGame
      * @description starts game with player object
      * @param player object of created player
+     * @future-idea Change to work as a portal to different sections of game
      */
     private static void startGame(Player player){
 

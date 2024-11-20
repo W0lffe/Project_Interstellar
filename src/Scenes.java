@@ -1,3 +1,4 @@
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
 /**@class Scenes
@@ -91,8 +92,8 @@ public class Scenes {
         player.characterStatusUpdate();
 
         //Set reference of character info to player object
-        player.setCharacterInfo(player.Character());
-
+        player.setCharacterInfo(createCharacterInfo(player));
+        
         //Create root for scene, using created containers, set stylesheet
         Interface gameRoot = new Interface(top, bottom, left, right, center);
         gameRoot.getStylesheets().add(Interface.class.getResource("styles.css").toExternalForm());
@@ -100,6 +101,74 @@ public class Scenes {
         //Create scene for running game, returns scene to game initialization
         Scene gameScene = new Scene(gameRoot, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
         return gameScene;
+    }
+
+
+    /**
+     * @description create a Vertical Container containing all the info of character,
+     * skill menu, level menu, inventory menu
+     * @return Character Info Container object
+     */
+    private static VerticalContainer createCharacterInfo(Player player){
+        
+        //Create container for character info
+        VerticalContainer characterContainer = new VerticalContainer(20, "Character");
+        characterContainer.setAlignment(Pos.TOP_CENTER);
+
+        //Create container for skills menu
+        VerticalContainer skillsContainer = new VerticalContainer(10, "Skills");
+        skillsContainer.setAlignment(Pos.CENTER);
+
+        //Create container for level menu
+        VerticalContainer levelUpContainer = new VerticalContainer(10, "Level");
+        levelUpContainer.setAlignment(Pos.CENTER);
+        player.setLevelUpContainer(levelUpContainer);
+
+        //Create container for inventory menu
+        VerticalContainer inventoryContainer = new VerticalContainer(10, "Inventory");
+        inventoryContainer.setAlignment(Pos.CENTER);
+
+        //append containers
+        characterContainer.getChildren().addAll(skillsContainer, levelUpContainer, inventoryContainer);
+
+        //Create skills menu
+        VerticalSkillList playerSkillsMenu = new VerticalSkillList(10, "");
+
+        //Toggles player skill menu in container, adds skills to list
+        skillsContainer.setOnMouseClicked(e -> {
+            if (!skillsContainer.getChildren().contains(playerSkillsMenu)) {
+                playerSkillsMenu.addSkillToList(player.getPlayerAcquiredSkills());
+                skillsContainer.getChildren().add(playerSkillsMenu);
+            }
+            else{
+                skillsContainer.getChildren().remove(playerSkillsMenu);
+            }
+        });
+
+        //Toggles level up menu in container, creates menu and sets to player class
+        levelUpContainer.setOnMouseClicked(e -> {
+            if (!levelUpContainer.getChildren().contains(player.getLevelUpMenu())) {
+                player.setLevelUpMenu(player.createLevelUpMenu());
+                levelUpContainer.getChildren().add(player.getLevelUpMenu());
+            }
+            else{
+                levelUpContainer.getChildren().remove(player.getLevelUpMenu());
+            }
+        });
+
+        //Toggles player inventory menu in container, creates menu and sets to player class
+        inventoryContainer.setOnMouseClicked(e -> {
+            if (!inventoryContainer.getChildren().contains(player.getPlayerInventoryMenu())) {
+                player.setPlayerInventoryMenu(player.createPlayerInventory());
+                inventoryContainer.getChildren().add(player.getPlayerInventoryMenu());
+            }
+            else{
+                inventoryContainer.getChildren().remove(player.getPlayerInventoryMenu());
+            }
+        });
+
+        //Return created character info container
+        return characterContainer;
     }
   
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 public class Player {
@@ -22,7 +21,6 @@ public class Player {
     private VerticalContainer levelUpContainer;
     private VerticalSkillList levelUpMenu;
     private VerticalInventoryList playerInventoryMenu;
-
 
     /**
      * @description Constructor of Player Object
@@ -53,6 +51,9 @@ public class Player {
         this.alive = alive;
         this.playerAcquiredProgressFlags = flags;
     }
+
+
+    /***************************************PLAYER OBJECT GETTER & SETTERS**********************************************************/
 
     /**@return name of player as String */
     public String getName() {
@@ -200,6 +201,8 @@ public class Player {
         this.alive = alive;
     }
 
+
+/***************************************PLAYER RELATED CONTAINER GETTER & SETTERS**********************************************************/
     /**@return status container of player */
     public VerticalStatus getStatusContainer() {
         return statusContainer;
@@ -226,69 +229,42 @@ public class Player {
         this.characterInfo = characterInfo;
     }
 
-
-    /**
-     * @description create a Vertical Container containing all the info of character,
-     * skill menu, level menu, inventory menu
-     * @return Character Info Container object
-     * @WorkInProgress
+     /**
+     * @description set level up container for player
+     * @param characterInfo container object to set
      */
-    public VerticalContainer Character() {   
-
-        //Create container for character info
-        VerticalContainer characterContainer = new VerticalContainer(20, "Character");
-        characterContainer.setAlignment(Pos.TOP_CENTER);
-
-        //Create container for skills menu
-        VerticalContainer skillsContainer = new VerticalContainer(10, "Skills");
-        skillsContainer.setAlignment(Pos.CENTER);
-
-        //Create container for level menu
-        this.levelUpContainer = new VerticalContainer(10, "Level");
-        levelUpContainer.setAlignment(Pos.CENTER);
-
-        //Create container for inventory menu
-        VerticalContainer inventoryContainer = new VerticalContainer(10, "Inventory");
-        inventoryContainer.setAlignment(Pos.CENTER);
-
-        //append containers
-        characterContainer.getChildren().addAll(skillsContainer, levelUpContainer, inventoryContainer);
-
-        //Create skills menu
-        VerticalSkillList playerSkillsMenu = new VerticalSkillList(10, "");
-
-        skillsContainer.setOnMouseClicked(e -> {
-            if (!skillsContainer.getChildren().contains(playerSkillsMenu)) {
-                playerSkillsMenu.addSkillToList(playerAcquiredSkills);
-                skillsContainer.getChildren().add(playerSkillsMenu);
-            }
-            else{
-                skillsContainer.getChildren().remove(playerSkillsMenu);
-            }
-        });
-
-        levelUpContainer.setOnMouseClicked(e -> {
-            if (!levelUpContainer.getChildren().contains(levelUpMenu)) {
-                this.levelUpMenu = createLevelUpMenu();
-                levelUpContainer.getChildren().add(levelUpMenu);
-            }
-            else{
-                levelUpContainer.getChildren().remove(levelUpMenu);
-            }
-        });
-
-        inventoryContainer.setOnMouseClicked(e -> {
-            if (!inventoryContainer.getChildren().contains(playerInventoryMenu)) {
-                this.playerInventoryMenu = createPlayerInventory();
-                inventoryContainer.getChildren().add(playerInventoryMenu);
-            }
-            else{
-                inventoryContainer.getChildren().remove(playerInventoryMenu);
-            }
-        });
-
-        return characterContainer;
+    public void setLevelUpContainer(VerticalContainer levelUpContainer) {
+        this.levelUpContainer = levelUpContainer;
     }
+    /**@return level up menu of player */
+    public VerticalSkillList getLevelUpMenu() {
+        return levelUpMenu;
+    }
+
+     /**
+     * @description set level up menu for player
+     * @param characterInfo container object to set
+     */
+    public void setLevelUpMenu(VerticalSkillList levelUpMenu) {
+        this.levelUpMenu = levelUpMenu;
+    }
+
+    /**@return player inventory menu  */
+    public VerticalInventoryList getPlayerInventoryMenu() {
+        return playerInventoryMenu;
+    }
+
+     /**
+     * @description set player inventory menu for player
+     * @param characterInfo container object to set
+     */
+    public void setPlayerInventoryMenu(VerticalInventoryList playerInventoryMenu) {
+        this.playerInventoryMenu = playerInventoryMenu;
+    }
+
+
+/***************************************PLAYER RELATED METHODS**********************************************************/
+
 
     /**@description Toggles character info and status containers in root containers */
     public void toggleCharacterInfoStatus(){
@@ -338,6 +314,26 @@ public class Player {
         //update player status container
         characterStatusUpdate();
     }
+
+    /**
+     * @description Loops through items in itemlist, adds to inventory
+     * @param itemList ArrayList typed to Items, itemlist
+     * @param foundWhere Where player found items
+     */
+   public void lootItems(ArrayList<Items> itemList, String foundWhere){
+
+        String itemsFound = "You loot the " + foundWhere + " and find: \n";
+
+        for (Items item : itemList) {
+            itemsFound += item.toString() + "\n";
+        }
+        Utility.Print(itemsFound, 0);
+
+        for (Items item : itemList) {
+            addItemToInventory(item);
+        }
+    } 
+
 
    /**
     * @description Adds items to player inventory

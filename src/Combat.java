@@ -64,6 +64,11 @@ public class Combat {
                     //If enemy health is 0 or less
                     if(enemy.getHealth() <= 0){
 
+                        //If enemy object has inventory, player loots inventory
+                        if (enemy.getInventory() != null) {
+                            player.lootItems(enemy.getInventory(), enemy.getName());
+                        }
+
                         //Remove status container of enemy from root
                         Utility.rightContainer.getChildren().remove(enemy.getStatusContainer());
                         enemy.setAlive(false);

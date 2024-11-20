@@ -34,9 +34,8 @@ public class Prologue {
      */
     public static void PartOne(Player player){
 
-        //Read file to string, starts from word PROLOGUE, ends to word SCENE2
-        String partOne = Files.ReadFile(storyFile, "PROLOGUE", "SCENE2"); 
-        Utility.Print(partOne, Utility.StoryPrintSpeed); //Print story
+        //Print story to textarea
+        Utility.readFileAndPrint(storyFile, "PROLOGUE", "SCENE2");
 
         //Possible choices for player
         playerChoices = "A) Character B) Take a look in the locker C) Inspect datapad D) Go outside";
@@ -59,15 +58,8 @@ public class Prologue {
             
             //if player has not checked locker, player is able to do so
             if (!checkedLocker) {
-                String itemsFound = "You look in the locker and find: \n" + Weapon.LASER_PISTOL + "\n" + 
-                                        Consumables.SPACE_SODA.Found() + "\n" + Consumables.BASIC_MEDKIT.Found();
-                Utility.Print(itemsFound, 0);
-
-                //Add items to player inventory, !!!IMPLEMENT: NEW METHOD HERE TO MAKE IT MORE DYNAMIC!!!
-                player.addItemToInventory(Weapon.LASER_PISTOL);
-                player.addItemToInventory(Consumables.SPACE_SODA);
-                player.addItemToInventory(Consumables.BASIC_MEDKIT);    
-
+                //Fetch predefined itemlist for prologue, send to lootItems function
+                player.lootItems(ItemLists.fetchPrologueItemList(0), "locker");
                 checkedLocker = true;
             }
             else{
@@ -81,9 +73,7 @@ public class Prologue {
             //If player has not read datapad, player is able to do so
             if(!readDatapad){
                 Utility.Print(Utility.activateDatapad, Utility.ActionSpeed);
-                
-                String datapad = Files.ReadFile(datapadFile,null,null);
-                Utility.Print(datapad, Utility.DatapadPrintSpeed);
+                Utility.readFileAndPrint(datapadFile, null, null);
                 
                 player.actionExperience(Utility.LoreItemEXP);
                 readDatapad = true;
@@ -115,9 +105,8 @@ public class Prologue {
      */
     private static void PartTwo(Player player){
         
-        //Read story to string
-        String partTwo = Files.ReadFile(storyFile, "SCENE2", "S2-OPTION1"); 
-        Utility.Print(partTwo, Utility.StoryPrintSpeed);  //print story
+        //Print story
+        Utility.readFileAndPrint(storyFile, "SCENE2", "S2-OPTION1");
 
         //Set new player choices
         playerChoices = "A) Go with Teth and Jaxer B) Not now";
@@ -133,8 +122,8 @@ public class Prologue {
             playerActionsContainer.getChildren().remove(playerActions); 
             playerActionsContainer.setVerticalTitle("");
             
-            String option1 = Files.ReadFile(storyFile, "S2-OPTION1", "S2-OPTION1,2");
-            Utility.Print(option1, Utility.StoryPrintSpeed);  
+            //Print story
+            Utility.readFileAndPrint(storyFile, "S2-OPTION1", "S2-OPTION1,2");
 
             //Create object NPC, add to list
             EnemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
@@ -144,9 +133,7 @@ public class Prologue {
 
                 //After combat run this: if player is alive --> read story and move to next part
                 if (player.isAlive()) {
-                    String option1o1 = Files.ReadFile(storyFile, "S2-OPTION1,2", "S2-OPTION2");
-                    Utility.Print(option1o1, Utility.StoryPrintSpeed);
-                    
+                    Utility.readFileAndPrint(storyFile, "S2-OPTION1,2", "S2-OPTION2");
                     PartThree(player); //exit PartTwo
                 }
             });
@@ -159,9 +146,7 @@ public class Prologue {
             playerActionsContainer.getChildren().remove(playerActions);
             playerActionsContainer.setVerticalTitle("");
 
-            String option2 = Files.ReadFile(storyFile, "S2-OPTION2", "SCENE3");
-            Utility.Print(option2, Utility.StoryPrintSpeed);   
-
+            Utility.readFileAndPrint(storyFile, "S2-OPTION2", "SCENE3");
             PartThree(player); //exit PartTwo
         });
 
@@ -175,8 +160,8 @@ public class Prologue {
 
 
         //Create NPC objects and add to List
-        EnemyList.add(new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_PISTOL, null));
-        EnemyList.add(new NPC(60, 60, "Rak'ra Brute", 75, true, Weapon.PULSE_RIFLE, null));
+        EnemyList.add(new NPC(40, 40, "Rak'ra Rookie", 50, true, Weapon.PULSE_PISTOL, ItemLists.randomLootForNPC()));
+        EnemyList.add(new NPC(50, 50, "Rak'ra Brute", 75, true, Weapon.PULSE_RIFLE, ItemLists.randomLootForNPC()));
 
         //reference to NPC object in list
         NPC brute = EnemyList.get(1);
@@ -235,9 +220,8 @@ public class Prologue {
      */
     private static void PartFour(Player player){
         
-        //Read story to string and print
-        String scene3 = Files.ReadFile(storyFile, "SCENE3", "S3-OPTION1");
-        Utility.Print(scene3, Utility.StoryPrintSpeed);
+        //Print story
+        Utility.readFileAndPrint(storyFile, "SCENE3", "S3-OPTION1");
 
         //Set new player choices
         playerChoices = "A) Go to Jaxer and see if you can help him recover B) Help Teth";
@@ -259,9 +243,8 @@ public class Prologue {
                 Utility.Print("You go to Jaxer\n", Utility.ActionSpeed);
                 player.addProgressFlag(new ProgressFlags("Saved Jaxer", true));
 
-                String s3o1 = Files.ReadFile(storyFile, "S3-OPTION1", "S3-OPTION2");
-                Utility.Print(s3o1, Utility.StoryPrintSpeed);
-
+                //Print story
+                Utility.readFileAndPrint(storyFile, "S3-OPTION1", "S3-OPTION2");
                 PartFive(player); //Exit PartFour
             }
             else{
@@ -275,9 +258,8 @@ public class Prologue {
             playerActionsContainer.getChildren().remove(playerActions);
             playerActionsContainer.setVerticalTitle("");
 
-            String s3o2 = Files.ReadFile(storyFile, "S3-OPTION2", "S3-PART2");
-            Utility.Print(s3o2, Utility.StoryPrintSpeed);
-
+            //Print story
+            Utility.readFileAndPrint(storyFile, "S3-OPTION2", "S3-PART2");
             PartFive(player); //exit PartFour
         });
 
@@ -289,9 +271,8 @@ public class Prologue {
      */
     private static void PartFive(Player player){
 
-        //Read story to String and print
-        String s3part2 = Files.ReadFile(storyFile, "S3-PART2", "S3P2-OPTION1");
-        Utility.Print(s3part2, Utility.StoryPrintSpeed);
+        //Print story
+        Utility.readFileAndPrint(storyFile, "S3-PART2", "S3P2-OPTION1");
 
         //Set new player choices
         playerChoices = "A) Kill the engineer B) Keep going";
@@ -314,13 +295,11 @@ public class Prologue {
             //Enter combat with player object and list of enemies
             Combat.FightMenu(player, EnemyList, () -> {
 
-                String p2o1 = Files.ReadFile(storyFile, "S3P2-OPTION1", "S3P2-OPTION2");
-                Utility.Print(p2o1, Utility.StoryPrintSpeed);
-                
+                //Print story
+                Utility.readFileAndPrint(storyFile, "S3P2-OPTION1", "S3P2-OPTION2");
+
                 //Add consumable objects to player inventory
-                player.addItemToInventory(Consumables.BASIC_MEDKIT); 
-                player.addItemToInventory(Consumables.BASIC_MEDKIT);
-    
+                player.lootItems(ItemLists.fetchPrologueItemList(1), "supply container");
                 Final(player); //exit PartFive
             }); 
         });
@@ -331,25 +310,24 @@ public class Prologue {
             playerActionsContainer.getChildren().remove(playerActions);
             playerActionsContainer.setVerticalTitle("");
 
-            String p2o2 = Files.ReadFile(storyFile, "S3P2-OPTION2", "S3P2-OPTION2P1");
-            Utility.Print(p2o2, Utility.StoryPrintSpeed);
+            //Print story
+            Utility.readFileAndPrint(storyFile, "S3P2-OPTION2", "S3P2-OPTION2P1");
 
             //Add consumable objects to player inventory
-            player.addItemToInventory(Consumables.BASIC_MEDKIT); //Add medkits to inventory
-            player.addItemToInventory(Consumables.BASIC_MEDKIT);
+            player.lootItems(ItemLists.fetchPrologueItemList(1), "supply container");
 
             //Create NPC objects and add to enemy list
-            EnemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null));
-            EnemyList.add(new NPC(100, 100, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, null));
+            EnemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, ItemLists.randomLootForNPC()));
+            EnemyList.add(new NPC(75, 75, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, ItemLists.randomLootForNPC()));
 
             //Enter combat with player object and enemylist
             Combat.FightMenu(player, EnemyList, () -> {
 
                 //after combat, if player is alive: read story and print, exit PartFive
                 if (player.isAlive()) {
-                    String p2o3 = Files.ReadFile(storyFile, "S3P2-OPTION2P1", "FINAL");
-                    Utility.Print(p2o3, Utility.StoryPrintSpeed);
 
+                    //Print story
+                    Utility.readFileAndPrint(storyFile, "S3P2-OPTION2P1", "FINAL");
                     Final(player); //Exit PartFive
                 }
                 //else game over
@@ -369,12 +347,11 @@ public class Prologue {
         //Set player health to maximum health
         player.setHealth(player.getMaxHealth());
 
-        //Read story to string and print
-        String finalScene = Files.ReadFile(storyFile, "FINAL", "FINAL-PART2");
-        Utility.Print(finalScene, Utility.StoryPrintSpeed);
+        //Print story
+        Utility.readFileAndPrint(storyFile, "FINAL", "FINAL-PART2");
 
         //Create NPC object and add to list
-        EnemyList.add(new NPC(150, 150, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, null));
+        EnemyList.add(new NPC(150, 150, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, ItemLists.randomLootForNPC()));
 
         //Reference to created npc
         NPC Boss = EnemyList.get(0);
@@ -385,9 +362,8 @@ public class Prologue {
             //if player is alive after combat
             if (player.isAlive()) {
 
-                //Read story to string and print
-                String finalPart2 = Files.ReadFile(storyFile, "FINAL-PART2", "END");
-                Utility.Print(finalPart2, Utility.StoryPrintSpeed);
+                //Print story
+                Utility.readFileAndPrint(storyFile, "FINAL-PART2", "END");
 
                 //Set new player chocies
                 playerChoices = "A) Eliminate Ka'tar B) Leave the Station with Teth";
@@ -417,7 +393,6 @@ public class Prologue {
 
                     //Remove prologue player actions container from Interface
                     Utility.centerContainer.getChildren().remove(playerActionsContainer);
-
                     PrologueEnd(player); //exit prologue final
                 });
             }
@@ -431,8 +406,7 @@ public class Prologue {
     private static void PrologueEnd(Player player){
 
         //Read prologue ending story to string and Print
-        String finalEnd = Files.ReadFile(storyFile, "END", "PROLOGUE-END");
-        Utility.Print(finalEnd, Utility.StoryPrintSpeed);
+        Utility.readFileAndPrint(storyFile, "END", "PROLOGUE-END");
 
         //TO NEXT ACT
      }

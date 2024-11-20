@@ -39,7 +39,7 @@ public class Utility {
     /**@description speed to print the story in function Print, CURRENTLY 0, TBD*/
     public static int StoryPrintSpeed = 0; 
     /**@description speed to print the story in function Print, 20ms*/
-    public static int DatapadPrintSpeed = 20; 
+    public static int DataPrintSpeed = 20; 
     /**@description speed to print the story in function Print, 15ms*/
     public static int ActionSpeed = 15;
 
@@ -51,6 +51,27 @@ public class Utility {
     public static final int LootItemEXP = 5;
 
 
+    /**
+     * @description Reads file to string, sends to printing function ->
+     * appends text to textarea
+     * @param fileName name of file
+     * @param startWord word in the file, where to start reading
+     * @param endWord word in the file, where to stop reading
+     */
+    public static void readFileAndPrint(String fileName, String startWord, String endWord){
+
+        String textToPrint = Files.ReadFile(fileName, startWord, endWord);
+        int speed;
+
+        if (fileName.contains("Datapad") || fileName.contains("Console")) {
+            speed = DataPrintSpeed;
+        }
+        else{
+            speed = StoryPrintSpeed;
+        }
+
+        Print(textToPrint, speed);
+    }
 
     /**
      * @description Function prints given string with delay, delay given as parameter
@@ -63,7 +84,11 @@ public class Utility {
         char[] toPrintArray = toPrint.toCharArray();
 
         for (int i = 0; i < toPrint.length(); i++) {
-                centerContainer.appendText(Character.toString(toPrintArray[i]));
+            centerContainer.appendText(Character.toString(toPrintArray[i]));
+
+            if (i == toPrint.length() - 1) {
+                centerContainer.appendText("\n");
+            }
         }
     }
 
