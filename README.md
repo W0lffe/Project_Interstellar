@@ -39,7 +39,7 @@ The project will be iteratively refined as new skills are developed, with the po
 * [ ] Final Act - The Reckoning
 
 ### Game World
-* [] Characters
+* [ ] Characters
     * [X] Player
     * [X] NPC
 * [ ] Items
