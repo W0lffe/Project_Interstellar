@@ -16,6 +16,7 @@ public class Player {
     private int expNeeded;
     private boolean alive;
     
+    //Containers related to player character info and status
     private VerticalStatus statusContainer;
     private VerticalContainer characterInfo;
     private VerticalContainer levelUpContainer;
@@ -57,6 +58,7 @@ public class Player {
     public String getName() {
         return name;
     }
+
     /**
      * @description set name for player
      * @param name string to set
@@ -64,10 +66,12 @@ public class Player {
     public void setName(String name) {
         this.name = name;
     }
+
     /**@return maximum health of player as Integer*/
     public int getMaxHealth() {
         return maxHealth;
     }
+
     /**
      * @description set maximum health for player
      * @param maxHealth value to set
@@ -75,10 +79,12 @@ public class Player {
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
     }
+
     /**@return current health of player as integer*/
     public int getHealth() {
         return health;
     }
+
     /**
      * @description set current health for player
      * @param health value to set
@@ -86,10 +92,12 @@ public class Player {
     public void setHealth(int health) {
         this.health = health;
     }
+
     /**@return inventory of player as ArrayList typed to Items*/
     public ArrayList<Items> getPlayerInventory() {
         return playerInventory;
     }
+
     /**
      * @description set inventory for player
      * @param inventory ArrayList typed to Items
@@ -97,10 +105,12 @@ public class Player {
     public void setPlayerInventory(ArrayList<Items> inventory) {
         playerInventory = inventory;
     }
+
     /**@return acquired skills of player as ArrayList typed to Skills */
     public ArrayList<Skills> getPlayerAcquiredSkills() {
         return playerAcquiredSkills;
     }
+
     /**
      * @description set list of acquired skills for player
      * @param playerSkills ArrayList typed to Skills
@@ -108,10 +118,12 @@ public class Player {
     public void setPlayerAcquiredSkills(ArrayList<Skills> playerSkills) {
         playerAcquiredSkills = playerSkills;
     }
+
     /**@return acquired progress flags of player as ArrayList typed to ProgressFlags */
     public ArrayList<ProgressFlags> getPlayerAcquiredProgressFlags() {
         return playerAcquiredProgressFlags;
     }
+
     /**
      * @description set list of acquired progression flags for player
      * @param progressFlags ArrayList typed to ProgressFlags
@@ -119,10 +131,12 @@ public class Player {
     public void setPlayerAcquiredProgressFlags(ArrayList<ProgressFlags> progressFlags) {
         playerAcquiredProgressFlags = progressFlags;
     }
+
     /**@return equipped weapon object of player */
     public Weapon getEquipped() {
         return equipped;
     }
+
     /**
      * @description set Weapon object for player to equip
      * @param equipped Weapon Object to equip
@@ -130,10 +144,12 @@ public class Player {
     public void setEquipped(Weapon equipped) {
         this.equipped = equipped;
     }
+
     /**@return current level of player as Integer */
     public int getLevel() {
         return level;
     }
+
     /**
      * @description set current level for player
      * @param level value to set
@@ -142,10 +158,12 @@ public class Player {
         this.level = level;
         characterStatusUpdate();
     }
+
     /**@return current experience points of player as Integer */
     public int getExperience() {
         return experience;
     }
+
     /**
      * @description sets current experience for player
      * @param experience value to set
@@ -155,10 +173,12 @@ public class Player {
         this.experience = experience;
         characterStatusUpdate();
     }
+
     /**@return needed experience points of player as Integer*/
     public int getExpNeeded() {
         return expNeeded;
     }
+
     /**
      * @description set experience needed for level for player
      * @param expNeeded value to set
@@ -166,10 +186,12 @@ public class Player {
     public void setExpNeeded(int expNeeded) {
         this.expNeeded = expNeeded;
     }
+
     /**@return if player is alive, true or false */
     public boolean isAlive() {
         return alive;
     }
+
     /**
      * @description set player alive status
      * @param alive true or false
@@ -177,10 +199,12 @@ public class Player {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+
     /**@return status container of player */
     public VerticalStatus getStatusContainer() {
         return statusContainer;
     }
+
     /**
      * @description set status container for player
      * @param statusContainer container object to set
@@ -188,10 +212,12 @@ public class Player {
     public void setStatusContainer(VerticalStatus statusContainer) {
         this.statusContainer = statusContainer;
     }
+
     /**@return vertical container containing character info of player */
      public VerticalContainer getCharacterInfo() {
         return characterInfo;
     }
+
     /**
      * @description set character info container for player
      * @param characterInfo container object to set
@@ -278,6 +304,7 @@ public class Player {
         }
     }
 
+
     /**@description updates character status container with player properties*/
     public void characterStatusUpdate() {
         String isEquipped = "";
@@ -363,15 +390,26 @@ public class Player {
         playerAcquiredProgressFlags.add(flag);
     }
 
+
+    /**
+     * @description Use or equip item to player
+     * if item is Weapon class, it will be equipped, 
+     * if item is Consumables class it will be used
+     * (restores health)
+     * @param item Item object
+     */
     public void useOrEquipItem(Items item){
 
+        //If item is weapon
         if (item instanceof Weapon) {
             Weapon itemToEquip = (Weapon)item;
 
+            //Return if item is already equipped
             if (equipped.equals(itemToEquip)) {
                 return;
             }
 
+            //Set item as equipped weapon
             setEquipped(itemToEquip);
             String equipped = "Equipped weapon: " + itemToEquip.getItem() + "\n";
             Utility.Print(equipped, Utility.ActionSpeed);
@@ -379,15 +417,21 @@ public class Player {
         else {
             Consumables itemToUse = (Consumables)item;
             
+            //Decreases 1 from selected item quantity
             itemToUse.setQuantity(itemToUse.getQuantity()-1);
+
+            //Restore health = current health + selected item heal points
             setHealth(health + itemToUse.getHealPoints());
             String healed = itemToUse.getItem() + " healed you " + itemToUse.getHealPoints() + " points!\n";
             Utility.Print(healed, Utility.ActionSpeed);
 
+            //If health is over maximum, set current to maximum
             if (health > maxHealth) {
                 setHealth(maxHealth);
             }
         }
+
+        //update character status container
         characterStatusUpdate();
     }
 
@@ -448,27 +492,38 @@ public class Player {
         return temporary;
     }
 
+    /**
+     * @description create player inventory listview container
+     * @return listview container
+     */
     public VerticalInventoryList createPlayerInventory(){
 
+        //Init temporary viewlist container
         VerticalInventoryList temporary;
 
+        //if player inventory is not empty
         if (!playerInventory.isEmpty()) {
             
             temporary = new VerticalInventoryList(10, "");
 
+            //Create button to list and append
             Button button = new Button("Use Item");
             temporary.getChildren().addAll(button);
 
+            //Loop items in player invetory, add to list
             for (Items item : playerInventory) {
                 temporary.getInventoryList().getItems().add(item);
             }
 
+            //If user clicks item in list
             temporary.getInventoryList().setOnMouseClicked(e -> {
 
+                //Get clicked item
                 Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
 
                 if (selectedItem != null) {
                     
+                    //Sets button text value based on class of item
                     if (selectedItem instanceof Weapon) {
                         button.setText("Equip Weapon");
                     }
@@ -477,29 +532,39 @@ public class Player {
                     }
                 }
             });
-
+            
             button.setOnAction(e -> {
 
+                //Select item with button click
                 Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
 
+                //If selected item is not null
                 if (selectedItem != null) {
-                  useOrEquipItem(selectedItem);
-                  
-                  if (selectedItem.getQuantity() < 1) {
-                    temporary.getInventoryList().getItems().remove(selectedItem);
-                  }
+
+                    //Call function with item parameter
+                    useOrEquipItem(selectedItem);
+                    
+                    //If item quantity goes below 1, remove item from list and inventory
+                    if (selectedItem.getQuantity() < 1) {
+                        temporary.getInventoryList().getItems().remove(selectedItem);
+                        for (Items item : playerInventory) {
+                            if (item.equals(selectedItem)) {
+                                playerInventory.remove(item);
+                            }
+                        }
+                    }
                 }
                 else{
                     button.setText("Select item first!");
                 }
             });
 
+            //Return filled list
             return temporary;
         }
         else{
-            temporary = new VerticalInventoryList(10, "Inventory is empty");
+            //If player inventory is empty, list is empty
+           return temporary = new VerticalInventoryList(10, "Inventory is empty");
         }
-
-        return temporary;
     }
 }
