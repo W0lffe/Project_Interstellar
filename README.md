@@ -6,6 +6,8 @@ The game has been successfully converted to run with a JavaFX GUI and is now pla
 It features functional core mechanics such as combat, skill checks, inventory management, and progress tracking. 
 Players can explore varied environments, engage with characters, and make impactful choices that shape their journey as the story unfolds. 
 
+
+
 As this is a work in progress, certain features are still being developed, and the game may contain bugs or issues. 
 Updates will continue as new content and features are added, with an ongoing focus on polishing gameplay and expanding the storyline.
 
@@ -84,6 +86,8 @@ The project will be iteratively refined as new skills are developed, with the po
  * [ ] (Optional) Endings Based On Players Choices
 * [ ] Journal
 * [X] Progress Flags
+
+
 
 
 
