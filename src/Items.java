@@ -133,6 +133,9 @@ class ItemLists{
 
     }
 
+    /**@description fetches predefined arraylist to prologue
+     * @param index value of index to get from arraylist
+     * @return ArrayList typed to Items */
     public static ArrayList<Items> fetchPrologueItemList(int index){
         return prologueItemLists.get(index);
     }

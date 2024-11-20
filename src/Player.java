@@ -92,6 +92,7 @@ public class Player {
      */
     public void setHealth(int health) {
         this.health = health;
+        characterStatusUpdate();
     }
 
     /**@return inventory of player as ArrayList typed to Items*/
@@ -415,6 +416,11 @@ public class Player {
             
             //Decreases 1 from selected item quantity
             itemToUse.setQuantity(itemToUse.getQuantity()-1);
+            
+            //Item quantity goes to 0, remove from player inventory
+            if (itemToUse.getQuantity() < 1) {
+                playerInventory.remove(itemToUse);
+            }
 
             //Restore health = current health + selected item heal points
             setHealth(health + itemToUse.getHealPoints());
@@ -540,14 +546,12 @@ public class Player {
                     //Call function with item parameter
                     useOrEquipItem(selectedItem);
                     
-                    //If item quantity goes below 1, remove item from list and inventory
-                    if (selectedItem.getQuantity() < 1) {
-                        temporary.getInventoryList().getItems().remove(selectedItem);
-                        for (Items item : playerInventory) {
-                            if (item.equals(selectedItem)) {
-                                playerInventory.remove(item);
-                            }
-                        }
+                    //Clear inventory list
+                    temporary.getInventoryList().getItems().clear();
+
+                    //Loop items in inventory again to have current status
+                    for (Items item : playerInventory) {
+                        temporary.getInventoryList().getItems().add(item);
                     }
                 }
                 else{

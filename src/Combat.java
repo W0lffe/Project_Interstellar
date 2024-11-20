@@ -13,7 +13,7 @@ public class Combat {
     public static void FightMenu(Player player, ArrayList<NPC> enemyList, Runnable onCombatEnd) {
 
         //Create new actions for player
-        HorizontalPlayerActions playerActions = new HorizontalPlayerActions(10, "", "Show Character", "Attack");
+        HorizontalPlayerActions playerActions = new HorizontalPlayerActions(10, "", "Character", "Attack");
 
         //Create choice box for enemies, update it with list of enemies, add to container
         CombatChoicesBox enemies = new CombatChoicesBox(5, "Select opponent");

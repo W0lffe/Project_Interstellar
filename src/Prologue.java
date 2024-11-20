@@ -171,7 +171,7 @@ public class Prologue {
         playerActionsContainer.setVerticalTitle(playerChoices);
 
         //Set new player actions
-        playerActions = new HorizontalPlayerActions(10,"","Show Character", "Fight!", "Help your friends", "Retreat!");
+        playerActions = new HorizontalPlayerActions(10,"","Character", "Fight!", "Help your friends", "Retreat!");
         playerActionsContainer.getChildren().add(playerActions);
 
         //Toggle player info and status
