@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 
 public class NPC {
     
@@ -10,6 +13,8 @@ public class NPC {
     private Weapon equipped;
     private ArrayList<Items> inventory;
     private VerticalStatus statusContainer;
+    private static ArrayList<NPC> predefinedRakra = new ArrayList<>();
+    private static ArrayList<NPC> predefinedBandits = new ArrayList<>();
 
     /**
      * @description Constructor for NPC object
@@ -173,4 +178,51 @@ public class NPC {
         String enemyStatus = name + " | Health: " + health + "/"+ maxHealth;
         statusContainer.updateEnemyStatus(enemyStatus);        
     }
+
+    /**@description Creates 2 preset enemy npc lists */
+    public static void initEnemyLists(){
+        NPC rakraScout = new NPC(40, 40, "Ra'kra Scout", 20, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC());
+        NPC rakraRookie = new NPC(50, 50, "Ra'kra Rookie", 40, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC());
+        NPC rakraBrute = new NPC(75, 75, "Ra'kra Brute", 50, true, Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC());
+        NPC rakraOfficer = new NPC(100, 100, "Ra'kra Officer", 75, true, Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC());
+        predefinedRakra.addAll(Arrays.asList(rakraBrute, rakraOfficer, rakraRookie, rakraScout, rakraScout, rakraScout));
+
+        NPC bandit = new NPC(50, 50, "Bandit", 75, true, Weapon.LASER_PISTOL, ItemLootLists.randomLootForNPC());
+        NPC bandit2 = new NPC(75, 75, "Bandit", 75, true, Weapon.STINGER_PISTOL, ItemLootLists.randomLootForNPC());
+        NPC banditLeader = new NPC(100, 100, "Bandit Leader", 75, true, Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC());
+        predefinedBandits.addAll(Arrays.asList(bandit, bandit, bandit, bandit2, banditLeader));
+    }
+
+    /**
+     * @description Creates arraylist filled with NPC, shuffles preset list and adds to returnable list
+     * @param maxAmount Value of maximum NPC count
+     * @param enemyType Value of enemy type, "Ra'kra"/"Bandit" available
+     * @return ArrayList typed to NPC
+     */
+    public static ArrayList<NPC> createEnemyList(int maxAmount, String enemyType){
+        ArrayList<NPC> temporary = new ArrayList<>();
+
+        if (enemyType.equals("Ra'kra")){
+            
+            for (int i = 0; i < maxAmount; i++) {
+                Collections.shuffle(predefinedRakra);
+                temporary.add(predefinedRakra.getFirst());
+            }
+        }
+        else if(enemyType.equals("Bandit")){
+
+            for (int i = 0; i < maxAmount; i++) {
+                Collections.shuffle(predefinedBandits);
+                temporary.add(predefinedBandits.getFirst());
+            }
+        }
+
+        return temporary;
+   } 
+  
+
+
+
+
+
 }

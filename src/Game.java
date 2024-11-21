@@ -23,12 +23,14 @@ public class Game {
         //Initialize array with predefined Skills
         Skills.initializeSkillArray(); 
         
-        //Initialize array with predefined arraylists of items
-        ItemLists.initItemLists();
-    
+        //Initialize array with predefined arraylists of lootable items
+        ItemLootLists.initItemLists();
+
+        NPC.initEnemyLists();
+
         //Create a new player
-        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
-        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 100, 250, true, progressFlags); //cheat/test player
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
+        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 100, 250, true, progressFlags); //cheat/test player
 
         //Create scene for running game, and set active
         gameRunningScene = Scenes.createGameScene(player);

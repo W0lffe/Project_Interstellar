@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import javafx.scene.control.Button;
 
 public class Player {
     
@@ -18,7 +17,6 @@ public class Player {
     //Containers related to player character info and status
     private VerticalStatus statusContainer;
     private VerticalContainer characterInfo;
-    private VerticalContainer levelUpContainer;
     private VerticalSkillList levelUpMenu;
     private VerticalInventoryList playerInventoryMenu;
     private VerticalSkillList playerSkillMenu;
@@ -233,13 +231,6 @@ public class Player {
         this.characterInfo = characterInfo;
     }
 
-     /**
-     * @description set level up container for player
-     * @param characterInfo container object to set
-     */
-    public void setLevelUpContainer(VerticalContainer levelUpContainer) {
-        this.levelUpContainer = levelUpContainer;
-    }
     /**@return level up menu of player */
     public VerticalSkillList getLevelUpMenu() {
         return levelUpMenu;
@@ -338,7 +329,13 @@ public class Player {
         String itemsFound = "You loot the " + foundWhere + " and find: \n";
 
         for (Items item : itemList) {
-            itemsFound += item.toString() + "\n";
+            if (item instanceof Consumables) {
+                Consumables consumableFound = (Consumables)item;
+                itemsFound += consumableFound.Found() + "\n";
+            }
+            else{
+                itemsFound += item.toString() + "\n";
+            }
         }
         Utility.Print(itemsFound, 0);
 

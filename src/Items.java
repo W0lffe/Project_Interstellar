@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -59,7 +60,7 @@ public class Items {
 }
 
 /**@description Contains item list creation and setting random inventory list to NPC */
-class ItemLists{
+class ItemLootLists{
 
     private static ArrayList<ArrayList<Items>> listOfItemLists = new ArrayList<>();
     private static ArrayList<ArrayList<Items>> prologueItemLists = new ArrayList<>();
@@ -72,20 +73,9 @@ class ItemLists{
         ArrayList<Items> mediumTierList = new ArrayList<>();
         ArrayList<Items> highTierList = new ArrayList<>();
 
-        lowTierList.add(Consumables.BANDAGE);
-        lowTierList.add(Consumables.BANDAGE);
-        lowTierList.add(Consumables.BASIC_MEDKIT);
-        lowTierList.add(Consumables.HYDRATION_PACK);
-        lowTierList.add(Consumables.RATIONS_BAR);
-
-        mediumTierList.add(Consumables.BASIC_MEDKIT);
-        mediumTierList.add(Consumables.BASIC_MEDKIT);
-        mediumTierList.add(Consumables.ADRENAL_SHOT);
-        mediumTierList.add(Consumables.SPACE_STEAK);
-
-        highTierList.add(Consumables.ADVANCED_MEDKIT);
-        highTierList.add(Consumables.ADVANCED_MEDKIT);
-        highTierList.add(Consumables.ADRENAL_SHOT);
+        lowTierList.addAll(Arrays.asList(Consumables.BANDAGE, Consumables.BANDAGE,Consumables.BASIC_MEDKIT , Consumables.HYDRATION_PACK, Consumables.RATIONS_BAR));
+        mediumTierList.addAll(Arrays.asList(Consumables.BASIC_MEDKIT, Consumables.BASIC_MEDKIT, Consumables.ADRENAL_SHOT,Consumables.SPACE_STEAK));
+        highTierList.addAll(Arrays.asList(Consumables.ADVANCED_MEDKIT, Consumables.ADVANCED_MEDKIT, Consumables.ADRENAL_SHOT));
 
         for (int i = 0; i < 10; i++) {
             if (i < 6) {
@@ -120,17 +110,12 @@ class ItemLists{
     private static void createPrologueItemLists(){
 
         ArrayList<Items> lockerItems = new ArrayList<>();
-        lockerItems.add(Weapon.LASER_PISTOL);
-        lockerItems.add(Consumables.SPACE_SODA);
-        lockerItems.add(Consumables.BASIC_MEDKIT);
-
+        lockerItems.addAll(Arrays.asList(Weapon.LASER_PISTOL, Consumables.SPACE_SODA, Consumables.BASIC_MEDKIT, Consumables.BASIC_MEDKIT));
+       
         ArrayList<Items> supplyContainer = new ArrayList<>();
-        supplyContainer.add(Consumables.BASIC_MEDKIT);
-        supplyContainer.add(Consumables.BASIC_MEDKIT);
+        supplyContainer.addAll(Arrays.asList(Consumables.BASIC_MEDKIT, Consumables.BASIC_MEDKIT));
 
-        prologueItemLists.add(lockerItems);
-        prologueItemLists.add(supplyContainer);
-
+        prologueItemLists.addAll(Arrays.asList(lockerItems, supplyContainer));
     }
 
     /**@description fetches predefined arraylist to prologue

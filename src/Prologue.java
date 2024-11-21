@@ -13,7 +13,7 @@ public class Prologue {
     private static final String datapadFile = "Prologue/Datapad1.txt";
     
     /**@description Arraylist to contain enemy NPC objects */
-    private static ArrayList<NPC> EnemyList = new ArrayList<>();
+    private static ArrayList<NPC> enemyList = new ArrayList<>();
     
     /**@description reference to container object, used throughout Prologue */
     private static VerticalContainer playerActionsContainer;
@@ -26,6 +26,9 @@ public class Prologue {
 
     /**@description Reference to string that is set to playerActionsContainer throughout Prologue */
     private static String playerChoices;
+
+    /**@description Enemy type as string for Prologue, used to create enemy lists */
+    private static final String enemyType = "Ra'kra";
 
 
     /**
@@ -42,7 +45,7 @@ public class Prologue {
         
         //Create container to hold player actions
         playerActionsContainer =  new VerticalContainer(10, playerChoices);
-        playerActions = new HorizontalPlayerActions(10, "", "Character", "Locker", "Datapad", "Go outside");
+        playerActions = new HorizontalPlayerActions(10, "", "Character", "Loot Locker", "Read Datapad", "Go outside");
 
         //Append player actions to container
         playerActionsContainer.getChildren().add(playerActions);
@@ -59,7 +62,7 @@ public class Prologue {
             //if player has not checked locker, player is able to do so
             if (!checkedLocker) {
                 //Fetch predefined itemlist for prologue, send to lootItems function
-                player.lootItems(ItemLists.fetchPrologueItemList(0), "locker");
+                player.lootItems(ItemLootLists.fetchPrologueItemList(0), "locker");
                 checkedLocker = true;
             }
             else{
@@ -113,7 +116,7 @@ public class Prologue {
         playerActionsContainer.setVerticalTitle(playerChoices);
 
         //Set new player actions
-        playerActions = new HorizontalPlayerActions(10,"", "Go with the guys", "Take a moment for yourself");
+        playerActions = new HorizontalPlayerActions(10,"", "Go To Firing Range", "Take A Moment For Yourself");
         playerActionsContainer.getChildren().add(playerActions);
 
         playerActions.getFirstButton().setOnAction(e -> {
@@ -126,10 +129,10 @@ public class Prologue {
             Utility.readFileAndPrint(storyFile, "S2-OPTION1", "S2-OPTION1,2");
 
             //Create object NPC, add to list
-            EnemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
+            enemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
 
             //Enter combat, sending player object and list containing enemy objects
-            Combat.FightMenu(player, EnemyList, () -> {
+            Combat.FightMenu(player, enemyList, () -> {
 
                 //After combat run this: if player is alive --> read story and move to next part
                 if (player.isAlive()) {
@@ -160,11 +163,12 @@ public class Prologue {
 
 
         //Create NPC objects and add to List
-        EnemyList.add(new NPC(40, 40, "Rak'ra Rookie", 50, true, Weapon.PULSE_PISTOL, ItemLists.randomLootForNPC()));
-        EnemyList.add(new NPC(50, 50, "Rak'ra Brute", 75, true, Weapon.PULSE_RIFLE, ItemLists.randomLootForNPC()));
+        enemyList = NPC.createEnemyList(2, enemyType);
+        //enemyList.add(new NPC(40, 40, "Ra'kra Rookie", 50, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+        //enemyList.add(new NPC(50, 50, "Ra'kra Brute", 75, true, Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC()));
 
         //reference to NPC object in list
-        NPC brute = EnemyList.get(1);
+        NPC enemy = enemyList.get(1);
 
         //Set new player choices
         playerChoices = "A) Character B) Fight the Rak'ra C) Try to run over to Teth D) Try to run away";
@@ -186,7 +190,7 @@ public class Prologue {
             Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
 
             //Enter combat, sending player object and list containing enemy objects
-            Combat.FightMenu(player, EnemyList, () -> {
+            Combat.FightMenu(player, enemyList, () -> {
                 
                 //After combat run this: if player is alive --> read story and move to next part
                 if (player.isAlive()) {
@@ -201,11 +205,11 @@ public class Prologue {
 
         playerActions.getThirdButton().setOnAction(e -> {
            
-            String takeDamage = "You try to get over to Teth. But " + brute.getName() + " spots you and shoots at you, dealing " + 
-            brute.getEquipped().getMinDamage() + " damage!\n";
+            String takeDamage = "You try to get over to Teth. But " + enemy.getName() + " spots you and shoots at you, dealing " + 
+            enemy.getEquipped().getMinDamage() + " damage!\n";
             Utility.Print(takeDamage, Utility.ActionSpeed);
 
-            player.takeDamage(brute.getEquipped().getMinDamage());
+            player.takeDamage(enemy.getEquipped().getMinDamage());
             Utility.Print("Forcing you back to cover\n", Utility.ActionSpeed);
         });
 
@@ -234,7 +238,7 @@ public class Prologue {
         playerActions.getFirstButton().setOnAction(e -> {
             
             //if player has object in inventory
-            if(player.getPlayerInventory().contains(Consumables.BASIC_MEDKIT)){
+            if(player.getPlayerInventory().contains(Consumables.BASIC_MEDKIT) || player.getPlayerInventory().contains(Consumables.ADVANCED_MEDKIT)){
 
                 //remove player actions before going to next part
                 playerActionsContainer.getChildren().remove(playerActions);
@@ -290,16 +294,16 @@ public class Prologue {
             playerActionsContainer.setVerticalTitle("");
 
             //Create NPC object and add to enemy list
-            EnemyList.add(new NPC(5, 5, "Crew Member", 20, true, Weapon.NONE, null));
+            enemyList.add(new NPC(5, 5, "Crew Member", 20, true, Weapon.NONE, null));
 
             //Enter combat with player object and list of enemies
-            Combat.FightMenu(player, EnemyList, () -> {
+            Combat.FightMenu(player, enemyList, () -> {
 
                 //Print story
                 Utility.readFileAndPrint(storyFile, "S3P2-OPTION1", "S3P2-OPTION2");
 
                 //Add consumable objects to player inventory
-                player.lootItems(ItemLists.fetchPrologueItemList(1), "supply container");
+                player.lootItems(ItemLootLists.fetchPrologueItemList(1), "supply container");
                 Final(player); //exit PartFive
             }); 
         });
@@ -314,14 +318,15 @@ public class Prologue {
             Utility.readFileAndPrint(storyFile, "S3P2-OPTION2", "S3P2-OPTION2P1");
 
             //Add consumable objects to player inventory
-            player.lootItems(ItemLists.fetchPrologueItemList(1), "supply container");
+            player.lootItems(ItemLootLists.fetchPrologueItemList(1), "supply container");
 
             //Create NPC objects and add to enemy list
-            EnemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, ItemLists.randomLootForNPC()));
-            EnemyList.add(new NPC(75, 75, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, ItemLists.randomLootForNPC()));
+            enemyList = NPC.createEnemyList(2, enemyType);
+            //enemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+            //enemyList.add(new NPC(75, 75, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC()));
 
             //Enter combat with player object and enemylist
-            Combat.FightMenu(player, EnemyList, () -> {
+            Combat.FightMenu(player, enemyList, () -> {
 
                 //after combat, if player is alive: read story and print, exit PartFive
                 if (player.isAlive()) {
@@ -351,13 +356,13 @@ public class Prologue {
         Utility.readFileAndPrint(storyFile, "FINAL", "FINAL-PART2");
 
         //Create NPC object and add to list
-        EnemyList.add(new NPC(150, 150, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, ItemLists.randomLootForNPC()));
+        enemyList.add(new NPC(150, 150, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
 
         //Reference to created npc
-        NPC Boss = EnemyList.get(0);
+        NPC Boss = enemyList.get(0);
 
         //Enter combat with player and enemylist
-        Combat.FightMenu(player, EnemyList, () -> {
+        Combat.FightMenu(player, enemyList, () -> {
             
             //if player is alive after combat
             if (player.isAlive()) {

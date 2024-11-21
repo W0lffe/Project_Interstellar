@@ -122,7 +122,6 @@ public class Scenes {
         //Create container for level menu
         VerticalContainer levelUpContainer = new VerticalContainer(10, "Level");
         levelUpContainer.setAlignment(Pos.CENTER);
-        player.setLevelUpContainer(levelUpContainer);
 
         //Create container for inventory menu
         VerticalContainer inventoryContainer = new VerticalContainer(10, "Inventory");
