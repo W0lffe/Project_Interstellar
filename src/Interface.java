@@ -434,6 +434,7 @@ class VerticalMainMenu extends VerticalContainer{
 class VerticalSkillList extends VerticalContainer{
     
     private ListView<Skills> skillsList;
+    private Button button;
     /**
      * @description Create vertical container with listview and label
      * @param arg0 spacing between elements
@@ -446,6 +447,20 @@ class VerticalSkillList extends VerticalContainer{
         this.getChildren().add(skillsList);
         this.setAlignment(Pos.TOP_CENTER);
         this.setPrefSize(Main.WINDOW_WIDTH/5, Main.WINDOW_HEIGHT/2.5);
+    }
+
+    public VerticalSkillList(double arg0, String labelText, String buttonText) {
+        super(arg0, labelText);
+        this.skillsList = new ListView<Skills>();
+        this.button = new Button(buttonText);
+
+        this.getChildren().addAll(skillsList, button);
+        this.setAlignment(Pos.TOP_CENTER);
+        this.setPrefSize(Main.WINDOW_WIDTH/5, Main.WINDOW_HEIGHT/2.5);
+    }
+
+    public Button getButton(){
+        return button;
     }
 
     /**@return listview element of container */
@@ -477,6 +492,7 @@ class VerticalSkillList extends VerticalContainer{
 class VerticalInventoryList extends VerticalContainer{
         
     private ListView<Items> inventoryList;
+    private Button button;
 
    /**
      * @description Create vertical container with listview and label
@@ -486,8 +502,9 @@ class VerticalInventoryList extends VerticalContainer{
     public VerticalInventoryList(double arg0, String labelText) {
         super(arg0, labelText);
         this.inventoryList = new ListView<Items>();
+        this.button = new Button();
 
-        this.getChildren().add(inventoryList);
+        this.getChildren().addAll(inventoryList, button);
         this.setAlignment(Pos.TOP_CENTER);
         this.setPrefSize(Main.WINDOW_WIDTH/5, Main.WINDOW_HEIGHT/2.5);
     }
@@ -495,6 +512,10 @@ class VerticalInventoryList extends VerticalContainer{
     /**@return listview element of container */
     public ListView<Items> getInventoryList() {
         return inventoryList;
+    }
+
+    public Button getButton(){
+        return button;
     }
         
 }

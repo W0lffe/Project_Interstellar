@@ -27,8 +27,8 @@ public class Game {
         ItemLists.initItemLists();
     
         //Create a new player
-        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
-        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 1000, 250, true, progressFlags); //cheat/test player
+        //Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.NONE, 1 , 0, 250, true, progressFlags); 
+        Player player = new Player("Jaxon Ryker", 150, 150, playerInventory, playerSkills, Weapon.QUANTUM_REPEATER, 1, 100, 250, true, progressFlags); //cheat/test player
 
         //Create scene for running game, and set active
         gameRunningScene = Scenes.createGameScene(player);

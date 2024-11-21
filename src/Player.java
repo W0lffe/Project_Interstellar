@@ -21,6 +21,8 @@ public class Player {
     private VerticalContainer levelUpContainer;
     private VerticalSkillList levelUpMenu;
     private VerticalInventoryList playerInventoryMenu;
+    private VerticalSkillList playerSkillMenu;
+
 
     /**
      * @description Constructor of Player Object
@@ -174,6 +176,7 @@ public class Player {
     public void setExperience(int experience) {
         this.experience = experience;
         characterStatusUpdate();
+        updateLevelUpMenu();
     }
 
     /**@return needed experience points of player as Integer*/
@@ -263,9 +266,18 @@ public class Player {
         this.playerInventoryMenu = playerInventoryMenu;
     }
 
+    public VerticalSkillList getPlayerSkillMenu() {
+        return playerSkillMenu;
+    }
+
+
+    public void setPlayerSkillMenu(VerticalSkillList playerSkillMenu) {
+        this.playerSkillMenu = playerSkillMenu;
+    }
+
+
 
 /***************************************PLAYER RELATED METHODS**********************************************************/
-
 
     /**@description Toggles character info and status containers in root containers */
     public void toggleCharacterInfoStatus(){
@@ -366,6 +378,8 @@ public class Player {
         
         //Get experience
         actionExperience(Utility.LootItemEXP);
+        //Update player inventory
+        updatePlayerInventory();
     }
 
     /**
@@ -435,41 +449,40 @@ public class Player {
 
         //update character status container
         characterStatusUpdate();
+        //updates player inventory
+        updatePlayerInventory();
     }
 
 
     /**
-     * @description creates list view container for level up menu
-     * @return ListView levelUpMenu
+     * @description updates level up menu to either have selection of skills, or to be empty
      */
-    public VerticalSkillList createLevelUpMenu(){
-        
-        VerticalSkillList temporary;
-        //If player has required amount of experience
+    public void updateLevelUpMenu(){
+
+        //If player has more experience than needed for leveling up
         if (experience >= expNeeded) {
             
-            //Create list view container
-            temporary = new VerticalSkillList(10, "Select a new skill");
-
-            //Loop skills in initialized arraylist
-            for (Skills skill : Skills.SkillList) {
-
-                //add skills to list view
-                temporary.getSkillsList().getItems().add(skill);
+            //Clear items from listview if its not empty
+            levelUpMenu.setVerticalTitle("Select a skill to level up!");
+            if (!levelUpMenu.getSkillsList().getItems().isEmpty()) {
+                levelUpMenu.getSkillsList().getItems().clear();
             }
 
-            Button button = new Button("Level Up!");
-            temporary.getChildren().add(button);
+            for (Skills skill : Skills.SkillList) {
+                //add skills to list view
+                levelUpMenu.getSkillsList().getItems().add(skill);
+            }
 
-            button.setOnAction(e -> {
+            levelUpMenu.getButton().setVisible(true);
+            levelUpMenu.getButton().setOnAction(e -> {
+
                 //When button is clicked, store selected skill
-                Skills selectedSkill = temporary.getSkillsList().getSelectionModel().getSelectedItem();
-                
-                //If selection is not null
+                Skills selectedSkill = levelUpMenu.getSkillsList().getSelectionModel().getSelectedItem();
                 if (selectedSkill != null) {
-
+    
                     //Add skill to player skill list
                     playerAcquiredSkills.add(selectedSkill); 
+                    updatePlayerSkills();
 
                     //Remove from initialized skill list
                     Skills.SkillList.remove(selectedSkill);
@@ -480,91 +493,99 @@ public class Player {
                     setMaxHealth(getMaxHealth() + 10); //Adds 10 points to max health 
                     setHealth(getMaxHealth()); //Restores character's max health
                     setExpNeeded(getExpNeeded() + 250); //Increases required experience for next level
-                    this.levelUpContainer.getChildren().remove(this.levelUpMenu); //Remove level up menu from container
                     characterStatusUpdate(); //Update character status container
                 }
                 else{
-                    temporary.setVerticalTitle("Please select a skill!");
+                    levelUpMenu.setVerticalTitle("Please select a skill!");
                 }
             });
         }
         else{
-            temporary = new VerticalSkillList(10, "Not enough experience for level up!");
+            levelUpMenu.setVerticalTitle("Not enough of experience!");
+            levelUpMenu.getButton().setVisible(false);
+            if (!levelUpMenu.getSkillsList().getItems().isEmpty()) {
+                levelUpMenu.getSkillsList().getItems().clear();
+            }
         }
-        return temporary;
     }
-
     /**
-     * @description create player inventory listview container
-     * @return listview container
+     * @description updates player inventory listview by looping items in inventory
      */
-    public VerticalInventoryList createPlayerInventory(){
+    public void updatePlayerInventory(){
 
-        //Init temporary viewlist container
-        VerticalInventoryList temporary;
+        //If player inventory is empty, set title to inform player that inventory is empty
+        if (playerInventory.isEmpty()) {
+            playerInventoryMenu.setVerticalTitle("Inventory is empty!");
+            playerInventoryMenu.getButton().setVisible(false);
+        }
+        else{
 
-        //if player inventory is not empty
-        if (!playerInventory.isEmpty()) {
-            
-            temporary = new VerticalInventoryList(10, "");
-
-            //Create button to list and append
-            Button button = new Button("Use Item");
-            temporary.getChildren().addAll(button);
-
-            //Loop items in player invetory, add to list
-            for (Items item : playerInventory) {
-                temporary.getInventoryList().getItems().add(item);
+            //If inventory is not empty, set title to blank, clear ListView items
+            if (!playerInventory.isEmpty()) {
+                playerInventoryMenu.setVerticalTitle("");
+                playerInventoryMenu.getInventoryList().getItems().clear();
             }
 
-            //If user clicks item in list
-            temporary.getInventoryList().setOnMouseClicked(e -> {
+            playerInventoryMenu.getButton().setVisible(true);
+            playerInventoryMenu.getButton().setText("Use Item");
 
-                //Get clicked item
-                Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
+            //Loop items in player inventory to ListView
+            for (Items item : playerInventory) {
+                playerInventoryMenu.getInventoryList().getItems().add(item);
+            }
 
+            playerInventoryMenu.getInventoryList().setOnMouseClicked(e -> {
+
+                //Store selected item
+                Items selectedItem = playerInventoryMenu.getInventoryList().getSelectionModel().getSelectedItem();
+    
                 if (selectedItem != null) {
                     
                     //Sets button text value based on class of item
                     if (selectedItem instanceof Weapon) {
-                        button.setText("Equip Weapon");
+                        playerInventoryMenu.getButton().setText("Equip Weapon");
                     }
                     else {
-                        button.setText("Use Item");
+                        playerInventoryMenu.getButton().setText("Use Item");
                     }
                 }
             });
-            
-            button.setOnAction(e -> {
+
+            playerInventoryMenu.getButton().setOnAction(e -> {
 
                 //Select item with button click
-                Items selectedItem = temporary.getInventoryList().getSelectionModel().getSelectedItem();
-
+                Items selectedItem =  getPlayerInventoryMenu().getInventoryList().getSelectionModel().getSelectedItem();
+    
                 //If selected item is not null
                 if (selectedItem != null) {
-
+ 
                     //Call function with item parameter
                     useOrEquipItem(selectedItem);
-                    
-                    //Clear inventory list
-                    temporary.getInventoryList().getItems().clear();
-
-                    //Loop items in inventory again to have current status
-                    for (Items item : playerInventory) {
-                        temporary.getInventoryList().getItems().add(item);
-                    }
                 }
                 else{
-                    button.setText("Select item first!");
+                    playerInventoryMenu.getButton().setText("Select item first!");
                 }
             });
-
-            //Return filled list
-            return temporary;
-        }
-        else{
-            //If player inventory is empty, list is empty
-           return temporary = new VerticalInventoryList(10, "Inventory is empty");
         }
     }
+    /**@description updates listview with player acquired skills */
+    public void updatePlayerSkills(){
+
+        if (playerAcquiredSkills.isEmpty()) {
+            playerSkillMenu.setVerticalTitle("You have not acquired any skills yet!");
+        }
+        else{
+
+              //If skills list is not empty, set title, clear ListView items
+            if (!playerAcquiredSkills.isEmpty()) {
+                playerSkillMenu.setVerticalTitle("You have acquired skills");
+                playerSkillMenu.getSkillsList().getItems().clear();
+            }
+
+            //Add all acquired skills to listview
+            playerSkillMenu.getSkillsList().getItems().setAll(playerAcquiredSkills);
+        }
+    }
+
+   
 }

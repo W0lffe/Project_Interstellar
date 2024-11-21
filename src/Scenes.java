@@ -83,17 +83,17 @@ public class Scenes {
         VerticalStoryPrint center = new VerticalStoryPrint(20, "");
         center.setPrefSize(Main.WINDOW_WIDTH/2, 500);
         
+        //Set reference of character info to player object
+        player.setCharacterInfo(createCharacterInfo(player));
+        
         //Create playerStatus container, set size
         VerticalStatus playerStatus = new VerticalStatus(5, player.getName(), "", "", "");
         playerStatus.setPrefSize(Main.WINDOW_WIDTH/4, right.getHeight()/2);
-
+ 
         //Set reference of status container to player object, and update its status
         player.setStatusContainer(playerStatus); 
         player.characterStatusUpdate();
 
-        //Set reference of character info to player object
-        player.setCharacterInfo(createCharacterInfo(player));
-        
         //Create root for scene, using created containers, set stylesheet
         Interface gameRoot = new Interface(top, bottom, left, right, center);
         gameRoot.getStylesheets().add(Interface.class.getResource("styles.css").toExternalForm());
@@ -106,7 +106,7 @@ public class Scenes {
 
     /**
      * @description create a Vertical Container containing all the info of character,
-     * skill menu, level menu, inventory menu
+     * skill menu, level menu, inventory menu and player status
      * @return Character Info Container object
      */
     private static VerticalContainer createCharacterInfo(Player player){
@@ -128,16 +128,27 @@ public class Scenes {
         VerticalContainer inventoryContainer = new VerticalContainer(10, "Inventory");
         inventoryContainer.setAlignment(Pos.CENTER);
 
-        //append containers
+        //Append containers
         characterContainer.getChildren().addAll(skillsContainer, levelUpContainer, inventoryContainer);
 
-        //Create skills menu
+        //Create skills menu, set reference to player class, update
         VerticalSkillList playerSkillsMenu = new VerticalSkillList(10, "");
+        player.setPlayerSkillMenu(playerSkillsMenu);
+        player.updatePlayerSkills();
 
-        //Toggles player skill menu in container, adds skills to list
+        //Create player inventory menu, set reference to player class, update
+        VerticalInventoryList playerInventoryMenu = new VerticalInventoryList(10, "");
+        player.setPlayerInventoryMenu(playerInventoryMenu);
+        player.updatePlayerInventory();
+
+        //Create level up menu, set reference to player class, update
+        VerticalSkillList playerLevelUpMenu = new VerticalSkillList(10, "", "Level Up!");
+        player.setLevelUpMenu(playerLevelUpMenu);
+        player.updateLevelUpMenu();
+
+        //Toggles player skill menu in container
         skillsContainer.setOnMouseClicked(e -> {
             if (!skillsContainer.getChildren().contains(playerSkillsMenu)) {
-                playerSkillsMenu.addSkillToList(player.getPlayerAcquiredSkills());
                 skillsContainer.getChildren().add(playerSkillsMenu);
             }
             else{
@@ -145,10 +156,9 @@ public class Scenes {
             }
         });
 
-        //Toggles level up menu in container, creates menu and sets to player class
+        //Toggles level up menu in container
         levelUpContainer.setOnMouseClicked(e -> {
             if (!levelUpContainer.getChildren().contains(player.getLevelUpMenu())) {
-                player.setLevelUpMenu(player.createLevelUpMenu());
                 levelUpContainer.getChildren().add(player.getLevelUpMenu());
             }
             else{
@@ -156,10 +166,9 @@ public class Scenes {
             }
         });
 
-        //Toggles player inventory menu in container, creates menu and sets to player class
+        //Toggles player inventory menu in container
         inventoryContainer.setOnMouseClicked(e -> {
             if (!inventoryContainer.getChildren().contains(player.getPlayerInventoryMenu())) {
-                player.setPlayerInventoryMenu(player.createPlayerInventory());
                 inventoryContainer.getChildren().add(player.getPlayerInventoryMenu());
             }
             else{
