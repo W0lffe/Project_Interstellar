@@ -26,6 +26,7 @@ public class Game {
         //Initialize array with predefined arraylists of lootable items
         ItemLootLists.initItemLists();
 
+        //Initialize preset enemy lists
         NPC.initEnemyLists();
 
         //Create a new player

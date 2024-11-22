@@ -1,3 +1,9 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 /**@class Utility 
  * @description Holds variables, references and utility functions(ex. printing)
@@ -80,17 +86,36 @@ public class Utility {
      * @IMPLEMENT Char-by-char printing!!!!
      */
     public static void Print(String toPrint, int speed){
-        
-        char[] toPrintArray = toPrint.toCharArray();
 
+        char[] toPrintArray = toPrint.toCharArray();
+        
         for (int i = 0; i < toPrint.length(); i++) {
             centerContainer.appendText(Character.toString(toPrintArray[i]));
 
             if (i == toPrint.length() - 1) {
                 centerContainer.appendText("\n");
             }
-        }
-    }
+        } 
 
+
+      /* 
+       ALMOST WORKS....
+        IntegerProperty i = new SimpleIntegerProperty(0);
+        Timeline timeline = new Timeline();
+        KeyFrame keyFrame = new KeyFrame(
+                Duration.millis(speed), event -> {
+                    if (i.get() > toPrint.length()) {
+                        timeline.stop();
+                    } else {
+                        centerContainer.setText(toPrint.substring(0, i.get()));
+                        i.set(i.get() + 1);
+                    }
+                });
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play(); */
+
+    }
+    
 }
 

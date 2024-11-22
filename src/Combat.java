@@ -149,9 +149,12 @@ public class Combat {
         int enemyMaxDmg = enemyEquipped.getMaxDamage();
 
         //if player has Weapons skill, increase damage
-        if (player.getPlayerAcquiredSkills().contains(Skills.Weapons)){
-            playerMaxDmg += 5;
-            playerMinDmg += 5;
+        for (Skills skill : player.getPlayerAcquiredSkills()) {
+            if (skill.getSkill().equals("Weapons")){
+                playerMaxDmg += 5;
+                playerMinDmg += 5;
+
+            }
         }
 
         //Get random damage from equipped item range
