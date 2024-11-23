@@ -1,8 +1,17 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class Weapon extends Items{
     
     private int minDamage;
     private int maxDamage;
+    private static Map<String, ArrayList<Weapon>> tieredWeaponsMap = new HashMap<>();
+    private static ArrayList<Weapon> lowTierWeapons = new ArrayList<>();
+    private static ArrayList<Weapon> mediumTierWeapons = new ArrayList<>();
+    private static ArrayList<Weapon> highTierWeapons = new ArrayList<>();
+
 
     /**
      * @description Constructor for Weapon object
@@ -53,27 +62,41 @@ public class Weapon extends Items{
     }
 
     //predefined weapons
-
-    //LOW-GRADE | MAX-DAMAGE BELOW 20
     public static Weapon NONE = new Weapon("Hands", "Hands", 0, 0, "Hands", 0);
-    public static Weapon PULSE_PISTOL = new Weapon("Pulse Pistol", "Energy Weapon", 8, 12, "A compact energy-based sidearm", 1);
-    public static Weapon LASER_PISTOL  = new Weapon("Laser Pistol", "Energy Weapon" , 9, 13, "Lightweight pistol for sharpshooters", 1);
-    public static Weapon PHASE_REVOLVER = new Weapon("Phase Revolver", "Energy Weapon", 14, 18, "Emits short-range energy blasts that can phase through armor with minimal delay", 1);
-    public static Weapon SENTRY_CARBINE = new Weapon("Sentry Carbine", "Energy Carbine", 11, 17, "Mid-range energy carbine for quick strikes", 1);
-
-    //MEDIUM-GRADE | MAX-DAMAGE BELOW 30
-    public static Weapon BLAZE_RIFLE = new Weapon("Blaze Rifle", "Energy Rifle", 20, 25, "An energy rifle that shoots high-intensity plasma bolts capable of igniting enemies", 1);
-    public static Weapon STINGER_PISTOL = new Weapon("Stinger Pistol", "Projectile Weapon", 16, 20, "Fires compact, armor-piercing rounds with pinpoint accuracy, perfect for critical shots", 1);
-    public static Weapon PULSE_RIFLE = new Weapon("Pulse Rifle", "Energy Weapon" ,18, 22, "Firepower with versatility", 1);
-    public static Weapon LASER_RIFLE  = new Weapon("Laser Rifle", "Energy Weapon" ,15, 20, "Lightweight rifle with precision", 1);
-    public static Weapon PARTICLE_BEAMER = new Weapon("Particle Beamer", "Energy Weapon", 20, 28, "Fires a continuous, precise particle beam", 1);
-    public static Weapon HYPERSONIC_REPEATER = new Weapon("Hypersonic Repeater", "Projectile Weapon", 18, 24, "Rapid-firing weapon that launches high-speed projectiles with piercing power", 1);
-
-    //HIGH-GRADE | MAX-DAMAGE OVER 30
-    public static Weapon FURY_RIFLE = new Weapon("Fury Rifle", "Projectile Rifle", 28, 45, "Fires explosive rounds that deal massive area damage", 1);
-    public static Weapon FUSION_RIFLE = new Weapon("Fusion Rifle", "Energy Weapon", 25, 35, "Fires fusion energy rounds with explosive impact and long-range capabilities", 1);
-    public static Weapon QUANTUM_REPEATER  = new Weapon("Quantum Repeater", "Energy Weapon" , 27, 35, "Unleash a hail of destabilized energy", 1);
     public static Weapon GRAVITY_CANNON = new Weapon("Gravity Cannon", "Heavy Weapon", 40, 50, "Uses gravity pulses to crush and destabilize enemies", 1);
-    public static Weapon OMEGA_CARBINE = new Weapon("Omega Carbine", "Energy Carbine", 30, 40, "A heavy-hitting carbine that fires powerful charged energy bolts", 1);
     public static Weapon ANTIMATTER_RIFLE = new Weapon("Antimatter Rifle", "Energy Weapon", 60, 75, "Fires a powerful stream of antimatter particles, instantly annihilating targets", 1);
+
+    /**@description initialize tiered weapons lists for NPC usage and loot pools.
+     * Lists are placed to a Map
+    */
+    public static void initWeaponLists(){
+
+        //LOW-GRADE | MAX-DAMAGE BELOW 20
+        lowTierWeapons.add(new Weapon("Pulse Pistol", "Energy Weapon", 8, 12, "A compact energy-based sidearm", 1));
+        lowTierWeapons.add(new Weapon("Laser Pistol", "Energy Weapon" , 9, 13, "Lightweight pistol for sharpshooters", 1));
+        lowTierWeapons.add(new Weapon("Phase Revolver", "Energy Weapon", 14, 18, "Emits short-range energy blasts that can phase through armor with minimal delay", 1));
+        lowTierWeapons.add(new Weapon("Sentry Carbine", "Energy Carbine", 11, 17, "Mid-range energy carbine for quick strikes", 1));
+
+        //MEDIUM-GRADE | MAX-DAMAGE BELOW 30
+        mediumTierWeapons.add(new Weapon("Blaze Rifle", "Energy Rifle", 20, 25, "An energy rifle that shoots high-intensity plasma bolts capable of igniting enemies", 1));
+        mediumTierWeapons.add(new Weapon("Stinger Pistol", "Projectile Weapon", 16, 20, "Fires compact, armor-piercing rounds with pinpoint accuracy, perfect for critical shots", 1));
+        mediumTierWeapons.add(new Weapon("Pulse Rifle", "Energy Weapon" ,18, 22, "Firepower with versatility", 1));
+        mediumTierWeapons.add(new Weapon("Laser Rifle", "Energy Weapon" ,15, 20, "Lightweight rifle with precision", 1));
+        mediumTierWeapons.add(new Weapon("Particle Beamer", "Energy Weapon", 20, 28, "Fires a continuous, precise particle beam", 1));
+        mediumTierWeapons.add(new Weapon("Hypersonic Repeater", "Projectile Weapon", 18, 24, "Rapid-firing weapon that launches high-speed projectiles with piercing power", 1));
+
+        //HIGH-GRADE | MAX-DAMAGE OVER 30
+        highTierWeapons.add(new Weapon("Fury Rifle", "Projectile Rifle", 28, 45, "Fires explosive rounds that deal massive area damage", 1));
+        highTierWeapons.add(new Weapon("Fusion Rifle", "Energy Weapon", 25, 35, "Fires fusion energy rounds with explosive impact and long-range capabilities", 1));
+        highTierWeapons.add(new Weapon("Quantum Repeater", "Energy Weapon" , 27, 35, "Unleash a hail of destabilized energy", 1));
+        highTierWeapons.add(new Weapon("Omega Carbine", "Energy Carbine", 30, 40, "A heavy-hitting carbine that fires powerful charged energy bolts", 1));
+
+        tieredWeaponsMap.put("Low Tier", lowTierWeapons);
+        tieredWeaponsMap.put("Medium Tier", mediumTierWeapons);
+        tieredWeaponsMap.put("High Tier", highTierWeapons);
+    }
+    
+    public static ArrayList<Weapon> retrieveWeaponList(String tier){
+        return tieredWeaponsMap.get(tier);
+    }
 }

@@ -9,12 +9,12 @@ public class NPC {
     private int health;
     private String name;
     private int experience;
-    private boolean alive;
+    private String type;
     private Weapon equipped;
     private ArrayList<Items> inventory;
     private VerticalStatus statusContainer;
-    private static ArrayList<NPC> predefinedRakra = new ArrayList<>();
-    private static ArrayList<NPC> predefinedBandits = new ArrayList<>();
+    private static ArrayList<NPC> rakraList = new ArrayList<>();
+    private static ArrayList<NPC> banditList = new ArrayList<>();
 
     /**
      * @description Constructor for NPC object
@@ -26,12 +26,12 @@ public class NPC {
      * @param equipped What NPC equips
      * @param inventory Inventory of NPC
      */
-    public NPC(int maxHealth, int health, String name, int experience, boolean alive, Weapon equipped, ArrayList<Items> inventory) {
+    public NPC(int maxHealth, int health, String name, int experience, String type, Weapon equipped, ArrayList<Items> inventory) {
         this.maxHealth = maxHealth;
         this.health = health;
         this.name = name;
         this.experience = experience;
-        this.alive = alive;
+        this.type = type;
         this.equipped = equipped;
         this.inventory = inventory;
     }
@@ -100,18 +100,18 @@ public class NPC {
     }
     /**
      * 
-     * @return true or false if NPC is alive or not
+     * @return type of NPC
      */
-    public boolean isAlive() {
-        return alive;
+    public String getType() {
+        return type;
     }
 
     /**
-     * @description set alive status for NPC
-     * @param alive true or false
+     * @description set type for NPC
+     * @param typeOfNPC type of NPC as String
      */
-    public void setAlive(boolean alive) {
-        this.alive = alive;
+    public void setAlive(String typeOfNPC) {
+        this.type = typeOfNPC;
     }
     /**
      * 
@@ -164,10 +164,6 @@ public class NPC {
     public void takeDamage(int damage){
         health -= damage;
 
-        if (health <= 0) {
-            setAlive(false);
-        }
-
         enemyStatusUpdate();
     }
 
@@ -175,22 +171,17 @@ public class NPC {
      * @description function updates NPC status containers in combat, converts NPC properties to string
      */
     public void enemyStatusUpdate(){
-        String enemyStatus = name + " | Health: " + health + "/"+ maxHealth;
+        String enemyStatus = name + " (" + type + ") | Health: " + health + "/"+ maxHealth;
         statusContainer.updateEnemyStatus(enemyStatus);        
     }
 
     /**@description Creates 2 preset enemy npc lists */
-    public static void initEnemyLists(){
-        NPC rakraScout = new NPC(40, 40, "Ra'kra Scout", 20, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC());
-        NPC rakraRookie = new NPC(50, 50, "Ra'kra Rookie", 40, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC());
-        NPC rakraBrute = new NPC(75, 75, "Ra'kra Brute", 50, true, Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC());
-        NPC rakraOfficer = new NPC(100, 100, "Ra'kra Officer", 75, true, Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC());
-        predefinedRakra.addAll(Arrays.asList(rakraBrute, rakraOfficer, rakraRookie, rakraScout, rakraScout, rakraScout));
+    public static void initEnemyLists(int playerLevel){
 
-        NPC bandit = new NPC(50, 50, "Bandit", 75, true, Weapon.LASER_PISTOL, ItemLootLists.randomLootForNPC());
-        NPC bandit2 = new NPC(75, 75, "Bandit", 75, true, Weapon.STINGER_PISTOL, ItemLootLists.randomLootForNPC());
-        NPC banditLeader = new NPC(100, 100, "Bandit Leader", 75, true, Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC());
-        predefinedBandits.addAll(Arrays.asList(bandit, bandit, bandit, bandit2, banditLeader));
+        initRakraList(playerLevel);
+
+        initBanditList(playerLevel);
+        
     }
 
     /**
@@ -205,20 +196,54 @@ public class NPC {
         if (enemyType.equals("Ra'kra")){
             
             for (int i = 0; i < maxAmount; i++) {
-                Collections.shuffle(predefinedRakra);
-                temporary.add(predefinedRakra.getFirst());
+                Collections.shuffle(rakraList);
+                temporary.add(rakraList.getFirst());
             }
         }
         else if(enemyType.equals("Bandit")){
 
             for (int i = 0; i < maxAmount; i++) {
-                Collections.shuffle(predefinedBandits);
-                temporary.add(predefinedBandits.getFirst());
+                Collections.shuffle(banditList);
+                temporary.add(banditList.getFirst());
             }
         }
 
         return temporary;
    } 
+
+   private static void initRakraList(int playerLevel){
+        int numberOfNormals;
+        int numberOfStrongs;
+        int healthModifier;
+        int expModifier;
+        ArrayList<Weapon> retrievedWeaponList;
+        
+        if (playerLevel > 0 && playerLevel <= 5) {
+            numberOfNormals = 6;
+            numberOfStrongs = 4;
+            healthModifier = 0;
+            expModifier = 0;
+            retrievedWeaponList = Weapon.retrieveWeaponList("Low Tier");
+        }
+
+        for (int i = 0; i < numberOfNormals/2; i++) {
+            rakraList.add(new NPC(60+healthModifier, 60+healthModifier, "Ra'kra Scout", 20+expModifier, "Normal", Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(75+healthModifier, 75+healthModifier, "Ra'kra Rookie", 40+expModifier, "Normal", Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+        }
+        for (int i = 0; i < numberOfStrongs; i++) {
+            rakraList.add(new NPC(100+healthModifier, 100+healthModifier, "Ra'kra Brute", 50+expModifier, "Strong", Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(125+healthModifier, 125+healthModifier, "Ra'kra Officer", 75+expModifier, "Strong", Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC()));
+        }
+
+   }
+
+   private static void initBanditList(int playerLevel){
+
+        NPC bandit = new NPC(50, 50, "Bandit", 45, "Normal", Weapon.LASER_PISTOL, ItemLootLists.randomLootForNPC());
+        NPC bandit2 = new NPC(75, 75, "Bandit", 50, "Normal", Weapon.STINGER_PISTOL, ItemLootLists.randomLootForNPC());
+        NPC banditLeader = new NPC(100, 100, "Bandit Leader", 75, "Strong", Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC());
+        banditList.addAll(Arrays.asList(bandit, bandit, bandit, bandit2, banditLeader));
+   }
   
 
 

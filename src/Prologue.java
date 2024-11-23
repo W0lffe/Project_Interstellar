@@ -129,7 +129,7 @@ public class Prologue {
             Utility.readFileAndPrint(storyFile, "S2-OPTION1", "S2-OPTION1,2");
 
             //Create object NPC, add to list
-            enemyList.add(new NPC(5, 5, "Target", 20, true, Weapon.NONE, null));
+            enemyList.add(new NPC(5, 5, "Target", 20, "Story", Weapon.NONE, null));
 
             //Enter combat, sending player object and list containing enemy objects
             Combat.FightMenu(player, enemyList, () -> {
@@ -294,7 +294,7 @@ public class Prologue {
             playerActionsContainer.setVerticalTitle("");
 
             //Create NPC object and add to enemy list
-            enemyList.add(new NPC(5, 5, "Crew Member", 20, true, Weapon.NONE, null));
+            enemyList.add(new NPC(5, 5, "Crew Member", 20, "Story", Weapon.NONE, null));
 
             //Enter combat with player object and list of enemies
             Combat.FightMenu(player, enemyList, () -> {
@@ -356,7 +356,7 @@ public class Prologue {
         Utility.readFileAndPrint(storyFile, "FINAL", "FINAL-PART2");
 
         //Create NPC object and add to list
-        enemyList.add(new NPC(150, 150, "Ka'tar", 200, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+        enemyList.add(new NPC(150, 150, "Ka'tar", 200, "Boss", Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
 
         //Reference to created npc
         NPC Boss = enemyList.get(0);

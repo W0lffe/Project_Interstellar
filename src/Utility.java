@@ -86,7 +86,7 @@ public class Utility {
      * @IMPLEMENT Char-by-char printing!!!!
      */
     public static void Print(String toPrint, int speed){
-
+ 
         char[] toPrintArray = toPrint.toCharArray();
         
         for (int i = 0; i < toPrint.length(); i++) {
@@ -95,8 +95,7 @@ public class Utility {
             if (i == toPrint.length() - 1) {
                 centerContainer.appendText("\n");
             }
-        } 
-
+        }  
 
       /* 
        ALMOST WORKS....

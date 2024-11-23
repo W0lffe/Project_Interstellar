@@ -71,7 +71,6 @@ public class Combat {
 
                         //Remove status container of enemy from root
                         Utility.rightContainer.getChildren().remove(enemy.getStatusContainer());
-                        enemy.setAlive(false);
 
                         //Remove status container from list
                         enemyStatusList.remove(enemy.getStatusContainer());
@@ -165,7 +164,6 @@ public class Combat {
 
         //if enemy health is 0 or less
         if (enemy.getHealth() <= 0) {
-            enemy.setAlive(false); //enemy is not alive
             String eliminated = "You eliminated " + enemy.getName() + ", gaining " + enemy.getExperience() + " experience!\n";
             Utility.Print(eliminated, Utility.ActionSpeed);
             player.actionExperience(enemy.getExperience()); //Give player experience of enemy's experience property
