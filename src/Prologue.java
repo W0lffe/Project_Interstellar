@@ -30,6 +30,8 @@ public class Prologue {
     /**@description Enemy type as string for Prologue, used to create enemy lists */
     private static final String enemyType = "Ra'kra";
 
+    private static final Consumables medkit = Consumables.retrieveList("MedicalList").get(2);
+    private static final Consumables advancedMedkit = Consumables.retrieveList("MedicalList").get(3);
 
     /**
      * @description part one of prologue
@@ -238,7 +240,7 @@ public class Prologue {
         playerActions.getFirstButton().setOnAction(e -> {
             
             //if player has object in inventory
-            if(player.getPlayerInventory().contains(Consumables.BASIC_MEDKIT) || player.getPlayerInventory().contains(Consumables.ADVANCED_MEDKIT)){
+            if(player.getPlayerInventory().contains(medkit) || player.getPlayerInventory().contains(advancedMedkit)){
 
                 //remove player actions before going to next part
                 playerActionsContainer.getChildren().remove(playerActions);
@@ -356,7 +358,7 @@ public class Prologue {
         Utility.readFileAndPrint(storyFile, "FINAL", "FINAL-PART2");
 
         //Create NPC object and add to list
-        enemyList.add(new NPC(150, 150, "Ka'tar", 200, "Boss", Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+        enemyList.add(new NPC(150, 150, "Ka'tar", 200, "Boss", Weapon.retrieveTieredWeapon("Low Tier"), ItemLootLists.randomLootForNPC()));
 
         //Reference to created npc
         NPC Boss = enemyList.get(0);

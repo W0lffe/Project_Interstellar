@@ -75,8 +75,8 @@ The project will be iteratively refined as new skills are developed, with the po
 * [ ] Weapon Ammo System
 * [ ] (Optional) Weapon Condition
 * [ ] Dynamic Object Creating
-    * [ ] Loot Lists (3 different tier lists, NPC gets one with shuffle as of now)
-    * [ ] Dynamic and Randomized NPC creating
+    * [X] Loot Lists
+    * [X] Dynamic and Randomized NPC creating
     * [ ] Dynamic Weapon Creating with Randomized stats
 * [X] Combat 
     * [ ] (Optional) Make weapons have somekind of charges per turn

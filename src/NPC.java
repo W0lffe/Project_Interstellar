@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-
+import java.util.Map;
+import java.util.HashMap;
 
 public class NPC {
     
@@ -13,8 +13,7 @@ public class NPC {
     private Weapon equipped;
     private ArrayList<Items> inventory;
     private VerticalStatus statusContainer;
-    private static ArrayList<NPC> rakraList = new ArrayList<>();
-    private static ArrayList<NPC> banditList = new ArrayList<>();
+    private static Map<String, ArrayList<NPC>> enemyListMap = new HashMap<>();
 
     /**
      * @description Constructor for NPC object
@@ -164,6 +163,7 @@ public class NPC {
     public void takeDamage(int damage){
         health -= damage;
 
+        //update NPC status containers
         enemyStatusUpdate();
     }
 
@@ -178,9 +178,14 @@ public class NPC {
     /**@description Creates 2 preset enemy npc lists */
     public static void initEnemyLists(int playerLevel){
 
-        initRakraList(playerLevel);
+        for (int i = 0; i < enemyListMap.size(); i++) {
+            if (!enemyListMap.get(i).isEmpty()) {
+                enemyListMap.get(i).clear();
+            }
+        }
 
-        initBanditList(playerLevel);
+        //Call npc creation with player level as parameter
+        createNPC(playerLevel);
         
     }
 
@@ -192,62 +197,72 @@ public class NPC {
      */
     public static ArrayList<NPC> createEnemyList(int maxAmount, String enemyType){
         ArrayList<NPC> temporary = new ArrayList<>();
+        ArrayList<NPC> selectedType = enemyListMap.get(enemyType);
 
-        if (enemyType.equals("Ra'kra")){
-            
-            for (int i = 0; i < maxAmount; i++) {
-                Collections.shuffle(rakraList);
-                temporary.add(rakraList.getFirst());
-            }
-        }
-        else if(enemyType.equals("Bandit")){
-
-            for (int i = 0; i < maxAmount; i++) {
-                Collections.shuffle(banditList);
-                temporary.add(banditList.getFirst());
-            }
+        for (int i = 0; i < maxAmount; i++) {
+            Collections.shuffle(selectedType);
+            temporary.add(selectedType.getFirst());
         }
 
         return temporary;
    } 
 
-   private static void initRakraList(int playerLevel){
-        int numberOfNormals;
-        int numberOfStrongs;
-        int healthModifier;
-        int expModifier;
-        ArrayList<Weapon> retrievedWeaponList;
+   /**
+    * @description create NPC lists based on player level, puts to Map
+    * @param playerLevel level of player as Integer
+    */
+   private static void createNPC(int playerLevel){
+
+        //Modifiers for creating lists
+        int numberOfNormals = 0; //Amount of normal type NPC
+        int numberOfStrongs = 0; //Amount of strong type NPC
+        int healthModifier = 0; //Addition to health
+        int expModifier = 0; //Addition to experience
+        String tier = ""; //String for tier list, "Low Tier", "Medium Tier", "High Tier"
+        ArrayList<NPC> rakraList = new ArrayList<>();
+        ArrayList<NPC> banditList = new ArrayList<>();
         
+        //Player level between 1-5
         if (playerLevel > 0 && playerLevel <= 5) {
             numberOfNormals = 6;
             numberOfStrongs = 4;
             healthModifier = 0;
             expModifier = 0;
-            retrievedWeaponList = Weapon.retrieveWeaponList("Low Tier");
+            tier = "Low Tier";
+        }
+        //Player level between 6-10
+        else if(playerLevel > 5 && playerLevel <= 10){
+            numberOfNormals = 6;
+            numberOfStrongs = 6;
+            healthModifier = 30;
+            expModifier = 40;
+            tier = "Medium Tier";
+        }
+        //Player level over 10
+        else{
+            numberOfNormals = 4;
+            numberOfStrongs = 6;
+            healthModifier = 50;
+            expModifier = 60;
+            tier = "High Tier";
         }
 
         for (int i = 0; i < numberOfNormals/2; i++) {
-            rakraList.add(new NPC(60+healthModifier, 60+healthModifier, "Ra'kra Scout", 20+expModifier, "Normal", Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
-            rakraList.add(new NPC(75+healthModifier, 75+healthModifier, "Ra'kra Rookie", 40+expModifier, "Normal", Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(60+healthModifier, 60+healthModifier, "Ra'kra Scout", 20+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(75+healthModifier, 75+healthModifier, "Ra'kra Rookie", 40+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            banditList.add(new NPC(50+healthModifier, 50+healthModifier, "Bandit", 45+expModifier, "Normal",Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            banditList.add(new NPC(75+healthModifier, 75+healthModifier, "Bandit", 50+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
         }
-        for (int i = 0; i < numberOfStrongs; i++) {
-            rakraList.add(new NPC(100+healthModifier, 100+healthModifier, "Ra'kra Brute", 50+expModifier, "Strong", Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC()));
-            rakraList.add(new NPC(125+healthModifier, 125+healthModifier, "Ra'kra Officer", 75+expModifier, "Strong", Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC()));
+        for (int i = 0; i < numberOfStrongs/2; i++) {
+            rakraList.add(new NPC(100+healthModifier, 100+healthModifier, "Ra'kra Brute", 50+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(125+healthModifier, 125+healthModifier, "Ra'kra Officer", 75+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            banditList.add(new NPC(100+healthModifier, 100+healthModifier, "Bandit Leader", 75+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+
         }
 
+        enemyListMap.put("Ra'kra", rakraList);
+        enemyListMap.put("Bandit", banditList);
    }
-
-   private static void initBanditList(int playerLevel){
-
-        NPC bandit = new NPC(50, 50, "Bandit", 45, "Normal", Weapon.LASER_PISTOL, ItemLootLists.randomLootForNPC());
-        NPC bandit2 = new NPC(75, 75, "Bandit", 50, "Normal", Weapon.STINGER_PISTOL, ItemLootLists.randomLootForNPC());
-        NPC banditLeader = new NPC(100, 100, "Bandit Leader", 75, "Strong", Weapon.SENTRY_CARBINE, ItemLootLists.randomLootForNPC());
-        banditList.addAll(Arrays.asList(bandit, bandit, bandit, bandit2, banditLeader));
-   }
-  
-
-
-
 
 
 }

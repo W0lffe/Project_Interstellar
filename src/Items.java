@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-
+import java.util.Random;
 
 public class Items {
 
@@ -67,27 +67,65 @@ class ItemLootLists{
 
     
     /**@description Creates tiered itemlists and places to one big list */
-    public static void initItemLists(){
+    public static void initLootItemLists(){
         
-        ArrayList<Items> lowTierList = new ArrayList<>();
-        ArrayList<Items> mediumTierList = new ArrayList<>();
-        ArrayList<Items> highTierList = new ArrayList<>();
+        //Retrieve consumables from Map
+        ArrayList<Consumables> medical = Consumables.retrieveList("MedicalList");
+        ArrayList<Consumables> food = Consumables.retrieveList("FoodList");
 
-        lowTierList.addAll(Arrays.asList(Consumables.BANDAGE, Consumables.BANDAGE,Consumables.BASIC_MEDKIT , Consumables.HYDRATION_PACK, Consumables.RATIONS_BAR));
-        mediumTierList.addAll(Arrays.asList(Consumables.BASIC_MEDKIT, Consumables.BASIC_MEDKIT, Consumables.ADRENAL_SHOT,Consumables.SPACE_STEAK));
-        highTierList.addAll(Arrays.asList(Consumables.ADVANCED_MEDKIT, Consumables.ADVANCED_MEDKIT, Consumables.ADRENAL_SHOT));
+        //Init tiered lists
+        ArrayList<Items> lowTier = new ArrayList<>();
+        ArrayList<Items> medTier = new ArrayList<>();
+        ArrayList<Items> highTier = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            if (i < 6) {
-                listOfItemLists.add(lowTierList);
+        Random random = new Random();
+
+
+        //Loop items from consumables to tiered lists using random
+        for (int i = 0; i < 7; i++) {
+            Items medicalItem = medical.get(random.nextInt(medical.size()));
+            Items medicalItem2;
+            Items foodItem = food.get(random.nextInt(food.size()));
+            Items foodItem2;
+
+            //Ensure items are not equal
+            do {
+                medicalItem2 = medical.get(random.nextInt(medical.size()));
+                foodItem2 = food.get(random.nextInt(food.size()));
+            } while (medicalItem2 == medicalItem && foodItem2 == foodItem);
+
+
+            if (i < 2) {
+                lowTier.add(medicalItem);
+                lowTier.add(foodItem);
+                lowTier.add(foodItem2);
             }
-            else if(i > 6 && i < 9){
-                listOfItemLists.add(mediumTierList);
+            else if(i > 2 && i < 5){
+                medTier.add(medicalItem);
+                medTier.add(medicalItem2);
+                medTier.add(foodItem);
             }
             else{
-                listOfItemLists.add(highTierList);
+                highTier.add(medicalItem);
+                highTier.add(medicalItem2);
+                highTier.add(foodItem);
+                highTier.add(foodItem2);
             }
         }
+
+        //Add all tiered lists to arraylist
+        for (int i = 0; i < 10; i++) {
+            if (i < 5) {
+                listOfItemLists.add(lowTier); //50%
+            }
+            else if(i >= 5 && i < 8){
+                listOfItemLists.add(medTier); //30%
+            }
+            else{
+                listOfItemLists.add(highTier); //20%
+            }
+        }
+        
 
         createPrologueItemLists();
     }
@@ -110,10 +148,11 @@ class ItemLootLists{
     private static void createPrologueItemLists(){
 
         ArrayList<Items> lockerItems = new ArrayList<>();
-        lockerItems.addAll(Arrays.asList(Weapon.LASER_PISTOL, Consumables.SPACE_SODA, Consumables.BASIC_MEDKIT, Consumables.BASIC_MEDKIT));
+        lockerItems.addAll(Arrays.asList(Weapon.retrieveTieredWeapon("Low Tier"), Consumables.retrieveList("FoodList").get(3), Consumables.retrieveList("MedicalList").get(3),  
+                                        Consumables.retrieveList("MedicalList").get(3)));
        
         ArrayList<Items> supplyContainer = new ArrayList<>();
-        supplyContainer.addAll(Arrays.asList(Consumables.BASIC_MEDKIT, Consumables.BASIC_MEDKIT));
+        supplyContainer.addAll(Arrays.asList( Consumables.retrieveList("MedicalList").get(3),  Consumables.retrieveList("MedicalList").get(2)));
 
         prologueItemLists.addAll(Arrays.asList(lockerItems, supplyContainer));
     }

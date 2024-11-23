@@ -27,9 +27,15 @@ public class Game {
 
         //Initialize array with predefined Skills
         Skills.initializeSkillArray(); 
+
+        //Initiate tiered weapon lists
+        Weapon.initWeaponLists();
+
+        //Init consumables lists
+        Consumables.initConsumablesList();
         
         //Initialize array with predefined arraylists of lootable items
-        ItemLootLists.initItemLists();
+        ItemLootLists.initLootItemLists();
 
         //Initialize preset enemy lists
         NPC.initEnemyLists(player.getLevel());

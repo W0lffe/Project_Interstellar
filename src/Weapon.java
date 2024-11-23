@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,10 +9,6 @@ public class Weapon extends Items{
     private int minDamage;
     private int maxDamage;
     private static Map<String, ArrayList<Weapon>> tieredWeaponsMap = new HashMap<>();
-    private static ArrayList<Weapon> lowTierWeapons = new ArrayList<>();
-    private static ArrayList<Weapon> mediumTierWeapons = new ArrayList<>();
-    private static ArrayList<Weapon> highTierWeapons = new ArrayList<>();
-
 
     /**
      * @description Constructor for Weapon object
@@ -70,6 +67,9 @@ public class Weapon extends Items{
      * Lists are placed to a Map
     */
     public static void initWeaponLists(){
+        ArrayList<Weapon> lowTierWeapons = new ArrayList<>();
+        ArrayList<Weapon> mediumTierWeapons = new ArrayList<>();
+        ArrayList<Weapon> highTierWeapons = new ArrayList<>();
 
         //LOW-GRADE | MAX-DAMAGE BELOW 20
         lowTierWeapons.add(new Weapon("Pulse Pistol", "Energy Weapon", 8, 12, "A compact energy-based sidearm", 1));
@@ -96,7 +96,14 @@ public class Weapon extends Items{
         tieredWeaponsMap.put("High Tier", highTierWeapons);
     }
     
-    public static ArrayList<Weapon> retrieveWeaponList(String tier){
-        return tieredWeaponsMap.get(tier);
+    /**
+     * @description retrieves tiered weapon from weaponlist
+     * @param tier Wanted tier to retrieve as string
+     * @return Tiered weapon as Weapon object
+     */
+    public static Weapon retrieveTieredWeapon(String tier){
+        ArrayList<Weapon> tierList = tieredWeaponsMap.get(tier);
+        Collections.shuffle(tierList);
+        return tierList.getFirst();
     }
 }

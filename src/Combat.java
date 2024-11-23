@@ -171,7 +171,7 @@ public class Combat {
         }
 
         damage = (int) (Math.random() * ((enemyMaxDmg - enemyMinDmg) + 1) + enemyMinDmg);
-        damageDealt = enemy.getName() + " counters, dealing " + damage + " damage!\n";
+        damageDealt = enemy.getName() + " counters with " + enemy.getEquipped().getItem() + ", dealing " + damage + " damage!\n";
         Utility.Print(damageDealt, Utility.ActionSpeed);
         player.takeDamage(damage); //Reduce player health
 
