@@ -491,7 +491,7 @@ public class Player {
                     setHealth(getMaxHealth()); //Restores character's max health
                     setExpNeeded(getExpNeeded() + 250); //Increases required experience for next level
                     characterStatusUpdate(); //Update character status container
-                    ItemLootLists.initLootItemLists();
+                    NPC.initEnemyLists(level);
                 }
                 else{
                     levelUpMenu.setVerticalTitle("Please select a skill!");

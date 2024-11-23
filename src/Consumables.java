@@ -65,6 +65,11 @@ class Consumables extends Items {
         consumablesMap.put("MedicalList", medicalItems);
     }
 
+    /**
+     * @description retrieves consumable list from Map
+     * @param listKey key of the list as String
+     * @return ArrayList typed to Consumables
+     */
     public static ArrayList<Consumables> retrieveList(String listKey){
         return consumablesMap.get(listKey);
     }
