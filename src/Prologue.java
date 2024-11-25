@@ -29,9 +29,10 @@ public class Prologue {
 
     /**@description Enemy type as string for Prologue, used to create enemy lists */
     private static final String enemyType = "Ra'kra";
-
+    
     private static final Consumables medkit = Consumables.retrieveList("MedicalList").get(2);
     private static final Consumables advancedMedkit = Consumables.retrieveList("MedicalList").get(3);
+
 
     /**
      * @description part one of prologue
@@ -49,11 +50,8 @@ public class Prologue {
         playerActionsContainer =  new VerticalContainer(10, playerChoices);
         playerActions = new HorizontalPlayerActions(10, "", "Character", "Loot Locker", "Read Datapad", "Go outside");
 
-        //Append player actions to container
-        playerActionsContainer.getChildren().add(playerActions);
-
-        //Append to Interface
-        Utility.centerContainer.getChildren().add(playerActionsContainer);
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
         //Toggle character status and info
         playerActions.getFirstButton().setOnAction(e -> { player.toggleCharacterInfoStatus(); });
@@ -64,11 +62,11 @@ public class Prologue {
             //if player has not checked locker, player is able to do so
             if (!checkedLocker) {
                 //Fetch predefined itemlist for prologue, send to lootItems function
-                player.lootItems(ItemLootLists.fetchPrologueItemList(0), "locker");
+                player.lootItems(LootLists.fetchPrologueItemList(0), "locker");
                 checkedLocker = true;
             }
             else{
-                Utility.Print(Utility.lockerIsEmpty, Utility.ActionSpeed);
+                Utility.Print(Utility.isLooted, Utility.ActionSpeed);
             }
         });
 
@@ -93,8 +91,8 @@ public class Prologue {
             
             //Player cant proceed if has not checked locker
             if(checkedLocker){
-                playerActionsContainer.getChildren().remove(playerActions); //remove player actions before going to next part
-                playerActionsContainer.setVerticalTitle("");
+                //clear player actions before going to next part
+                Utility.clearPlayerActions(playerActionsContainer, playerActions);
                 PartTwo(player); //Exit PartOne
             }
             else{
@@ -113,19 +111,17 @@ public class Prologue {
         //Print story
         Utility.readFileAndPrint(storyFile, "SCENE2", "S2-OPTION1");
 
-        //Set new player choices
+        //Set new player choices and actions
         playerChoices = "A) Go with Teth and Jaxer B) Not now";
-        playerActionsContainer.setVerticalTitle(playerChoices);
-
-        //Set new player actions
         playerActions = new HorizontalPlayerActions(10,"", "Go To Firing Range", "Take A Moment For Yourself");
-        playerActionsContainer.getChildren().add(playerActions);
+
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
         playerActions.getFirstButton().setOnAction(e -> {
 
-            //remove player actions before going to combat
-            playerActionsContainer.getChildren().remove(playerActions); 
-            playerActionsContainer.setVerticalTitle("");
+           //clear player actions before going to combat
+           Utility.clearPlayerActions(playerActionsContainer, playerActions);
             
             //Print story
             Utility.readFileAndPrint(storyFile, "S2-OPTION1", "S2-OPTION1,2");
@@ -148,8 +144,7 @@ public class Prologue {
         playerActions.getSecondButton().setOnAction(e -> {
 
             //remove player actions before going to next part
-            playerActionsContainer.getChildren().remove(playerActions);
-            playerActionsContainer.setVerticalTitle("");
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
             Utility.readFileAndPrint(storyFile, "S2-OPTION2", "SCENE3");
             PartThree(player); //exit PartTwo
@@ -163,31 +158,26 @@ public class Prologue {
      */
     private static void PartThree(Player player){
 
-
         //Create NPC objects and add to List
         enemyList = NPC.createEnemyList(2, enemyType);
-        //enemyList.add(new NPC(40, 40, "Ra'kra Rookie", 50, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
-        //enemyList.add(new NPC(50, 50, "Ra'kra Brute", 75, true, Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC()));
-
+       
         //reference to NPC object in list
         NPC enemy = enemyList.get(1);
 
-        //Set new player choices
+        //Set new player choices and actions
         playerChoices = "A) Character B) Fight the Rak'ra C) Try to run over to Teth D) Try to run away";
-        playerActionsContainer.setVerticalTitle(playerChoices);
-
-        //Set new player actions
         playerActions = new HorizontalPlayerActions(10,"","Character", "Fight!", "Help your friends", "Retreat!");
-        playerActionsContainer.getChildren().add(playerActions);
+
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
         //Toggle player info and status
         playerActions.getFirstButton().setOnAction(e -> { player.toggleCharacterInfoStatus(); });
 
         playerActions.getSecondButton().setOnAction(e -> {
 
-            //remove player actions before going to combat
-            playerActionsContainer.getChildren().remove(playerActions);
-            playerActionsContainer.setVerticalTitle("");
+            //clear player actions before going to combat
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
             Utility.Print("You will fight the Rak'ra\n", Utility.ActionSpeed);
 
@@ -229,22 +219,20 @@ public class Prologue {
         //Print story
         Utility.readFileAndPrint(storyFile, "SCENE3", "S3-OPTION1");
 
-        //Set new player choices
+        //Set new player choices and actions
         playerChoices = "A) Go to Jaxer and see if you can help him recover B) Help Teth";
-        playerActionsContainer.setVerticalTitle(playerChoices);
-
-        //Set new player actions
         playerActions = new HorizontalPlayerActions(10,"", "Try to help Jaxer", "Help Teth");
-        playerActionsContainer.getChildren().addAll(playerActions);
+
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
         
         playerActions.getFirstButton().setOnAction(e -> {
             
             //if player has object in inventory
             if(player.getPlayerInventory().contains(medkit) || player.getPlayerInventory().contains(advancedMedkit)){
 
-                //remove player actions before going to next part
-                playerActionsContainer.getChildren().remove(playerActions);
-                playerActionsContainer.setVerticalTitle("");
+                //clear player actions before going to next part
+                Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
                 Utility.Print("You go to Jaxer\n", Utility.ActionSpeed);
                 player.addProgressFlag(new ProgressFlags("Saved Jaxer", true));
@@ -260,9 +248,8 @@ public class Prologue {
 
         playerActions.getSecondButton().setOnAction(e -> {
             
-            //remove player actions before going to next part
-            playerActionsContainer.getChildren().remove(playerActions);
-            playerActionsContainer.setVerticalTitle("");
+            //clear player actions before going to next part
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
             //Print story
             Utility.readFileAndPrint(storyFile, "S3-OPTION2", "S3-PART2");
@@ -280,20 +267,18 @@ public class Prologue {
         //Print story
         Utility.readFileAndPrint(storyFile, "S3-PART2", "S3P2-OPTION1");
 
-        //Set new player choices
+        //Set new player choices and actions
         playerChoices = "A) Kill the engineer B) Keep going";
-        playerActionsContainer.setVerticalTitle(playerChoices);
-
-        //Set new player actions
         playerActions = new HorizontalPlayerActions(10,"", "Kill the Engineer", "Keep running");
-        playerActionsContainer.getChildren().add(playerActions);
+
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
 
         playerActions.getFirstButton().setOnAction(e -> {
             
-            //remove player actions before going to combat
-            playerActionsContainer.getChildren().remove(playerActions);
-            playerActionsContainer.setVerticalTitle("");
+            //clear player actions before going to next part
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
             //Create NPC object and add to enemy list
             enemyList.add(new NPC(5, 5, "Crew Member", 20, "Story", Weapon.NONE, null));
@@ -305,27 +290,23 @@ public class Prologue {
                 Utility.readFileAndPrint(storyFile, "S3P2-OPTION1", "S3P2-OPTION2");
 
                 //Add consumable objects to player inventory
-                player.lootItems(ItemLootLists.fetchPrologueItemList(1), "supply container");
+                player.lootItems(LootLists.fetchPrologueItemList(1), "supply container");
                 Final(player); //exit PartFive
             }); 
         });
 
         playerActions.getSecondButton().setOnAction(e -> {
              
-            //remove player actions before going to combat
-            playerActionsContainer.getChildren().remove(playerActions);
-            playerActionsContainer.setVerticalTitle("");
-
+            //clear player actions before going to combat
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
             //Print story
             Utility.readFileAndPrint(storyFile, "S3P2-OPTION2", "S3P2-OPTION2P1");
 
             //Add consumable objects to player inventory
-            player.lootItems(ItemLootLists.fetchPrologueItemList(1), "supply container");
+            player.lootItems(LootLists.fetchPrologueItemList(1), "supply container");
 
             //Create NPC objects and add to enemy list
             enemyList = NPC.createEnemyList(2, enemyType);
-            //enemyList.add(new NPC(25, 25, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, ItemLootLists.randomLootForNPC()));
-            //enemyList.add(new NPC(75, 75, "Rak'ra Officer", 75, true, Weapon.PULSE_RIFLE, ItemLootLists.randomLootForNPC()));
 
             //Enter combat with player object and enemylist
             Combat.FightMenu(player, enemyList, () -> {
@@ -358,7 +339,7 @@ public class Prologue {
         Utility.readFileAndPrint(storyFile, "FINAL", "FINAL-PART2");
 
         //Create NPC object and add to list
-        enemyList.add(new NPC(150, 150, "Ka'tar", 200, "Boss", Weapon.retrieveTieredWeapon("Low Tier"), ItemLootLists.randomLootForNPC()));
+        enemyList.add(new NPC(150, 150, "Ka'tar", 200, "Boss", Weapon.retrieveTieredWeapon("Low Tier"), LootLists.retrieveRandomLootList("NPC")));
 
         //Reference to created npc
         NPC Boss = enemyList.get(0);
@@ -372,13 +353,11 @@ public class Prologue {
                 //Print story
                 Utility.readFileAndPrint(storyFile, "FINAL-PART2", "END");
 
-                //Set new player chocies
+                //Set new player choices and actions
                 playerChoices = "A) Eliminate Ka'tar B) Leave the Station with Teth";
-                playerActionsContainer.setVerticalTitle(playerChoices);
-
-                //Set new player actions
                 playerActions = new HorizontalPlayerActions(10,"", "Kill Ka'tar", "Leave the Station");
-                playerActionsContainer.getChildren().add(playerActions);
+
+                Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
                 playerActions.getFirstButton().setOnAction(e -> {
             
@@ -416,5 +395,6 @@ public class Prologue {
         Utility.readFileAndPrint(storyFile, "END", "PROLOGUE-END");
 
         //TO NEXT ACT
+        CalyraBunker.ActOne(player);
      }
 }

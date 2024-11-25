@@ -32,13 +32,16 @@ public class Utility {
     /**@contains string for player dialog, if area is cleared*/
     public static String areaClear = "Jaxon: I have cleared that area\n";
     /**@contains string for player action, locker is checked*/
-    public static String lockerIsEmpty = "Locker is empty.\n";
+    public static String isLooted = "Jaxon: I have already looted that.\n";
     /**@contains string for player dialog, has read datapad/console*/
     public static String isRead = "Jaxon: I already read that.\n";
     /**@contains string for player action, activates console*/
     public static String activateConsole = "You press the button on the console. The terminal flickers and hums to life, displaying a series of messages:\n";
     /**@contains string for player action, activates datapad*/
     public static String activateDatapad = "You pick up the datapad. It's an old model, slightly scratched. You wonder if it holds any important messages...\n";
+    /**@contains string for player action, resting*/
+    public static String playerRest = "Jaxon: Im gonna rest a while\n";
+        
 
     //Speed parameters for Utility.Print function, sets speed how fast to "type" text
 
@@ -114,6 +117,35 @@ public class Utility {
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play(); */
 
+    }
+
+    /**
+     * @description a function to update player actions during game
+     * @param container container that holds player actions container
+     * @param actions a container that has buttons for player action
+     * @param choices a string that displays choices
+     */
+    public static void updatePlayerActions(VerticalContainer container, HorizontalPlayerActions actions, String choices){
+
+        //Set title to player choices
+        container.setVerticalTitle(choices);
+
+        //Add player actions to container
+        container.getChildren().addAll(actions);
+
+        //if container is not in Interface, add
+        if (!Utility.centerContainer.getChildren().contains(container)) {
+            Utility.centerContainer.getChildren().add(container);
+        }
+    }
+
+    /**@description clears all player actions from container, buttons and title */
+    public static void clearPlayerActions(VerticalContainer container, HorizontalPlayerActions actions){
+
+        //Remove actions container from parent
+        container.getChildren().remove(actions); 
+        //Set title to blank
+        container.setVerticalTitle("");
     }
     
 }

@@ -1,121 +1,186 @@
-/* import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class CalyraCave {
-    
-    private static String userAction;
-    private static ArrayList<NPC> EnemyList = new ArrayList<>();
-    private static final String file = "ActOne/Cave.txt";
+
+     /**@description Arraylist to contain enemy NPC objects */
+    private static ArrayList<NPC> enemyList = new ArrayList<>();
+
+    //Files to read
+    private static final String storyFile = "ActOne/Cave.txt";
     private static final String datapadFile = "ActOne/Datapad1.txt";
 
+    /**@description reference to container object, used throughout this file */
+    private static VerticalContainer playerActionsContainer;
+    /**@description reference to player actions object, used throughout this file */
+    private static HorizontalPlayerActions playerActions;
 
-    public static void Cave(Player player, Scanner action){
-        String cave = "CalyraCaveFound";
-        boolean firstTime = !player.flagExists(cave);
-        String stealthStatus = "The Alpha stands tall, its piercing gaze sweeping over you, sizing you up. Cant get around.\n";
+    private static String playerChoices;
 
-        Weapon claws = new Weapon("Claws", "Creature Attack", 20, 24, "Sharp claws", 1);
+    public static void Cave(Player player){
+        
+        //Progress flag
+        String caveFound = "CalyraCaveFound";
 
-        if (firstTime) {
-            String caveIntro = Files.ReadFile(file, "CAVE1", "CAVE2");
-            Utility.Print(caveIntro, Utility.StoryPrintSpeed);
+        //To check if player has been here before
+        boolean firstTime = !player.flagExists(caveFound);
 
-            Weapon Stinger = new Weapon("Stinger", "Creature Attack", 18, 28, "Venomous stinger", 1);
-            EnemyList.add(new NPC(75, 75, "Fangdweller", 100, true, Stinger, null));
-            EnemyList.add(new NPC(75, 75, "Fangdweller", 100, true, claws, null));
-            EnemyList.add(new NPC(75, 75, "Fangdweller", 100, true, claws, null));
+        //If this is players first time here
+        if (firstTime){
 
-            Combat.FightMenu(player, EnemyList);
-            if (!player.isAlive()) {
-                return;
-            }
+            //Read and print story
+            Utility.readFileAndPrint(storyFile, "CAVE1", "CAVE2");
 
-            player.addProgressFlag(new ProgressFlags(cave, true));
+            //Create weapon for NPC in this instance
+            Weapon Stinger =  new Weapon("Stinger", "Creature Attack", 18, 28, "Venomous stinger", 1);
 
-            String cave2 = Files.ReadFile(file, "CAVE2", "CAVE3");
-            Utility.Print(cave2, Utility.StoryPrintSpeed);
+            //Create NPC
+            enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+            enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+            enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+
+            //Enter combat
+            Combat.FightMenu(player, enemyList, () -> {
+
+                //If player is alive after combat
+                if (player.isAlive()) {
+                    
+                    //Add progress flag
+                    player.addProgressFlag(new ProgressFlags(caveFound, true));
+
+                    //Read and print story
+                    Utility.readFileAndPrint(storyFile, "CAVE2", "CAVE3");
+
+                    CaveBoss(player); //Move to next part
+                }
+            });
         }
+        else{
+            CaveBoss(player); //Move to next part directly
+        }
+    }
 
+    private static void CaveBoss(Player player){
 
-        do {
+        //Progress flags
+        String caveCleared = "CalyraCaveClear";
+        String caveStealth = "CalyraCaveStealth";
 
-            if (player.flagExists("CalyraCaveStealth")) {
-                stealthStatus = "Jaxon: I have already been at the corpse, only Alpha remaining...\n";
-            }
-            
-            System.out.println("A) Show Character \nB) Attack Alpha \nC) Try to Sneak past it \nD) Leave the Cave");
-            userAction = Validation.UserInput(action);
+        //Set choices and actions for player
+        playerActionsContainer = new VerticalContainer(10, "");
+        playerChoices = "A) Character B) Attack Alpha C) Try to Sneak past it D) Leave the Cave";
+        playerActions = new HorizontalPlayerActions(10, "", "Character", "Attack", "Sneak", "Leave");
 
-            switch (userAction) {
-                case "A":
-                    //player.Character(action);
-                    break;
-                case "B":
-                    EnemyList.add(new NPC(300, 300, "Fangdweller Alpha", 250, true, claws, null));
-                    Combat.FightMenu(player, EnemyList);
-                    if (!player.isAlive()) {
-                        return;
-                    }
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
+
+        playerActions.getFirstButton().setOnAction(e -> {player.toggleCharacterInfoStatus();});
+
+        playerActions.getSecondButton().setOnAction(e -> {
+
+            //Clear player actions before combat
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
+
+            //Create weapon for this instance
+            Weapon Claws = new Weapon("Claws", "Creature Attack", 20, 28, "Sharp claws", 1);
+
+            //Create NPC 
+            enemyList.add(new NPC(300, 300, "Fangdweller Alpha", 250, "Boss", Claws, null));
+
+            //Enter combat
+            Combat.FightMenu(player, enemyList, () -> {
+
+                //if player is alive after combat
+                if (player.isAlive()) {
+                    
+                    //Add progress flag
                     Utility.Print("Jaxon: Alpha down. Guess he wasn't so invincible after all.\n", Utility.ActionSpeed);
-                    player.addProgressFlag(new ProgressFlags("CalyraCaveClear", true));
+                    player.addProgressFlag(new ProgressFlags(caveCleared, true));
 
-                    if (!player.flagExists("CalyraCaveStealth")) {
+                    //If player didnt do stealth option
+                    if (!player.flagExists("CalyraCaveStealth")){
+
                         Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed);
-                        System.out.println("You take a look at the corpse and its surroundings, you find: \n");
-    
-                        String datapad = Files.ReadFile(datapadFile, null, null);
-                        Utility.Print(datapad, Utility.DatapadPrintSpeed);
-                        player.LoreExperience();
+                        Utility.Print("You take a look at the corpse and its surroundings, you find: \n", Utility.ActionSpeed);
+
+                        //Read and print data
+                        Utility.readFileAndPrint(datapadFile, "", "");
+                        player.actionExperience(Utility.LoreItemEXP); //Gain experience
+
+                        //List for loot
+                        ArrayList<Items> lootFound = new ArrayList<>();
+                        lootFound.add(Weapon.retrieveTieredWeapon("Medium Tier")); // 1 weapon from medium tier, add to loot
+
+                        //Temporary list to get random lootlist
+                        ArrayList<Items> temp = LootLists.retrieveRandomLootList("NPC");
                         
-                        System.out.println(Weapon.HYPERSONIC_REPEATER);
-                        player.addItem(Weapon.HYPERSONIC_REPEATER);
-    
-                        System.out.println(Consumables.ADVANCED_MEDKIT);
-                        player.addItem(Consumables.ADVANCED_MEDKIT);
-    
-                        System.out.println(Consumables.BASIC_MEDKIT);
-                        player.addItem(Consumables.BASIC_MEDKIT);
+                        //Add temp lootlist to found loot
+                        lootFound.addAll(temp);
+
+                        //Player loots, adds to inventory
+                        player.lootItems(lootFound, "corpse");
+
                     }
-                  
+
                     Utility.Print("Jaxon: Now lets get out of this smelling cave..\n", Utility.ActionSpeed);
-                    return;
-                case "C":
-                    if (player.getPlayerSkills().contains(Skills.Stealth) && !player.flagExists("CalyraCaveStealth")) {
-                        Utility.Print("Jaxon: Here goes nothing..\nYou reach the body. \n", Utility.ActionSpeed);
-                        Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed);
-                        System.out.println("You take a look at the corpse and its surroundings, you find: ");
-    
-                        String datapadfile = Files.ReadFile(datapadFile, null, null);
-                        Utility.Print(datapadfile, Utility.DatapadPrintSpeed);
-                        player.LoreExperience();
-                        
-                        System.out.println(Weapon.HYPERSONIC_REPEATER);
-                        player.addItem(Weapon.HYPERSONIC_REPEATER);
-    
-                        System.out.println(Consumables.ADVANCED_MEDKIT);
-                        player.addItem(Consumables.ADVANCED_MEDKIT);
-    
-                        System.out.println(Consumables.BASIC_MEDKIT);
-                        player.addItem(Consumables.BASIC_MEDKIT);
 
-                        player.addProgressFlag(new ProgressFlags("CalyraCaveStealth", true));
-                        Utility.Print("Jaxon: Now lets get out of this smelling cave..\n", Utility.ActionSpeed);
-                        return;
-                    }
-                    else{
-                        Utility.Print(stealthStatus, Utility.ActionSpeed);
-                        break;
-                    }
-                case "D":
-                    Utility.Print("Jaxon: A fight for another day.\n", Utility.ActionSpeed);
-                    return;
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
+                    //Clear player actions
+                    Utility.clearPlayerActions(playerActionsContainer, playerActions);
+                    Utility.centerContainer.getChildren().remove(playerActionsContainer);
+                    //Exit cave
+                    CalyraBunker.PathToColony(player);
+                }
+            });
+        });
+
+        playerActions.getThirdButton().setOnAction(e -> {
+
+            if (player.hasSkill("Stealth") && !player.flagExists(caveStealth)) {
+                
+                Utility.Print("Jaxon: Here goes nothing..\nYou reach the body. \n", Utility.ActionSpeed);
+                Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed);
+
+                //Read and print data
+                Utility.readFileAndPrint(datapadFile, "", "");
+                player.actionExperience(Utility.LoreItemEXP); //Gain experience
+
+                //List for loot
+                ArrayList<Items> lootFound = new ArrayList<>();
+                lootFound.add(Weapon.retrieveTieredWeapon("Medium Tier")); // 1 weapon from medium tier, add to loot
+
+                //Temporary list to get random lootlist
+                ArrayList<Items> temp = LootLists.retrieveRandomLootList("NPC");
+                  
+                //Add temp lootlist to found loot
+                lootFound.addAll(temp);
+
+                //Player loots, adds to inventory
+                player.lootItems(lootFound, "corpse");
+
+                //Add progress flag
+                player.addProgressFlag(new ProgressFlags(caveStealth, true));
             }
-        } while (player.isAlive());
+            else{
+                //if player has flag
+                if (player.flagExists(caveStealth)) {
+                    Utility.Print("Jaxon: I have already been at the corpse, only Alpha remaining...\n", Utility.ActionSpeed);
+                }
+                else{
+                    Utility.Print("The Alpha stands tall, its piercing gaze sweeping over you, sizing you up. Cant get around.\n", Utility.ActionSpeed);
+                }
+            }
+        });
 
+        playerActions.getFourthButton().setOnAction(e -> {
+            
+            //clear player actions
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
+            Utility.centerContainer.getChildren().remove(playerActionsContainer);
+
+            Utility.Print("Jaxon: A fight for another day.\n", Utility.ActionSpeed);
+            //Exit cave
+            CalyraBunker.PathToColony(player);
+        });
 
     }
+    
 }
- */

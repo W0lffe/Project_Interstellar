@@ -35,7 +35,7 @@ public class Game {
         Consumables.initConsumablesList();
         
         //Initialize array with predefined arraylists of lootable items
-        ItemLootLists.initLootItemLists();
+        LootLists.initLootItemLists();
 
         //Initialize preset enemy lists
         NPC.initEnemyLists(player.getLevel());
@@ -58,10 +58,10 @@ public class Game {
         Utility.Print("Game is starting\n", Utility.ActionSpeed);
 
         //Take player to prologue 
-        Prologue.PartOne(player); //take player to Prologue
+        //Prologue.PartOne(player); //take player to Prologue
 
-        //CalyraBunker.InstanceOne(player, action);
-        //CalyraBunker.BunkerMainRoom(player, action);
+        //CalyraBunker.InstanceOne(player);
+        CalyraBunker.BunkerMainRoom(player);
     }
 
     /**@Function loadGame

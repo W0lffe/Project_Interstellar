@@ -273,6 +273,8 @@ public class Player {
     /**@description Toggles character info and status containers in root containers */
     public void toggleCharacterInfoStatus(){
         
+        updatePlayerInventory();
+
         //If container doesnt contain info and status containers, they will be added, otherwise removed
         if (!Utility.leftContainer.getChildren().contains(this.characterInfo) && !Utility.rightContainer.getChildren().contains(this.statusContainer)) {
             Utility.leftContainer.getChildren().add(this.characterInfo);
@@ -396,6 +398,23 @@ public class Player {
      */
     public void addProgressFlag(ProgressFlags flag){
         playerAcquiredProgressFlags.add(flag);
+    }
+
+    /**
+     * @description function loops through player acquired progressflags ArrayList
+     * @param flagName name of progressflag to search for
+     * @return true or false, based on if flag is found
+     */
+    public boolean flagExists(String flagName){
+        boolean flagFound = false;
+
+        for (ProgressFlags progressFlags : playerAcquiredProgressFlags) {
+            if (progressFlags.getAction().equals(flagName)) {
+                flagFound = true;
+            }
+        }
+
+        return flagFound;
     }
 
 
@@ -585,5 +604,22 @@ public class Player {
         }
     }
 
-   
+    
+    /**
+     * @description function loops through player acquired skills ArrayList
+     * @param skillName name of skill to search for
+     * @return true or false, based on if skill is found
+     */
+    public boolean hasSkill(String skillName){
+        boolean skillFound = false;
+
+        for (Skills skill : playerAcquiredSkills) {
+            if (skill.getSkill().equals(skillName)) {
+                skillFound = true;
+            }
+        }
+
+        return skillFound;
+    }
+
 }

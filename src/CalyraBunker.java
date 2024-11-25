@@ -1,313 +1,403 @@
-/* import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class CalyraBunker {
-
-    private static final String file = "ActOne/ActOne.txt";
+    
+    //Files to read
+    private static final String storyFile = "ActOne/ActOne.txt";
     private static final String shipConsole = "ActOne/Console1.txt";
     private static final String armoryTerminal = "ActOne/Console2.txt";
 
-    private static String userAction;
-    private static ArrayList<NPC> EnemyList = new ArrayList<>();
+    /**@description Arraylist to contain enemy NPC objects */
+    private static ArrayList<NPC> enemyList = new ArrayList<>();
 
-    public static void InstanceOne(Player player, Scanner action) {
-        boolean instance = true;
+    /**@description reference to container object, used throughout this file */
+    private static VerticalContainer playerActionsContainer;
+    /**@description reference to player actions object, used throughout this file */
+    private static HorizontalPlayerActions playerActions;
 
-        boolean checkedLocker = false;
-        boolean readConsole = false;
+    /**@description possible enemy types for this file*/
+    private static final String[] enemyType = {"Ra'kra", "Bandit"};
 
-        String ActOneScene1 = Files.ReadFile(file, "ACT1-SCENE1", "ACT1-SCENE2");
-        Utility.Print(ActOneScene1, Utility.StoryPrintSpeed);
+    /**@description Reference to string that is set to playerActionsContainer throughout this file*/
+    private static String playerChoices;
 
-        do {
-            System.out.println("A) Show Character \nB) Take a look in the medical locker " +
-                    " \nC) Inspect the flashing console \nD) Exit the ship");
-            userAction = Validation.UserInput(action);
+    private static boolean partOneLocker = false;
+    private static boolean partOneConsole = false;
 
-            switch (userAction) {
-                case "A":
-                    //player.Character(action);
-                    break;
-                case "B":
-                    if (!checkedLocker) {
-                        System.out.println("You open the medical locker and find: ");
-                        System.out.println(Consumables.BASIC_MEDKIT.Found());
 
-                        player.addItem(Consumables.BASIC_MEDKIT);
-                        checkedLocker = true;
-                        break;
-                    } else {
-                        Utility.Print(Utility.lockerIsEmpty, Utility.ActionSpeed);
-                        break;
-                    }
-                case "C":
-                    if (!readConsole) {
-                        Utility.Print(Utility.activateConsole ,Utility.ActionSpeed);
-                        String console = Files.ReadFile(shipConsole, "", "");
-                        Utility.Print(console, Utility.DatapadPrintSpeed);
+    /**
+     * @description Start of Act 1
+     * @param player player object
+     */
+    public static void ActOne(Player player) {
 
-                        player.LoreExperience();
-                        Utility.Print("Jaxon: The ship is in bad shape, but at least the life support is still operational.\n",Utility.ActionSpeed);
-                        readConsole = true;
-                        break;
-                    } else {
-                        Utility.Print(Utility.isRead, Utility.ActionSpeed);
-                        break;
-                    }
-                case "D":
-                    Utility.Print("You exit the ship through emergency hatch.\n", Utility.ActionSpeed);
-                    instance = false;
-                    break;
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
+        //Print story to textarea
+        Utility.readFileAndPrint(storyFile, "ACT1-SCENE1", "ACT1-SCENE2");
+
+        //Possible choices for player
+        playerChoices = "A) Show Character B) Loot Locker  C) Activate Console D) Exit";
+        playerActions = new HorizontalPlayerActions(10, "", "Character", "Loot Locker", "Activate Console", "Exit");
+        playerActionsContainer = new VerticalContainer(10, playerChoices);
+
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
+
+        playerActions.getFirstButton().setOnAction(e -> {player.toggleCharacterInfoStatus(); });
+
+        playerActions.getSecondButton().setOnAction(e -> {
+
+            //If player has not opened locker yet
+            if (!partOneLocker) {
+                player.lootItems(LootLists.retrieveRandomLootList("Meds"), "locker");
+                partOneLocker = true; //has opened
+            }
+            else{
+                Utility.Print(Utility.isLooted, Utility.ActionSpeed);
             }
 
-        } while (instance);
+        });
+        
+        playerActions.getThirdButton().setOnAction(e -> {
 
-        String ActOneScene2 = Files.ReadFile(file, "ACT1-SCENE2", "ACT1-SCENE3");
-        Utility.Print(ActOneScene2, Utility.StoryPrintSpeed);
+            //If player has not activated console yet
+            if (!partOneConsole) {
+                Utility.Print(Utility.activateConsole ,Utility.ActionSpeed);
+                Utility.readFileAndPrint(shipConsole, "", "");
+                Utility.Print("Jaxon: The ship is in bad shape, but at least the life support is still operational.\n",Utility.ActionSpeed);
+                player.actionExperience(Utility.LoreItemEXP); //Gain experience
+                partOneConsole = true; //has activated
+            }
+            else{
+                Utility.Print(Utility.isRead, Utility.ActionSpeed);
+            }
+        });
 
-        EnemyList.add(new NPC(50, 50, "Ra'kra Scout", 35, true, Weapon.PULSE_PISTOL, null));
-        EnemyList.add(new NPC(50, 50, "Rak'ra Rookie", 50, true, Weapon.PULSE_RIFLE, null));
+        playerActions.getFourthButton().setOnAction(e -> {
+            Utility.Print("You exit the ship through emergency hatch.\n", Utility.ActionSpeed);
 
-        Combat.FightMenu(player, EnemyList);
-        if (!player.isAlive()) {
-            return;
-        }
+            //Clear player actions before combat
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
+            //Read and print story
+            Utility.readFileAndPrint(storyFile, "ACT1-SCENE2", "ACT1-SCENE3");
 
-        String ActOneScene3 = Files.ReadFile(file, "ACT1-SCENE3", "ACT1-SCENE4");
-        Utility.Print(ActOneScene3, Utility.StoryPrintSpeed);
+            //Create enemylist
+            enemyList = NPC.createEnemyList(2, enemyType[0]);
 
-        Weapon acidSpit = new Weapon("Acid Spit", "Projectile Weapon", 8, 18, "", 1);
-        for (int i = 0; i < 2; i++) {
-            EnemyList.add(new NPC(20, 20, "Skitter Soldier", 15, true, acidSpit, null));
-        }
-        EnemyList.add(new NPC(50, 50, "Skitter Guardian", 25, true, acidSpit, null));
-        EnemyList.add(new NPC(100, 100, "Alpha Skitter", 50, true, acidSpit, null));
+            //Enter combat
+            Combat.FightMenu(player, enemyList, () -> {
 
-        Combat.FightMenu(player, EnemyList);
-        if (!player.isAlive()) {
-            return;
-        }
+                //If player is alive after combat
+                if (player.isAlive()) {
 
-        BunkerArmory(player, action);
+                    //Read and print story
+                    Utility.readFileAndPrint(storyFile, "ACT1-SCENE3", "ACT1-SCENE4");
+
+                    //Init new weapon object to be used in this instance
+                    Weapon acidSpit = new Weapon("Acid Spit", "Projectile Weapon", 8, 18, "", 1);
+
+                    //Create NPC objects
+                    enemyList.add(new NPC(20, 20, "Skitter Soldier", 15, "Creature", acidSpit, null));
+                    enemyList.add(new NPC(20, 20, "Skitter Soldier", 15, "Creature", acidSpit, null));
+                    enemyList.add(new NPC(50, 50, "Skitter Guardian", 25, "Creature", acidSpit, null));
+                    enemyList.add(new NPC(100, 100, "Alpha Skitter", 50, "Creature", acidSpit, null));
+
+                    //Enter combat
+                    Combat.FightMenu(player, enemyList, () -> {
+                        
+                        //If player is alive after combat, exit this function/part
+                        if (player.isAlive()) {
+                            BunkerArmory(player); //Exit PartOne
+                        }
+                    });
+                }
+            });
+
+        });
     }
 
-    private static void BunkerArmory(Player player, Scanner action) {
-        boolean instance = true;
+
+    private static void BunkerArmory(Player player){
+
         //progress flags
         String firstTimeFlag = "BunkerArmory";
         String rackLooted = "ArmoryRackLooted";
         String cabinetUnlocked = "ArmoryCabinetUnlocked";
         String terminalRead = "ArmoryTerminalRead";
-        String cabinetStatus = "Jaxon: There is no way I can open this.\n";
 
+        //See if player is here for first time
         boolean firstTime = !player.flagExists(firstTimeFlag);
 
+        //If player is here for first time, this will be executed
         if (firstTime) {
-            String ActOneScene4 = Files.ReadFile(file, "ACT1-SCENE4", "ACT1-SCENE5");
-            Utility.Print(ActOneScene4, Utility.StoryPrintSpeed);
-            player.addProgressFlag(new ProgressFlags("BunkerArmory", true));
+            Utility.readFileAndPrint(storyFile, "ACT1-SCENE4", "ACT1-SCENE5");
+            player.addProgressFlag(new ProgressFlags(firstTimeFlag, true));
         }
 
-        do {
-            System.out.println(
-                    "A) Show Character \nB) Take a look at the cabinet \nC) Inspect old terminal \nD) Inspect the weapon rack \nE) Go back to Main Room");
-            userAction = Validation.UserInput(action);
+        //Set new player choices and actions
+        playerChoices = "A) Character B) Look at the locker C) Inspect terminal D) Inspect the weapon rack E) Go to Main Room";
+        playerActions = new HorizontalPlayerActions(10,"", "Character", "Loot Locker", "Activate terminal", "Loot Rack", "Exit Room");
+        if (playerActionsContainer == null) {
+            playerActionsContainer = new VerticalContainer(10, playerChoices);
+        }
 
-            if (player.flagExists(cabinetUnlocked)) {
-                cabinetStatus = Utility.lockerIsEmpty;
+        //Update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
+
+        playerActions.getFirstButton().setOnAction(e -> {player.toggleCharacterInfoStatus();});
+
+        playerActions.getSecondButton().setOnAction(e -> {
+            
+            //String for status of cabinet
+            String cabinetStatus = "Jaxon: There is no way I can open this.\n";
+
+            //If player has skill and player does not have progress flag yet
+            if (player.hasSkill("Lockpicking") && !player.flagExists(cabinetUnlocked)){
+                
+                //Loot items
+                player.lootItems(LootLists.retrieveRandomLootList("Meds"), "locker");
+                player.addProgressFlag(new ProgressFlags(cabinetUnlocked, true)); //action done
             }
-
-            switch (userAction) {
-                case "A":
-                    //player.Character(action);
-                    break;
-                case "B":
-                    if (player.getPlayerSkills().contains(Skills.Lockpicking) && !player.flagExists(cabinetUnlocked)) {
-                        System.out.println("You unlock the cabinet and find: ");
-                        System.out.println(Consumables.ADRENAL_SHOT.Found());
-                        System.out.println(Consumables.ADRENAL_SHOT.Found());
-                        System.out.println(Consumables.ADRENAL_SHOT.Found());
-                        System.out.println(Consumables.ADVANCED_MEDKIT.Found());
-
-                        player.addItem(Consumables.ADRENAL_SHOT);
-                        player.addItem(Consumables.ADRENAL_SHOT);
-                        player.addItem(Consumables.ADRENAL_SHOT);
-                        player.addItem(Consumables.ADVANCED_MEDKIT);
-                        player.addProgressFlag(new ProgressFlags(cabinetUnlocked, true));
-                        break;
-                    } else {
-                        Utility.Print(cabinetStatus, Utility.ActionSpeed);
-                        break;
-                    }
-                case "C":
-                    if (!player.flagExists(terminalRead)) {
-                        Utility.Print("You press the button on the console. The terminal flickers and hums to life, displaying a series of messages:\n", Utility.ActionSpeed);
-                        String terminal = Files.ReadFile(armoryTerminal, null, null);
-                        Utility.Print(terminal, Utility.DatapadPrintSpeed);
-
-                        player.LoreExperience();
-                        player.addProgressFlag(new ProgressFlags(terminalRead, true));
-                        break;
-                    } else {
-                        Utility.Print(Utility.isRead, Utility.ActionSpeed);
-                        break;
-                    }
-                case "D":
-                    if (!player.flagExists(rackLooted)) {
-                        System.out.println("In the weapon rack you find: ");
-                        System.out.println(Weapon.LASER_RIFLE);
-                        player.addItem(Weapon.LASER_RIFLE);
-
-                        player.addProgressFlag(new ProgressFlags(rackLooted, true));
-                        break;
-                    } else {
-                        Utility.Print("Only broken weapons remaining..\n", Utility.ActionSpeed);
-                        break;
-                    }
-                case "E":
-                    Utility.Print("You go back to Main Room\n", Utility.ActionSpeed);
-
-                    if (player.flagExists(firstTimeFlag) &&
-                        player.flagExists(cabinetUnlocked) &&
-                        player.flagExists(terminalRead) &&
-                        player.flagExists(rackLooted) ){
-                            player.addProgressFlag(new ProgressFlags("BunkerArmoryClear", true));
-                            Utility.Print("Jaxon: I think I've found everything useful here.\n", Utility.ActionSpeed);
-                    }
-
-                    instance = false;
-                    BunkerMainRoom(player, action);
-                    break;
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
+            else{
+                //If player has opened cabinet
+                if (player.flagExists(cabinetUnlocked)) {
+                    Utility.Print(Utility.isLooted, Utility.ActionSpeed); //is looted
+                }
+                else{
+                    Utility.Print(cabinetStatus, Utility.ActionSpeed); //cant do this action yet
+                }
             }
-        } while (instance);
-    }
+        });
 
-    public static void BunkerMainRoom(Player player, Scanner action) {
-        boolean instance = true;
+        playerActions.getThirdButton().setOnAction(e -> {
 
+            //If player does not have said progress flag
+            if (!player.flagExists(terminalRead)){
+
+                Utility.Print("You press the button on the console. The terminal flickers and hums to life, displaying a series of messages:\n", Utility.ActionSpeed);
+                
+                //Read and print terminal data
+                Utility.readFileAndPrint(armoryTerminal, null, null);
+
+                //Gain experience and set action done
+                player.actionExperience(Utility.LoreItemEXP);
+                player.addProgressFlag(new ProgressFlags(terminalRead, true));
+            }
+            else{
+                Utility.Print(Utility.isRead, Utility.ActionSpeed);
+            }
+        });;
+
+        playerActions.getFourthButton().setOnAction(e -> {
+
+             //If player does not have said progress flag
+            if (!player.flagExists(rackLooted)) {
+
+                ArrayList<Items> temporaryList = new ArrayList<>();
+                temporaryList.add(Weapon.retrieveTieredWeapon("Medium Tier"));
+                //Loot rack -> Get random weapon from Medium Tier, set action done
+                player.lootItems(temporaryList, "weapon rack");;
+                player.addProgressFlag(new ProgressFlags(rackLooted, true));
+            }
+            else{
+                Utility.Print(Utility.isLooted, Utility.ActionSpeed);
+            }
+        });
+
+        playerActions.getFifthButton().setOnAction(e -> {
+
+            //Exit this function
+            Utility.Print("You go back to Main Room\n", Utility.ActionSpeed);
+            
+            //clear player actions before going to next part
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
+
+            //If player has flags, get new flag "area clear"
+            if (player.flagExists(firstTimeFlag) &&
+                    player.flagExists(cabinetUnlocked) &&
+                    player.flagExists(terminalRead) &&
+                    player.flagExists(rackLooted) ){
+                    player.addProgressFlag(new ProgressFlags("BunkerArmoryClear", true));
+                    Utility.Print("Jaxon: I think I've found everything useful here.\n", Utility.ActionSpeed);
+            }
+            
+            //Exit function/area
+            BunkerMainRoom(player);
+        });
+
+
+    }   
+
+    public static void BunkerMainRoom(Player player){
+
+        //Progress flag
         String BunkerMain = "BunkerMain";
-        boolean firstTime = !player.flagExists(BunkerMain); // if player flag doesnt exist, set false, if found set true
-        String goingOut = "Jaxon: Heading out!\n";
 
-        if (!player.flagExists("PathToColony")) {
-            goingOut = "Jaxon: Lets see what is out there\n";
-        }
+        //See if player has been here before
+        boolean firstTime = !player.flagExists(BunkerMain);
 
+        //If player is here for first time
         if (firstTime) {
-            String ActOneScene5 = Files.ReadFile(file, "ACT1-SCENE5", "ACT1-SCENE6");
-            Utility.Print(ActOneScene5, Utility.StoryPrintSpeed);
+            //Read and print story
+            Utility.readFileAndPrint(storyFile, "ACT1-SCENE5", "ACT1-SCENE6");
+            //Add progress flag
             player.addProgressFlag(new ProgressFlags(BunkerMain, true));
-            //player.setHealth(player.getMaxHealth());
-            // RestoreHealth and Savegame logic here
+
+            //Restore player health to maximun and save game
+            player.setHealth(player.getMaxHealth());
+            //Savegame logic here
         }
 
-        do {
-            System.out.println("A) Show Character \nB) Rest in the cozy bunkbed \nC) Head out \nD) Go to Armory");
-            userAction = Validation.UserInput(action);
+        
+        //Set new player choices and actions
+        playerChoices = "A) Show Character B) Rest in the cozy bunkbed C) Go to Armory D) Head out";
+        playerActions = new HorizontalPlayerActions(10,"", "Character", "Rest", "Go To Armory", "Exit Bunker");
+        if (playerActionsContainer == null) {
+            playerActionsContainer = new VerticalContainer(0, "");
+        }
 
-            switch (userAction) {
-                case "A":
-                    //player.Character(action);
-                    break;
-                case "B":
-                    Utility.Print("Jaxon: Im gonna rest a while\n", Utility.ActionSpeed);
-                    // save and health restore logic here
-                    break;
-                case "C":
-                    instance = false;
-                    Utility.Print(goingOut, Utility.ActionSpeed);
-                    PathToColony(player, action);
-                    break;
-                case "D":
-                    if (!player.flagExists("BunkerArmoryClear")) {
-                        Utility.Print("You go to Armory\n", Utility.ActionSpeed);
-                        BunkerArmory(player, action);
-                        break;
-                    }
-                    else{
-                        Utility.Print(Utility.areaClear, Utility.ActionSpeed);
-                        break;
-                    }
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
+        //update player actions
+        Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
+
+        playerActions.getFirstButton().setOnAction(e -> {player.toggleCharacterInfoStatus();});
+
+        playerActions.getSecondButton().setOnAction(e -> {
+            
+            Utility.Print(Utility.playerRest, Utility.ActionSpeed);
+
+            //SAVE GAME AND HEALTH RESTORE LOGIC HERE
+        });
+
+        playerActions.getThirdButton().setOnAction(e -> {
+
+            //If player doesnt have said flag, goes to calls function
+            if (!player.flagExists("BunkerArmoryClear")){
+
+                Utility.clearPlayerActions(playerActionsContainer, playerActions);
+                Utility.Print("You go to Armory\n", Utility.ActionSpeed);
+                BunkerArmory(player);
             }
+            else{
+                Utility.Print(Utility.areaClear, Utility.ActionSpeed);
+            }
+        });
 
-        } while (instance && player.isAlive());
+        playerActions.getFourthButton().setOnAction(e -> {
+           
+            //clear player options
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
+
+            //If player does not have said flag
+            if (!player.flagExists("PathToColony")) {
+                Utility.Print("Jaxon: Lets see what is out there\n", Utility.ActionSpeed);
+            }
+            else{
+                Utility.Print("Jaxon: Heading out!\n", Utility.ActionSpeed);
+            }
+            
+            PathToColony(player);
+        });
+
     }
 
-    public static void PathToColony(Player player, Scanner action) {
-        boolean instance = true;
-
+    public static void PathToColony(Player player){
+        
+        //Progress flags
         String PathToColony = "PathToColony";
+
+        //See if player has been here before
         boolean firstTime = !player.flagExists(PathToColony);
+        
+        //Set new player choices and actions
+        playerChoices = "A) Character B) Go West C) Go South D) Go North E) Go back to Bunker";
+        playerActions = new HorizontalPlayerActions(10,"", "Character", "West", "South", "North", "Back to Bunker");
 
+        //If player is here for first time
         if (firstTime) {
-            String ActOneScene6 = Files.ReadFile(file, "ACT1-SCENE6", "ACT1-SCENE7");
-            Utility.Print(ActOneScene6, Utility.StoryPrintSpeed);
 
-            EnemyList.add(new NPC(50, 50, "Bandit", 25, true, Weapon.LASER_PISTOL, null));
-            EnemyList.add(new NPC(75, 75, "Bandit Leader", 40, true, Weapon.PULSE_RIFLE, null));
-            Combat.FightMenu(player, EnemyList);
-            if (!player.isAlive()) {
-                return;
-            }
-            player.addProgressFlag(new ProgressFlags(PathToColony, true));
+            //Read and print story
+            Utility.readFileAndPrint(storyFile, "ACT1-SCENE6", "ACT1-SCENE7");
 
-            String ActOneScene7 = Files.ReadFile(file, "ACT1-SCENE7", "ACT1-SCENE8");
-            Utility.Print(ActOneScene7, Utility.StoryPrintSpeed);
+            //Create NPC list
+            enemyList = NPC.createEnemyList(2, enemyType[1]);
+            
+            //Enter combat
+            Combat.FightMenu(player, enemyList, () -> {
+                
+                //If player is alive after combat
+                if(player.isAlive()){
+
+                    //Add progress flag
+                    player.addProgressFlag(new ProgressFlags(PathToColony, true));
+
+                    //Read and print story
+                    Utility.readFileAndPrint(storyFile, "ACT1-SCENE7", "ACT1-SCENE8");
+
+                    //Update player actions
+                    Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
+
+                }
+            });
         }
-       
-        do {
-            System.out.println("A) Show Character \nB) Go West \nC) Go South \nD) Go North \nE) Go back to Bunker");
-            userAction = Validation.UserInput(action);
+        else{
+            
+            Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
+        }
 
-            switch (userAction) {
-                case "A":
-                    //player.Character(action);
-                    break;
-                case "B":
-                    Utility.Print("Jaxon: Lets find ourselves a ship.\n", Utility.ActionSpeed);
+        playerActions.getFirstButton().setOnAction(e -> {player.toggleCharacterInfoStatus();});
+
+        playerActions.getSecondButton().setOnAction(e -> {
+            
+            Utility.Print("Jaxon: Lets find ourselves a ship.\n", Utility.ActionSpeed);
                     // Go west SPACEPORT
-                    break;
-                case "C":
-                    Utility.Print("Jaxon: Lets see if I find any answers.\n", Utility.ActionSpeed);
+        });
+
+        playerActions.getThirdButton().setOnAction(e -> {
+            
+            Utility.Print("Jaxon: Lets see if I find any answers.\n", Utility.ActionSpeed);
                     // Go south ENEMY BASE
-                    break;
-                case "D":
-                    if (!player.flagExists("CalyraCaveClear")) {
-                        
-                        if (!player.flagExists("CalyraCaveFound")) {
-                            Utility.Print("Jaxon: I wonder what is there.\n", Utility.ActionSpeed);
-                        }
-                        else{
-                            Utility.Print("Jaxon: To the nasty cave I go!\n", Utility.ActionSpeed);
-                        }
-                        CalyraCave.Cave(player, action);
-                        break;
-                    }
-                    else{
-                        Utility.Print(Utility.areaClear, Utility.ActionSpeed);
-                        break;
-                    }
-                case "E":
-                    Utility.Print("You go back to Bunker\n", Utility.ActionSpeed);
-                    return;
-                default:
-                    Utility.Print(Utility.cantDoThat, Utility.ActionSpeed);
-                    break;
+        });
+
+        playerActions.getFourthButton().setOnAction(e -> {
+            
+            //if player does not have flag
+            if (!player.flagExists("CalyraCaveClear")) {
+                
+               //clear player options
+                Utility.clearPlayerActions(playerActionsContainer, playerActions);
+
+                //Based on if flag exists, print string
+                if (!player.flagExists("CalyraCaveFound")) {
+                    Utility.Print("Jaxon: I wonder what is there.\n", Utility.ActionSpeed);
+                }
+                else{
+                    Utility.Print("Jaxon: To the nasty cave I go!\n", Utility.ActionSpeed);
+                }
+
+                Utility.centerContainer.getChildren().remove(playerActionsContainer);
+                CalyraCave.Cave(player); //To next area, exit this function
             }
-        } while (instance && player.isAlive());
+            else{
+                Utility.Print(Utility.areaClear, Utility.ActionSpeed);
+            }
+        });
+    
+        playerActions.getFifthButton().setOnAction(e -> {
+
+            //clear player options
+            Utility.clearPlayerActions(playerActionsContainer, playerActions);
+
+            Utility.Print("You go back to Bunker\n", Utility.ActionSpeed);
+            BunkerMainRoom(player); //Go back to previous function
+        });
+
 
     }
+
+
+
+
+
+
+
 }
-
-
- */

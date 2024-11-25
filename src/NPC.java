@@ -177,10 +177,11 @@ public class NPC {
 
     /**@description Creates 2 preset enemy npc lists */
     public static void initEnemyLists(int playerLevel){
+        String[] npcTypes = {"Ra'kra", "Bandit"};
 
         for (int i = 0; i < enemyListMap.size(); i++) {
-            if (!enemyListMap.get(i).isEmpty()) {
-                enemyListMap.get(i).clear();
+            if (!enemyListMap.get(npcTypes[i]).isEmpty()) {
+                enemyListMap.get(npcTypes[i]).clear();
             }
         }
 
@@ -248,15 +249,15 @@ public class NPC {
         }
 
         for (int i = 0; i < numberOfNormals/2; i++) {
-            rakraList.add(new NPC(60+healthModifier, 60+healthModifier, "Ra'kra Scout", 20+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
-            rakraList.add(new NPC(75+healthModifier, 75+healthModifier, "Ra'kra Rookie", 40+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
-            banditList.add(new NPC(50+healthModifier, 50+healthModifier, "Bandit", 45+expModifier, "Normal",Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
-            banditList.add(new NPC(75+healthModifier, 75+healthModifier, "Bandit", 50+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(60+healthModifier, 60+healthModifier, "Ra'kra Scout", 20+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
+            rakraList.add(new NPC(75+healthModifier, 75+healthModifier, "Ra'kra Rookie", 40+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
+            banditList.add(new NPC(50+healthModifier, 50+healthModifier, "Bandit", 45+expModifier, "Normal",Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
+            banditList.add(new NPC(75+healthModifier, 75+healthModifier, "Bandit", 50+expModifier, "Normal", Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
         }
         for (int i = 0; i < numberOfStrongs/2; i++) {
-            rakraList.add(new NPC(100+healthModifier, 100+healthModifier, "Ra'kra Brute", 50+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
-            rakraList.add(new NPC(125+healthModifier, 125+healthModifier, "Ra'kra Officer", 75+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
-            banditList.add(new NPC(100+healthModifier, 100+healthModifier, "Bandit Leader", 75+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), ItemLootLists.randomLootForNPC()));
+            rakraList.add(new NPC(100+healthModifier, 100+healthModifier, "Ra'kra Brute", 50+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
+            rakraList.add(new NPC(125+healthModifier, 125+healthModifier, "Ra'kra Officer", 75+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
+            banditList.add(new NPC(100+healthModifier, 100+healthModifier, "Bandit Leader", 75+expModifier, "Strong", Weapon.retrieveTieredWeapon(tier), LootLists.retrieveRandomLootList("NPC")));
 
         }
 
