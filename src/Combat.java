@@ -94,7 +94,7 @@ public class Combat {
                     }
             }
             else{
-                Utility.Print("Select opponent first!\n", Utility.ActionSpeed);
+                Utility.Print("Select opponent first!\n", Utility.ActionSpeed, () -> {});
             }
         });
 
@@ -159,30 +159,31 @@ public class Combat {
         //Get random damage from equipped item range
         int damage = (int) (Math.random() * ((playerMaxDmg - playerMinDmg) + 1) + playerMinDmg);
         String damageDealt = "You strike with " + playerEquipped.getItem() + ", dealing " + damage + " damage!\n";
-        Utility.Print(damageDealt, Utility.ActionSpeed);
         enemy.takeDamage(damage); //reduce enemy health
-
-        //if enemy health is 0 or less
-        if (enemy.getHealth() <= 0) {
-            String eliminated = "You eliminated " + enemy.getName() + ", gaining " + enemy.getExperience() + " experience!\n";
-            Utility.Print(eliminated, Utility.ActionSpeed);
-            player.actionExperience(enemy.getExperience()); //Give player experience of enemy's experience property
-            return;
-        }
+        Utility.Print(damageDealt, Utility.ActionSpeed, () -> {
+            //if enemy health is 0 or less
+            if (enemy.getHealth() <= 0) {
+                String eliminated = "You eliminated " + enemy.getName() + ", gaining " + enemy.getExperience() + " experience!\n";
+                Utility.Print(eliminated, Utility.ActionSpeed, () -> {
+                    player.actionExperience(enemy.getExperience()); //Give player experience of enemy's experience property
+                    return;
+                });
+            }
+        });
 
         damage = (int) (Math.random() * ((enemyMaxDmg - enemyMinDmg) + 1) + enemyMinDmg);
         damageDealt = enemy.getName() + " counters with " + enemy.getEquipped().getItem() + ", dealing " + damage + " damage!\n";
-        Utility.Print(damageDealt, Utility.ActionSpeed);
         player.takeDamage(damage); //Reduce player health
-
-        //if player health is 0 or less
-        if (player.getHealth() <= 0) {
-            String eliminated = "You have been eliminated...\n";
-            Utility.Print(eliminated, Utility.ActionSpeed);
-            player.setAlive(false); //player is not alive
-            return;
-        }
-
+        Utility.Print(damageDealt, Utility.ActionSpeed, () -> {
+            //if player health is 0 or less
+            if (player.getHealth() <= 0) {
+                String eliminated = "You have been eliminated...\n";
+                Utility.Print(eliminated, Utility.ActionSpeed, () -> {
+                    player.setAlive(false); //player is not alive
+                    return;
+                });
+            }
+        });
     }
 
 

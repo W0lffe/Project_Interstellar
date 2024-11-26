@@ -44,8 +44,11 @@ public class Game {
         gameRunningScene = Scenes.createGameScene(player);
         Main.primaryStage.setScene(gameRunningScene);
 
-        //Start game with created player
-        startGame(player);
+        
+        Utility.Print("Game is starting\n", Utility.ActionSpeed, () -> {
+            //Start game with created player
+            startGame(player);
+        });
     }
 
     /**@Function startGame
@@ -55,12 +58,10 @@ public class Game {
      */
     private static void startGame(Player player){
 
-        Utility.Print("Game is starting\n", Utility.ActionSpeed);
-
+       
         //Take player to prologue 
         //Prologue.PartOne(player); //take player to Prologue
 
-        //CalyraBunker.InstanceOne(player);
         CalyraBunker.BunkerMainRoom(player);
     }
 

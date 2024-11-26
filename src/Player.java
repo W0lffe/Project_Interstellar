@@ -339,11 +339,14 @@ public class Player {
                 itemsFound += item.toString() + "\n";
             }
         }
-        Utility.Print(itemsFound, 0);
+        Utility.Print(itemsFound, Utility.ActionSpeed, () -> {
 
-        for (Items item : itemList) {
-            addItemToInventory(item);
-        }
+            for (Items item : itemList) {
+                addItemToInventory(item);
+            }
+
+        });
+      
     } 
 
 
@@ -364,19 +367,22 @@ public class Player {
                 items.setQuantity(itemToAdd.getQuantity() + 1);
                 String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
 
-                //Get experience
-                actionExperience(Utility.LootItemEXP);
-                Utility.Print(itemAdded, Utility.ActionSpeed);
+                Utility.Print(itemAdded, Utility.ActionSpeed, () -> {
+                    //Get experience
+                    actionExperience(Utility.LootItemEXP);
+                });
                 return;
             }
         }
         //Add item to invetory
         playerInventory.add(itemToAdd);
         String itemAdded = itemToAdd.getItem() + " added to your inventory\n";
-        Utility.Print(itemAdded, Utility.ActionSpeed);
+        Utility.Print(itemAdded, Utility.ActionSpeed, () -> {
+
+            //Get experience
+            actionExperience(Utility.LootItemEXP);
+        });
         
-        //Get experience
-        actionExperience(Utility.LootItemEXP);
         //Update player inventory
         updatePlayerInventory();
     }
@@ -387,7 +393,7 @@ public class Player {
      */
     public void actionExperience(int experienceGained){
 
-        Utility.Print("You gained " + experienceGained + " experience.\n", Utility.ActionSpeed);
+        Utility.Print("You gained " + experienceGained + " experience.\n", Utility.ActionSpeed, () -> {});
         setExperience(experience + experienceGained);
     }   
 
@@ -439,7 +445,7 @@ public class Player {
             //Set item as equipped weapon
             setEquipped(itemToEquip);
             String equipped = "Equipped weapon: " + itemToEquip.getItem() + "\n";
-            Utility.Print(equipped, Utility.ActionSpeed);
+            Utility.Print(equipped, Utility.ActionSpeed, () -> {});
         }
         else {
             Consumables itemToUse = (Consumables)item;
@@ -455,7 +461,7 @@ public class Player {
             //Restore health = current health + selected item heal points
             setHealth(health + itemToUse.getHealPoints());
             String healed = itemToUse.getItem() + " healed you " + itemToUse.getHealPoints() + " points!\n";
-            Utility.Print(healed, Utility.ActionSpeed);
+            Utility.Print(healed, Utility.ActionSpeed, () -> {});
 
             //If health is over maximum, set current to maximum
             if (health > maxHealth) {

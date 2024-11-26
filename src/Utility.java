@@ -1,9 +1,7 @@
-import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 
 /**@class Utility 
  * @description Holds variables, references and utility functions(ex. printing)
@@ -46,11 +44,11 @@ public class Utility {
     //Speed parameters for Utility.Print function, sets speed how fast to "type" text
 
     /**@description speed to print the story in function Print, CURRENTLY 0, TBD*/
-    public static int StoryPrintSpeed = 0; 
+    public static int StoryPrintSpeed = 1; 
     /**@description speed to print the story in function Print, 20ms*/
-    public static int DataPrintSpeed = 20; 
+    public static int DataPrintSpeed = 15; 
     /**@description speed to print the story in function Print, 15ms*/
-    public static int ActionSpeed = 15;
+    public static int ActionSpeed = 10;
 
     //Experience points got from "LoreItems"
 
@@ -67,11 +65,13 @@ public class Utility {
      * @param startWord word in the file, where to start reading
      * @param endWord word in the file, where to stop reading
      */
-    public static void readFileAndPrint(String fileName, String startWord, String endWord){
+    public static void readFileAndPrint(String fileName, String startWord, String endWord, Runnable afterFilePrinting){
 
+        //Read file to string
         String textToPrint = Files.ReadFile(fileName, startWord, endWord);
-        int speed;
+        int speed; //declare speed
 
+        //If file is Datapad or Console, use correct speed, otherwise storyprinting speed
         if (fileName.contains("Datapad") || fileName.contains("Console")) {
             speed = DataPrintSpeed;
         }
@@ -79,45 +79,41 @@ public class Utility {
             speed = StoryPrintSpeed;
         }
 
-        Print(textToPrint, speed);
+        //Print
+        Print(textToPrint, speed, () -> {
+            afterFilePrinting.run();
+        });
     }
 
     /**
      * @description Function prints given string with delay, delay given as parameter
      * @param toPrint value as string
      * @param speed value as integer, sets speed for delay
-     * @IMPLEMENT Char-by-char printing!!!!
      */
-    public static void Print(String toPrint, int speed){
- 
-        char[] toPrintArray = toPrint.toCharArray();
-        
-        for (int i = 0; i < toPrint.length(); i++) {
-            centerContainer.appendText(Character.toString(toPrintArray[i]));
+    public static void Print(String toPrint, int speed, Runnable afterPrinting){
 
-            if (i == toPrint.length() - 1) {
-                centerContainer.appendText("\n");
-            }
-        }  
-
-      /* 
-       ALMOST WORKS....
-        IntegerProperty i = new SimpleIntegerProperty(0);
+        //Init timeline
         Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(
-                Duration.millis(speed), event -> {
-                    if (i.get() > toPrint.length()) {
-                        timeline.stop();
-                    } else {
-                        centerContainer.setText(toPrint.substring(0, i.get()));
-                        i.set(i.get() + 1);
-                    }
-                });
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play(); */
+        
+        //Loop through string to print, index tells what character to append
+        for (int i = 0; i < toPrint.length(); i++) {
+            int index = i;
+            KeyFrame keyFrame = new KeyFrame(Duration.millis(speed * i), event -> {
+                centerContainer.appendText(toPrint.charAt(index) + "");
+            });
+            timeline.getKeyFrames().add(keyFrame);
+        }
+            timeline.setOnFinished(e -> {
 
+            //Create 1 second delay after the character appending has finished
+            PauseTransition delay = new PauseTransition(Duration.seconds(1)); // 1-second delay
+            delay.setOnFinished(event -> afterPrinting.run()); // Run after the delay
+            delay.play(); // Start the delay
+            });
+
+            timeline.play();
     }
+    
 
     /**
      * @description a function to update player actions during game
@@ -148,5 +144,5 @@ public class Utility {
         container.setVerticalTitle("");
     }
     
-}
 
+}

@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 
+/**@class holds functionality for part of the game "Calyra Cave" */
 public class CalyraCave {
 
-     /**@description Arraylist to contain enemy NPC objects */
+    /**@description Arraylist to contain enemy NPC objects */
     private static ArrayList<NPC> enemyList = new ArrayList<>();
 
     //Files to read
@@ -14,56 +15,64 @@ public class CalyraCave {
     /**@description reference to player actions object, used throughout this file */
     private static HorizontalPlayerActions playerActions;
 
+    //Used throughout this file, reference for player action choices
     private static String playerChoices;
 
+    //PROGRESS FLAGS
+    private static final String CAVE_FOUND_FLAG = "CalyraCaveFound";
+    private static final String CAVE_CLEARED_FLAG = "CalyraCaveClear";
+    private static final String CAVE_STEALTH_FLAG = "CalyraCaveStealth";
+
+    //References
+    private static final String SKILL_STEALTH = "Stealth";
+    private static final String LOOT_NPC = "NPC";
+
+
+    /**
+     * @description functionality for Calyra Cave first part
+     * @param player player object
+     */
     public static void Cave(Player player){
         
-        //Progress flag
-        String caveFound = "CalyraCaveFound";
-
         //To check if player has been here before
-        boolean firstTime = !player.flagExists(caveFound);
+        boolean firstTime = !player.flagExists(CAVE_FOUND_FLAG);
 
         //If this is players first time here
         if (firstTime){
 
             //Read and print story
-            Utility.readFileAndPrint(storyFile, "CAVE1", "CAVE2");
+            Utility.readFileAndPrint(storyFile, "CAVE1", "CAVE2", () -> {
 
-            //Create weapon for NPC in this instance
-            Weapon Stinger =  new Weapon("Stinger", "Creature Attack", 18, 28, "Venomous stinger", 1);
+                createCaveNPC(1);
 
-            //Create NPC
-            enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
-            enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
-            enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+                //Enter combat
+                Combat.FightMenu(player, enemyList, () -> {
 
-            //Enter combat
-            Combat.FightMenu(player, enemyList, () -> {
+                    //If player is alive after combat
+                    if (player.isAlive()) {
+                        
+                        //Add progress flag
+                        player.addProgressFlag(new ProgressFlags(CAVE_FOUND_FLAG, true));
 
-                //If player is alive after combat
-                if (player.isAlive()) {
-                    
-                    //Add progress flag
-                    player.addProgressFlag(new ProgressFlags(caveFound, true));
+                        //Read and print story
+                        Utility.readFileAndPrint(storyFile, "CAVE2", "CAVE3", () -> {
+                            CaveBoss(player); //Move to next part
+                        });
 
-                    //Read and print story
-                    Utility.readFileAndPrint(storyFile, "CAVE2", "CAVE3");
-
-                    CaveBoss(player); //Move to next part
-                }
+                    }
+                });
             });
-        }
+        }    
         else{
             CaveBoss(player); //Move to next part directly
         }
     }
 
+    /**
+     * @description Handles Calyra Cave boss instance
+     * @param player object player
+     */
     private static void CaveBoss(Player player){
-
-        //Progress flags
-        String caveCleared = "CalyraCaveClear";
-        String caveStealth = "CalyraCaveStealth";
 
         //Set choices and actions for player
         playerActionsContainer = new VerticalContainer(10, "");
@@ -80,11 +89,7 @@ public class CalyraCave {
             //Clear player actions before combat
             Utility.clearPlayerActions(playerActionsContainer, playerActions);
 
-            //Create weapon for this instance
-            Weapon Claws = new Weapon("Claws", "Creature Attack", 20, 28, "Sharp claws", 1);
-
-            //Create NPC 
-            enemyList.add(new NPC(300, 300, "Fangdweller Alpha", 250, "Boss", Claws, null));
+            createCaveNPC(2);
 
             //Enter combat
             Combat.FightMenu(player, enemyList, () -> {
@@ -93,79 +98,88 @@ public class CalyraCave {
                 if (player.isAlive()) {
                     
                     //Add progress flag
-                    Utility.Print("Jaxon: Alpha down. Guess he wasn't so invincible after all.\n", Utility.ActionSpeed);
-                    player.addProgressFlag(new ProgressFlags(caveCleared, true));
+                    Utility.Print("Jaxon: Alpha down. Guess he wasn't so invincible after all.\n", Utility.ActionSpeed, () -> {});
+                    player.addProgressFlag(new ProgressFlags(CAVE_CLEARED_FLAG, true));
 
                     //If player didnt do stealth option
-                    if (!player.flagExists("CalyraCaveStealth")){
+                    if (!player.flagExists(CAVE_STEALTH_FLAG)){
 
-                        Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed);
-                        Utility.Print("You take a look at the corpse and its surroundings, you find: \n", Utility.ActionSpeed);
+                        Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed, () -> {
 
-                        //Read and print data
-                        Utility.readFileAndPrint(datapadFile, "", "");
-                        player.actionExperience(Utility.LoreItemEXP); //Gain experience
+                            Utility.Print("You take a look at the corpse and its surroundings, you find: \n", Utility.ActionSpeed, () -> {
+                                    //Read and print data
+                                Utility.readFileAndPrint(datapadFile, "", "", () -> {
 
-                        //List for loot
-                        ArrayList<Items> lootFound = new ArrayList<>();
-                        lootFound.add(Weapon.retrieveTieredWeapon("Medium Tier")); // 1 weapon from medium tier, add to loot
+                                player.actionExperience(Utility.LoreItemEXP); //Gain experience
 
-                        //Temporary list to get random lootlist
-                        ArrayList<Items> temp = LootLists.retrieveRandomLootList("NPC");
-                        
-                        //Add temp lootlist to found loot
-                        lootFound.addAll(temp);
+                                //List for loot
+                                ArrayList<Items> lootFound = new ArrayList<>();
+                                lootFound.add(Weapon.retrieveTieredWeapon("Medium Tier")); // 1 weapon from medium tier, add to loot
 
-                        //Player loots, adds to inventory
-                        player.lootItems(lootFound, "corpse");
+                                //Temporary list to get random lootlist
+                                ArrayList<Items> temp = LootLists.retrieveRandomLootList(LOOT_NPC);
+                                
+                                //Add temp lootlist to found loot
+                                lootFound.addAll(temp);
 
+                                //Player loots, adds to inventory
+                                player.lootItems(lootFound, "corpse");
+
+                                });
+                            });
+                        });
                     }
 
-                    Utility.Print("Jaxon: Now lets get out of this smelling cave..\n", Utility.ActionSpeed);
-
-                    //Clear player actions
-                    Utility.clearPlayerActions(playerActionsContainer, playerActions);
-                    Utility.centerContainer.getChildren().remove(playerActionsContainer);
-                    //Exit cave
-                    CalyraBunker.PathToColony(player);
+                    Utility.Print("Jaxon: Now lets get out of this smelling cave..\n", Utility.ActionSpeed, () -> {
+                        //Clear player actions
+                        Utility.clearPlayerActions(playerActionsContainer, playerActions);
+                        Utility.centerContainer.getChildren().remove(playerActionsContainer);
+                        //Exit cave
+                        CalyraBunker.PathToColony(player);
+                    });
                 }
             });
         });
 
         playerActions.getThirdButton().setOnAction(e -> {
 
-            if (player.hasSkill("Stealth") && !player.flagExists(caveStealth)) {
+            if (player.hasSkill(SKILL_STEALTH) && !player.flagExists(CAVE_STEALTH_FLAG)) {
                 
-                Utility.Print("Jaxon: Here goes nothing..\nYou reach the body. \n", Utility.ActionSpeed);
-                Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed);
+                Utility.Print("Jaxon: Here goes nothing..\nYou reach the body. \n", Utility.ActionSpeed, () -> {
 
-                //Read and print data
-                Utility.readFileAndPrint(datapadFile, "", "");
-                player.actionExperience(Utility.LoreItemEXP); //Gain experience
+                    Utility.Print("Jaxon: Now lets see what we find", Utility.ActionSpeed, () -> {
 
-                //List for loot
-                ArrayList<Items> lootFound = new ArrayList<>();
-                lootFound.add(Weapon.retrieveTieredWeapon("Medium Tier")); // 1 weapon from medium tier, add to loot
-
-                //Temporary list to get random lootlist
-                ArrayList<Items> temp = LootLists.retrieveRandomLootList("NPC");
-                  
-                //Add temp lootlist to found loot
-                lootFound.addAll(temp);
-
-                //Player loots, adds to inventory
-                player.lootItems(lootFound, "corpse");
-
-                //Add progress flag
-                player.addProgressFlag(new ProgressFlags(caveStealth, true));
+                        //Read and print data
+                        Utility.readFileAndPrint(datapadFile, "", "", () ->{
+                        player.actionExperience(Utility.LoreItemEXP); //Gain experience
+    
+                        //List for loot
+                        ArrayList<Items> lootFound = new ArrayList<>();
+                        lootFound.add(Weapon.retrieveTieredWeapon("Medium Tier")); // 1 weapon from medium tier, add to loot
+        
+                        //Temporary list to get random lootlist
+                        ArrayList<Items> temp = LootLists.retrieveRandomLootList(LOOT_NPC);
+                          
+                        //Add temp lootlist to found loot
+                        lootFound.addAll(temp);
+        
+                        //Player loots, adds to inventory
+                        player.lootItems(lootFound, "corpse");
+        
+                        //Add progress flag
+                        player.addProgressFlag(new ProgressFlags(CAVE_STEALTH_FLAG, true));
+    
+                        });
+                    });
+                });
             }
             else{
                 //if player has flag
-                if (player.flagExists(caveStealth)) {
-                    Utility.Print("Jaxon: I have already been at the corpse, only Alpha remaining...\n", Utility.ActionSpeed);
+                if (player.flagExists(CAVE_STEALTH_FLAG)) {
+                    Utility.Print("Jaxon: I have already been at the corpse, only Alpha remaining...\n", Utility.ActionSpeed, () -> {});
                 }
                 else{
-                    Utility.Print("The Alpha stands tall, its piercing gaze sweeping over you, sizing you up. Cant get around.\n", Utility.ActionSpeed);
+                    Utility.Print("The Alpha stands tall, its piercing gaze sweeping over you, sizing you up. Cant get around.\n", Utility.ActionSpeed, () -> {});
                 }
             }
         });
@@ -176,11 +190,33 @@ public class CalyraCave {
             Utility.clearPlayerActions(playerActionsContainer, playerActions);
             Utility.centerContainer.getChildren().remove(playerActionsContainer);
 
-            Utility.Print("Jaxon: A fight for another day.\n", Utility.ActionSpeed);
-            //Exit cave
-            CalyraBunker.PathToColony(player);
+            Utility.Print("Jaxon: A fight for another day.\n", Utility.ActionSpeed, () -> {
+                //Exit cave
+                CalyraBunker.PathToColony(player);
+            });
         });
+    }
 
+    private static void createCaveNPC(int phase){
+
+        switch (phase) {
+            case 1:
+                //Create weapon for NPC in this instance
+                Weapon Stinger =  new Weapon("Stinger", "Creature Attack", 18, 28, "Venomous stinger", 1);
+
+                //Create NPC
+                enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+                enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+                enemyList.add(new NPC(75, 75, "Fangdweller", 100, "Creature", Stinger, null));
+                break;
+            case 2:
+                //Create weapon for this instance
+                Weapon Claws = new Weapon("Claws", "Creature Attack", 20, 28, "Sharp claws", 1);
+
+                //Create NPC 
+                enemyList.add(new NPC(300, 300, "Fangdweller Alpha", 250, "Boss", Claws, null));
+                break;
+        }
     }
     
 }
