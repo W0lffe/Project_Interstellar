@@ -59,7 +59,7 @@ public class Combat {
                 NPC enemy = enemyList.get(selectedEnemyIndex);
 
                 //Attack enemy
-                Attack(player, enemy);
+                Attack(player, enemy, () -> {
 
                     //If enemy health is 0 or less
                     if(enemy.getHealth() <= 0){
@@ -86,12 +86,45 @@ public class Combat {
                             enemies.getEnemiesChoiceBox().setValue(enemies.getEnemiesChoiceBox().getItems().getFirst());
                         }
                     }
-
                     //If enemy list is empty or player is not alive, player actions container will be removed and combat ends
-                    if (enemyList.isEmpty() || !player.isAlive()) {
+                    if(enemyList.isEmpty() || !player.isAlive()){
                         Utility.centerContainer.getChildren().remove(playerActions);
                         onCombatEnd.run();
                     }
+
+                });
+/* 
+                 //If enemy health is 0 or less
+                 if(enemy.getHealth() <= 0){
+
+                    //If enemy object has inventory, player loots inventory
+                    if (enemy.getInventory() != null) {
+                        player.lootItems(enemy.getInventory(), enemy.getName());
+                    }
+
+                    //Remove status container of enemy from root
+                    Utility.rightContainer.getChildren().remove(enemy.getStatusContainer());
+
+                    //Remove status container from list
+                    enemyStatusList.remove(enemy.getStatusContainer());
+
+                    //Remove enemy NPC from list
+                    enemyList.remove(enemy);
+
+                    //Remove choice from choicebox
+                    enemies.deleteEnemyFromChoices(selectedEnemyIndex);
+                    
+                    //If list of enemies is not empty, choicebox value will be set to first value
+                    if (!enemyList.isEmpty()) {
+                        enemies.getEnemiesChoiceBox().setValue(enemies.getEnemiesChoiceBox().getItems().getFirst());
+                    }
+                }
+
+                //If enemy list is empty or player is not alive, player actions container will be removed and combat ends
+                if (enemyList.isEmpty() || !player.isAlive()) {
+                    Utility.centerContainer.getChildren().remove(playerActions);
+                    onCombatEnd.run();
+                } */
             }
             else{
                 Utility.Print("Select opponent first!\n", Utility.ActionSpeed, () -> {});
@@ -136,56 +169,85 @@ public class Combat {
 
        
 
-    public static void Attack(Player player, NPC enemy) {
-        //get Weapon objects that player and enemy equips
+    /**
+     * @description Handles player vs npc combat
+     * @param player player object
+     * @param enemy npc object
+     */
+    public static void Attack(Player player, NPC enemy, Runnable attackFinished) {
+
+        playerAttack(player, enemy, () -> {
+
+            //if enemy health is 0 or less
+            if (enemy.getHealth() <= 0) {
+                String eliminated = "You eliminated " + enemy.getName() + "\n";
+                Utility.Print(eliminated, Utility.ActionSpeed, () -> {
+                    player.actionExperience(enemy.getExperience()); //Give player experience of enemy's experience property
+                    attackFinished.run();
+                });
+            }
+            else{
+                npcAttack(player, enemy, () -> {
+
+                    //if player health is 0 or less
+                    if (player.getHealth() <= 0) {
+                        String eliminated = "You have been eliminated...\n";
+                        Utility.Print(eliminated, Utility.ActionSpeed, () -> {
+                            player.setAlive(false); //player is not alive
+                            attackFinished.run();
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    private static void playerAttack(Player player, NPC enemy, Runnable afterAttack){
+        
+        //get Weapon object that player equips
         Weapon playerEquipped = player.getEquipped();
-        Weapon enemyEquipped = enemy.getEquipped();
 
         //minimum and maximum damages of said objects
         int playerMaxDmg = playerEquipped.getMaxDamage();
         int playerMinDmg = playerEquipped.getMinDamage();
-        int enemyMinDmg = enemyEquipped.getMinDamage();
-        int enemyMaxDmg = enemyEquipped.getMaxDamage();
 
         //if player has Weapons skill, increase damage
         for (Skills skill : player.getPlayerAcquiredSkills()) {
+              
             if (skill.getSkill().equals("Weapons")){
-                playerMaxDmg += 5;
-                playerMinDmg += 5;
+                  playerMaxDmg += 5;
+                  playerMinDmg += 5;
+              }
+          }
 
-            }
-        }
 
         //Get random damage from equipped item range
         int damage = (int) (Math.random() * ((playerMaxDmg - playerMinDmg) + 1) + playerMinDmg);
         String damageDealt = "You strike with " + playerEquipped.getItem() + ", dealing " + damage + " damage!\n";
         enemy.takeDamage(damage); //reduce enemy health
         Utility.Print(damageDealt, Utility.ActionSpeed, () -> {
-            //if enemy health is 0 or less
-            if (enemy.getHealth() <= 0) {
-                String eliminated = "You eliminated " + enemy.getName() + ", gaining " + enemy.getExperience() + " experience!\n";
-                Utility.Print(eliminated, Utility.ActionSpeed, () -> {
-                    player.actionExperience(enemy.getExperience()); //Give player experience of enemy's experience property
-                    return;
-                });
-            }
-        });
-
-        damage = (int) (Math.random() * ((enemyMaxDmg - enemyMinDmg) + 1) + enemyMinDmg);
-        damageDealt = enemy.getName() + " counters with " + enemy.getEquipped().getItem() + ", dealing " + damage + " damage!\n";
-        player.takeDamage(damage); //Reduce player health
-        Utility.Print(damageDealt, Utility.ActionSpeed, () -> {
-            //if player health is 0 or less
-            if (player.getHealth() <= 0) {
-                String eliminated = "You have been eliminated...\n";
-                Utility.Print(eliminated, Utility.ActionSpeed, () -> {
-                    player.setAlive(false); //player is not alive
-                    return;
-                });
-            }
+          afterAttack.run();; 
         });
     }
 
+    private static void npcAttack(Player player, NPC enemy, Runnable afterAttack){
 
+        //get Weapon object that enemy equips
+        Weapon enemyEquipped = enemy.getEquipped();      
+        
+        //minimum and maximum damages of said objects
+        int enemyMinDmg = enemyEquipped.getMinDamage();
+        int enemyMaxDmg = enemyEquipped.getMaxDamage();
+
+        //Get random damage from equipped item range
+        int damage = (int) (Math.random() * ((enemyMaxDmg - enemyMinDmg) + 1) + enemyMinDmg);
+        String damageDealt = enemy.getName() + " counters with " + enemy.getEquipped().getItem() + ", dealing " + damage + " damage!\n";
+        player.takeDamage(damage); //Reduce player health
+        Utility.Print(damageDealt, Utility.ActionSpeed, () -> {
+            afterAttack.run();
+        });
+    }
 }
+
+
 

@@ -82,8 +82,10 @@ public class CalyraCave {
         //Update player actions
         Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
+        //OPTION A
         playerActions.getFirstButton().setOnAction(e -> {player.toggleCharacterInfoStatus();});
 
+        //OPTION B
         playerActions.getSecondButton().setOnAction(e -> {
 
             //Clear player actions before combat
@@ -135,12 +137,13 @@ public class CalyraCave {
                         Utility.clearPlayerActions(playerActionsContainer, playerActions);
                         Utility.centerContainer.getChildren().remove(playerActionsContainer);
                         //Exit cave
-                        CalyraBunker.PathToColony(player);
+                        CalyraPath.Crossroads(player);
                     });
                 }
             });
         });
 
+        //OPTION C
         playerActions.getThirdButton().setOnAction(e -> {
 
             if (player.hasSkill(SKILL_STEALTH) && !player.flagExists(CAVE_STEALTH_FLAG)) {
@@ -184,6 +187,7 @@ public class CalyraCave {
             }
         });
 
+        //OPTION D
         playerActions.getFourthButton().setOnAction(e -> {
             
             //clear player actions
@@ -192,11 +196,15 @@ public class CalyraCave {
 
             Utility.Print("Jaxon: A fight for another day.\n", Utility.ActionSpeed, () -> {
                 //Exit cave
-                CalyraBunker.PathToColony(player);
+                CalyraPath.Crossroads(player);
             });
         });
     }
 
+    /**
+     * @description Creates specific NPC for this instance
+     * @param phase Wich phase player is in when this function is called
+     */
     private static void createCaveNPC(int phase){
 
         switch (phase) {

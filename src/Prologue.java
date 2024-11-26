@@ -56,10 +56,10 @@ public class Prologue {
 
         });
 
-        //Toggle character status and info
+        //OPTION A
         playerActions.getFirstButton().setOnAction(e -> { player.toggleCharacterInfoStatus(); });
 
-        //Open Locker
+        //OPTION B
         playerActions.getSecondButton().setOnAction(e -> {
             
             //if player has not checked locker, player is able to do so
@@ -73,7 +73,7 @@ public class Prologue {
             }
         });
 
-        //Read Datapad
+        //OPTION C
         playerActions.getThirdButton().setOnAction(e -> {
             
             //If player has not read datapad, player is able to do so
@@ -92,7 +92,7 @@ public class Prologue {
             }
         });
 
-        //Continue gameflow
+        //OPTION D
         playerActions.getFourthButton().setOnAction(e -> {
             
             //Player cant proceed if has not checked locker
@@ -125,6 +125,7 @@ public class Prologue {
             Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
         });
 
+        //OPTION A
         playerActions.getFirstButton().setOnAction(e -> {
 
            //clear player actions before going to combat
@@ -150,6 +151,7 @@ public class Prologue {
             });
         });
 
+        //OPTION B
         playerActions.getSecondButton().setOnAction(e -> {
 
             //remove player actions before going to next part
@@ -181,9 +183,10 @@ public class Prologue {
         //Update player actions
         Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
 
-        //Toggle player info and status
+        //OPTION A
         playerActions.getFirstButton().setOnAction(e -> { player.toggleCharacterInfoStatus(); });
 
+        //OPTION B
         playerActions.getSecondButton().setOnAction(e -> {
 
             //clear player actions before going to combat
@@ -207,6 +210,7 @@ public class Prologue {
             });
         });
 
+        //OPTION C
         playerActions.getThirdButton().setOnAction(e -> {
            
             String takeDamage = "You try to get over to Teth. But " + enemy.getName() + " spots you and shoots at you, dealing " + 
@@ -217,6 +221,7 @@ public class Prologue {
             });
         });
 
+        //OPTION D
         playerActions.getFourthButton().setOnAction(e -> {
             Utility.Print("Jaxon: I need to help Teth and Jaxer!\n", Utility.ActionSpeed, () -> {});
         });
@@ -239,6 +244,7 @@ public class Prologue {
             Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
         });
 
+        //OPTION A
         playerActions.getFirstButton().setOnAction(e -> {
             
             //if player has object in inventory
@@ -262,6 +268,7 @@ public class Prologue {
             }
         });
 
+        //OPTION B
         playerActions.getSecondButton().setOnAction(e -> {
             
             //clear player actions before going to next part
@@ -291,6 +298,7 @@ public class Prologue {
             Utility.updatePlayerActions(playerActionsContainer, playerActions, playerChoices);
         });
 
+        //OPTION A
         playerActions.getFirstButton().setOnAction(e -> {
             
             //clear player actions before going to next part
@@ -312,6 +320,7 @@ public class Prologue {
             }); 
         });
 
+        //OPTION B
         playerActions.getSecondButton().setOnAction(e -> {
              
             //clear player actions before going to combat
@@ -379,6 +388,7 @@ public class Prologue {
 
                     });
 
+                    //OPTION A
                     playerActions.getFirstButton().setOnAction(e -> {
                         //add progress flag
                         player.addProgressFlag(new ProgressFlags("Eliminated Ka'tar", true));
@@ -394,6 +404,7 @@ public class Prologue {
                         });
                     });
 
+                    //OPTION B
                     playerActions.getSecondButton().setOnAction(e -> {
                 
                         Utility.Print("You make your way to the ship and leave the station.\n", Utility.ActionSpeed, () -> {
@@ -417,7 +428,7 @@ public class Prologue {
         Utility.readFileAndPrint(storyFile, "END", "PROLOGUE-END", () -> {
 
             //TO NEXT ACT
-            CalyraBunker.ActOne(player);
+            ActOne.Start(player);
         });
      }
 }

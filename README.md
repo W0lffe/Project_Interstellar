@@ -49,10 +49,6 @@ The project will be iteratively refined as new skills are developed, with the po
     * [ ] Ammo
     * [ ] (Optional) More all above
 * [ ] Locations
-    * [ ] Planet 
-        * [ ] Sub-locations - like outposts
-    * [ ] Ships
-        * [ ] Sub-locations - like bridge, mess hall etc..
 * [X] Interactable Lore Objects - hackable computers, readable datapads etc..
  
 ### Game Mechanics

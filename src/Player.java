@@ -340,7 +340,7 @@ public class Player {
             }
         }
         Utility.Print(itemsFound, Utility.ActionSpeed, () -> {
-
+         
             for (Items item : itemList) {
                 addItemToInventory(item);
             }
@@ -393,8 +393,9 @@ public class Player {
      */
     public void actionExperience(int experienceGained){
 
-        Utility.Print("You gained " + experienceGained + " experience.\n", Utility.ActionSpeed, () -> {});
-        setExperience(experience + experienceGained);
+        Utility.Print("You gained " + experienceGained + " experience.\n", Utility.ActionSpeed, () -> {
+            setExperience(experience + experienceGained);
+        });
     }   
 
 
